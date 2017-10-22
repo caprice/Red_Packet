@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/side_nav_bar"
+    android:clickable="false"
+    android:gravity="center_horizontal"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <com.pkmmte.view.CircularImageView
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/head"
+            android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="刘博文"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/red_packet" />
+
+            <TextView
+                android:id="@+id/tv_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="1000元"
+                android:textColor="#D53E35"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/tv_red"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="40dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="35dp"
+            android:drawableLeft="@drawable/packet"
+            android:drawablePadding="12dp"
+            android:paddingLeft="30dp"
+            android:text="钱包"
+            android:clickable="true"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/tv_prize_invited"
+            android:gravity="center_vertical"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="6dp"
+            android:drawableLeft="@drawable/prize_invited"
+            android:drawablePadding="12dp"
+            android:paddingLeft="30dp"
+            android:text="有奖邀请"
+            android:textColor="#333333"
+            android:clickable="true"
+
+            android:textSize="14sp" />
+
+        <TextView
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/tv_red_maneger"
+            android:gravity="center_vertical"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="6dp"
+            android:drawableLeft="@drawable/red_maneger"
+            android:drawablePadding="12dp"
+            android:paddingLeft="30dp"
+            android:text="红包管理"
+            android:textColor="#333333"
+            android:clickable="true"
+
+            android:textSize="14sp" />
+
+        <TextView
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/tv_save"
+            android:gravity="center_vertical"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="6dp"
+            android:drawableLeft="@drawable/save"
+            android:drawablePadding="12dp"
+            android:paddingLeft="30dp"
+            android:text="我的收藏"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:id="@+id/tv_contect_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:drawableTop="@drawable/contect_phone"
+        android:drawablePadding="6dp"
+        android:paddingBottom="15dp"
+        android:text="客服"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+</RelativeLayout>

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_red_packet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    tools:context="com.haoxiong.taotao.ui.redpacket.RedPacketActivity">
+
+    <LinearLayout
+        android:id="@+id/liner_red_packet_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:textSize="17sp">
+
+        <ImageView
+            android:id="@+id/img_red_packet_bottom"
+            android:layout_width="16sp"
+            android:layout_height="16sp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_money" />
+
+        <TextView
+            android:id="@+id/tv_red_packet_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="抢红包"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:id="@+id/liner_red_packet_back"
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_logo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/liner_red_packet_love"
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical|end"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/img_red_packet_love"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_love_unselect" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_marginBottom="44dp"
+        android:id="@+id/srl_red_packet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/write"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_red_packet_pic"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/item"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/red_packet" />
+
+                    <TextView
+                        android:id="@+id/tv_red_packet_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:text=""
+                        android:textColor="#989898"
+                        android:textSize="12sp"
+                        tools:text="1000元/1000个" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/left_red_packet" />
+
+                    <TextView
+                        android:id="@+id/tv_red_packet_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:text=""
+                        android:textColor="#989898"
+                        android:textSize="12sp"
+                        tools:text="1000个" />
+                </LinearLayout>
+            </RelativeLayout>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#B9B9B9" />
+            <TextView
+                android:lineSpacingMultiplier="1.2"
+                android:id="@+id/tv_rea_packet_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                tools:text="asdasdsfas" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="#B9B9B9" />
+
+
+            <LinearLayout
+                android:id="@+id/liner_all"
+                android:paddingTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/liner_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="电话："
+                        android:textColor="#333333"
+                        android:textSize="13sp"
+                        android:id="@+id/textView3" />
+
+                    <TextView
+                        android:id="@+id/tv_rea_packet_tel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#989898"
+                        android:textSize="13sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/liner_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="地址："
+                        android:textColor="#333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:lineSpacingMultiplier="1.2"
+                        android:id="@+id/tv_rea_packet_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#989898"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#B9B9B9" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:background="#f3f4f6" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#B9B9B9" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingBottom="12dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_question" />
+
+                <TextView
+                    android:id="@+id/tv_rea_packet_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    tools:text="dasda" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="#B9B9B9" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="82dp"
+                android:paddingBottom="11dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="11dp">
+
+                <TextView
+                    android:textSize="13sp"
+                    android:padding="2dp"
+                    android:textColor="#666666"
+                    android:id="@+id/tv_rea_packet_answer1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+
+                    android:background="@drawable/answer_wrong"
+                    android:gravity="center"
+                    tools:text="1" />
+
+                <TextView
+                    android:textSize="13sp"
+                    android:padding="2dp"
+                    android:textColor="#666666"
+                    android:id="@+id/tv_rea_packet_answer2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/answer_wrong"
+                    android:gravity="center"
+                    tools:text="2" />
+
+                <TextView
+                    android:textSize="13sp"
+                    android:padding="2dp"
+                    android:textColor="#666666"
+                    android:id="@+id/tv_rea_packet_answer3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/answer_wrong"
+                    android:gravity="center"
+                    tools:text="3" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#B9B9B9" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:background="#f3f4f6" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#B9B9B9" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_red_winer" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="红包得主"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="#B9B9B9" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_red_packet_winer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

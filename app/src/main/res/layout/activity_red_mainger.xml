@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_red_mainger"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/write"
+    tools:context="com.haoxiong.taotao.ui.redmaneger.RedMangerActivity">
+    <RelativeLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <LinearLayout
+            android:paddingLeft="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/liner_manager_back"
+            android:gravity="center_vertical"
+            android:layout_width="46dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/ic_back"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="17sp"
+                android:textColor="#ffffff"
+                android:text="红包管理"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:background="#F8F8FA"
+        android:layout_width="match_parent"
+        android:layout_height="41dp">
+        <LinearLayout
+            android:id="@+id/liner_manager_run"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="41dp">
+
+            <TextView
+                android:id="@+id/tv_manager_run"
+                android:textColor="#d43c33"
+                android:textSize="14dp"
+                android:text="进行中"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/tv_manager_run_underline"
+                android:background="#d43c33"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/liner_manager_end"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="41dp">
+            <TextView
+                android:id="@+id/tv_manager_end"
+                android:textColor="#333333"
+                android:textSize="14dp"
+                android:text="已结束"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <TextView
+                android:id="@+id/tv_manager_end_underline"
+                android:background="#F8F8FA"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        style="@style/view_h_without_margin" />
+    <FrameLayout
+        android:id="@+id/fragment_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+</LinearLayout>

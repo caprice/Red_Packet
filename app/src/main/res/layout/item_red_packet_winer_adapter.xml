@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:paddingTop="10dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:background="#ffffff"
+    android:paddingBottom="8dp"
+    android:layout_height="68dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.pkmmte.view.CircularImageView
+            android:id="@+id/img_item_red_pic"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/head"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="9dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp">
+            <TextView
+                android:textColor="#333333"
+                android:textSize="14sp"
+                tools:text="assadasdasd"
+                android:gravity="center_vertical"
+                android:id="@+id/tv_item_red_name"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+            <TextView
+                android:textColor="#666666"
+                android:textSize="10sp"
+                tools:text="assadasdasd"
+                android:id="@+id/tv_item_red_add"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_height="0dp" />
+            <TextView
+                android:gravity="center_vertical"
+                android:textColor="#666666"
+                android:textSize="10sp"
+                tools:text="assadasdasd"
+                android:id="@+id/tv_item_red_time"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_item_red_money"
+        android:textColor="#d43c33"
+        tools:text="42312"
+        android:textSize="15sp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

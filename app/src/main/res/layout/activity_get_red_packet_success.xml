@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_get_red_packet_success"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:gravity="center_horizontal"
+    tools:context="com.haoxiong.taotao.ui.sendredpacket.GetRedPacketSuccessActivity">
+
+    <RelativeLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <LinearLayout
+            android:paddingLeft="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/liner_get_red_packet_back"
+            android:gravity="center_vertical"
+            android:layout_width="46dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/ic_back"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="17sp"
+                android:textColor="#ffffff"
+                android:text="抢到的红包"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="44dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:src="@mipmap/item"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:id="@+id/img_get_red_packet_bg"
+            android:layout_width="match_parent"
+            android:layout_height="172dp" />
+        <TextView
+            android:id="@+id/tv_get_red_packet_name"
+            android:textColor="#d43c33"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            tools:text="yinjin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="#cccccc"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:text="发来的红包"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_get_red_packet_money"
+                android:textColor="#000000"
+                android:textSize="40sp"
+                tools:text="24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:text="元"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:textColor="#cccccc"
+            android:textSize="12sp"
+            android:layout_marginTop="10dp"
+            android:text="可提现或用于发红包"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_marginTop="59dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="#357dd2"
+                android:textSize="14sp"
+                android:text="该红包还剩"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_get_red_packet_left"
+                android:textColor="#d43c33"
+                android:textSize="14sp"
+                tools:text="24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="#357dd2"
+                android:textSize="14sp"
+                android:text="个"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tv_get_red_packet_share"
+        android:layout_marginTop="12dp"
+        android:background="#d43c33"
+        android:textColor="#ffffff"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:text="邀请朋友一起抢"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        />
+</RelativeLayout>

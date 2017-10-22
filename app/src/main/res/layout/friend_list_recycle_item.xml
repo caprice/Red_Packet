@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/write"
+    android:layout_width="match_parent"
+
+    android:layout_height="71dp">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <com.pkmmte.view.CircularImageView
+            android:id="@+id/img_end_img"
+            app:srcCompat="@drawable/contect_phone"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_weight="1"
+                tools:text="张三"
+                android:id="@+id/tv_item_name"
+                android:textSize="12dp"
+                android:textColor="#000000"
+                android:maxLines="1"
+                android:text=""
+                android:ellipsize="end"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tv_item_self_money"
+                android:textSize="12dp"
+                android:textColor="#666666"
+                android:maxLines="1"
+                android:text=""
+                tools:text="已抢到的红包：270元"
+                android:ellipsize="end"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tv_item_for_me_money"
+                android:textSize="12dp"
+                android:textColor="#666666"
+                android:maxLines="1"
+                android:text=""
+                tools:text="给我创造的奖金：15元"
+                android:ellipsize="end"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView style="@style/view_h_without_margin" />
+</LinearLayout>

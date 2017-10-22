@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_manager_title"
+            android:layout_centerVertical="true"
+            android:textSize="16dp"
+            android:textColor="@android:color/black"
+            android:text=""
+            tools:text="喜马拉雅-动铁耳音"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/img_manager_edit"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/edit"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+    </RelativeLayout>
+<RelativeLayout
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="195dp">
+    <ImageView
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:background="@drawable/item"
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:id="@+id/img_manager_picture"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:visibility="gone"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:background="@drawable/red_pacekt_item_distence"
+        android:gravity="center"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="6dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="10dp"
+        android:textColor="#ffffff"
+        android:text="1.7km"
+        tools:text="1.7km"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+    <RelativeLayout
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/red_packet"
+                android:layout_width="14dp"
+                android:layout_height="14dp" />
+            <TextView
+                android:id="@+id/tv_manger_charge"
+                android:layout_marginLeft="6dp"
+                android:textSize="12sp"
+                android:textColor="#989898"
+                android:text=""
+                tools:text="2017元/200个"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/left_red_packet"
+                android:layout_width="14dp"
+                android:layout_height="14dp" />
+
+            <TextView
+                android:layout_marginLeft="6dp"
+                android:textSize="12sp"
+                android:textColor="#989898"
+                android:text=""
+                tools:text="200个"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_manger_num" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/liner_state"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/item_state"
+                android:gravity="center"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:background="@drawable/red_pacekt_inreview"
+                android:text="审核中"
+                android:textColor="#333333"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+    <TextView
+        android:background="#cccccc"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+</LinearLayout>

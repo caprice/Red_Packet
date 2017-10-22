@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/write"
+    tools:context="com.haoxiong.taotao.ui.redmaneger.RunFragment">
+
+    <android.support.v7.widget.RecyclerView
+        tools:listitem="@layout/manager_recycle_item"
+        android:id="@+id/recycle_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</FrameLayout>

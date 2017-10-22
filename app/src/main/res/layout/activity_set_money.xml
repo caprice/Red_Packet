@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_set_money"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg"
+    tools:context="com.haoxiong.taotao.ui.sendredpacket.SetMoneyActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:id="@+id/liner_set_money_back"
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_back" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设定金额"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:paddingTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingBottom="8dp"
+            android:text="¥"
+            android:textSize="18sp"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="0.00"
+            android:textSize="30sp"
+            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_set_money_num" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="@drawable/set_money_bg_shape"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            android:text="总金额"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:gravity="end"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:maxLength="7"
+                android:background="@null"
+                android:inputType="number"
+                android:id="@+id/et_set_money_num"
+                android:hint="0.00"
+                android:textColorHint="#cccccc"
+                android:textColor="#333333"
+                android:textSize="15sp"
+                android:gravity="end"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="6dp"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:textColor="#333333"
+                android:text="元"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="25dp"
+        android:layout_centerVertical="true"
+        android:textSize="12sp"
+        android:textColor="#aaaaaa"
+        android:text="金额不得少于1元"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:background="@drawable/set_money_bg_shape"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            android:text="红包个数"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:maxLength="7"
+                android:background="@null"
+                android:inputType="number"
+                android:id="@+id/et_set_money_red_num"
+                android:hint="0.00"
+                android:textColorHint="#cccccc"
+                android:textColor="#333333"
+                android:textSize="15sp"
+                android:gravity="end"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="6dp"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:textColor="#333333"
+                android:text="个"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="25dp"
+        android:layout_centerVertical="true"
+        android:textSize="12sp"
+        android:textColor="#aaaaaa"
+        android:text="人均不得小于0.1元"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+
+        android:layout_marginTop="20dp"
+        android:background="@drawable/set_money_next_press_shape"
+        android:textColor="#ffffff"
+        android:text="下一步"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:id="@+id/tv_set_money_next" />
+</LinearLayout>

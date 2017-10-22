@@ -1,0 +1,114 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+apply plugin: 'com.neenbedankt.android-apt'
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        multiDexEnabled true
+        applicationId "com.haoxiong.taotao"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 4
+        versionName "1.0.2"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                GETUI_APP_ID : "czku0Bzx4x72LpxJARpYs6",
+                GETUI_APP_KEY : "uFKKi9pW799N3J9ENbLVRA",
+                GETUI_APP_SECRET : "oDhGMdmZ7G8adrN5FifBU1"
+        ]
+        ndk {
+            abiFilters "armeabi"
+        }
+    }
+    signingConfigs {
+        debug {
+            storeFile file("my-release-key.keystore") // 刚修改过的默认debug keystore路径。
+            storePassword 'HaoXiong2017' // 默认debug keystore的密码。
+            keyAlias 'alias_name' // 默认debug keystore的alias。
+            keyPassword 'HaoXiong2017' // 默认debug keystore的alias的密码。
+        }
+        release {
+            storeFile file("my-release-key.keystore") // 刚修改过的默认debug keystore路径。
+            storePassword 'HaoXiong2017' // 默认debug keystore的密码。
+            keyAlias 'alias_name' // 默认debug keystore的alias。
+            keyPassword 'HaoXiong2017' // 默认debug keystore的alias的密码。
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'org.greenrobot:eventbus:3.0.0'
+    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'top.zibin:Luban:1.1.2'
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+    testCompile 'junit:junit:4.12'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile files('libs/open_sdk_r5781.jar')
+    compile files('libs/SocialSDK_QQ_Full.jar')
+    compile files('libs/SocialSDK_WeiXin_Full.jar')
+    compile files('libs/umeng_shareboard_widget.jar')
+    compile files('libs/umeng_social_api.jar')
+    compile files('libs/umeng_social_net.jar')
+    compile files('libs/umeng_social_shareboard.jar')
+    compile files('libs/umeng_social_tool.jar')
+    compile 'com.pkmmte.view:circularimageview:1.1'
+    compile files('libs/SocialSDK_Sina_Full.jar')
+    compile files('libs/weiboSDKCore.jar')
+    compile files('libs/GetuiSDK2.10.2.0.jar')
+    compile files('libs/json_simple-1.1.jar')
+    compile project(':service')
+    compile files('libs/alipaySdk-20170725.jar')
+    compile files('libs/AMap3DMap_5.3.0_AMapSearch_5.3.1_AMapLocation_3.5.0_20170817.jar')
+    compile project(':ucrop')
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile files('libs/commons-codec-1.9.jar')
+    compile files('libs/commons-logging-1.2.jar')
+    compile files('libs/fluent-hc-4.5.jar')
+    compile files('libs/httpclient-4.5.jar')
+    compile files('libs/httpclient-cache-4.5.jar')
+    compile files('libs/httpclient-win-4.5.jar')
+    compile files('libs/httpcore-4.4.1.jar')
+    compile files('libs/httpmime-4.5.jar')
+    compile files('libs/libammsdk.jar')
+    compile files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
+}
+apt {
+    arguments {
+        eventBusIndex "com.whoislcj.eventbus.MyEventBusIndex"
+    }
+}

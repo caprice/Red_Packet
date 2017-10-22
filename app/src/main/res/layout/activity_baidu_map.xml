@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_baidu_map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/write"
+    android:orientation="vertical"
+    tools:context="com.haoxiong.taotao.ui.map.BaiduMapActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:id="@+id/liner_map_back"
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="定位"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/liner_map_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="保存"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="44dp"></com.amap.api.maps.MapView>
+</RelativeLayout>

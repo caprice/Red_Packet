@@ -27,6 +27,8 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.utils.Log;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -126,6 +128,7 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        MainActivity.luncher(GetRedPacketSuccessActivity.this);
+        EventBus.getDefault().post(new Intent("refresh"));
+        finish();
     }
 }

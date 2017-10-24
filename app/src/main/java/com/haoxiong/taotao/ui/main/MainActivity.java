@@ -208,14 +208,14 @@ public class MainActivity extends BaseActivity
 
                         }
                     });
-            RedPacketListApi.get_my_wallet(MainActivity.this, MyApp.token, new OnRequestCompletedListener<WalletResponse>() {
+         /*   RedPacketListApi.get_my_wallet(MainActivity.this, MyApp.token, new OnRequestCompletedListener<WalletResponse>() {
                 @Override
                 public void onCompleted(WalletResponse response, String msg) {
                     if (response.getErr() == 0) {
                         tvCharge.setText(response.getData().getBalance() + "元");
                     }
                 }
-            });
+            });*/
             RedPacketListApi.update_user_location(MainActivity.this, MyApp.token, MyApp.location.getLatitude() + ""
                     , MyApp.location.getLongitude() + "", new OnRequestCompletedListener<WalletResponse>() {
                         @Override
@@ -252,7 +252,7 @@ public class MainActivity extends BaseActivity
                         MyApp.getInstance().user = loginResponse;
                         GlideUtil.loadImg(MainActivity.this, R.mipmap.head, loginResponse.getData().getUserinfo().getUserPic(), imageView);
                         tvName.setText(loginResponse.getData().getUserinfo().getUsername() != null ? loginResponse.getData().getUserinfo().getUsername() : "");
-                        tvCharge.setText(loginResponse.getData().getUserinfo().getBalance());
+                        tvCharge.setText(loginResponse.getData().getUserinfo().getBalance()+"元");
                     }
                 }
             });
@@ -673,7 +673,7 @@ public class MainActivity extends BaseActivity
                 LoginResponse user = MyApp.getInstance().user;
                 GlideUtil.loadImg(MainActivity.this, R.mipmap.head, user.getData().getUserinfo().getUserPic(), imageView);
                 tvName.setText(user.getData().getUserinfo().getUsername() != null ? user.getData().getUserinfo().getUsername() : "");
-                tvCharge.setText(user.getData().getUserinfo().getBalance());
+                tvCharge.setText(user.getData().getUserinfo().getBalance()+"元");
                 break;
             case "refreshUserhead":
                 Log.e("...", MyApp.getInstance().user.getData().getUserinfo().getUserPic() + "");

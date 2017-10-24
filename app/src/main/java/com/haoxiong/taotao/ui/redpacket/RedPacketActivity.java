@@ -314,7 +314,7 @@ public class RedPacketActivity extends BaseActivity {
                     @Override
                     public void onCompleted(RedPacketDetailResponse response, String msg) {
                         dismissProgressDialog();
-                        if (response != null&&response.getErr()==0) {
+                        if (response != null && response.getErr() == 0) {
                             detailResponse = response.getData();
                             if (MyApp.TYPE == 2) {
                                 if (detailResponse.getIsgot() == 1) {
@@ -890,7 +890,12 @@ public class RedPacketActivity extends BaseActivity {
                 break;
             case "fail":
                 break;
-
+            case "refresh":
+                MyApp.TYPE = 5;
+                imgRedPacketBottom.setVisibility(View.VISIBLE);
+                tvRedPacketBottom.setText("抢红包");
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
+                break;
         }
     }
 
@@ -960,7 +965,7 @@ public class RedPacketActivity extends BaseActivity {
                         RedPacketListApi.get_alipay_param(RedPacketActivity.this, MyApp.token, new OnRequestCompletedListener<AlipayResponse>() {
                             @Override
                             public void onCompleted(AlipayResponse response, String msg) {
-                                if (response != null&&response.getErr()==0) {
+                                if (response != null && response.getErr() == 0) {
                                     if (!TextUtils.isEmpty(sendRedPacketRequest.getLat())) {
                                         sendLocal();
                                     } else {

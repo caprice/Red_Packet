@@ -28,10 +28,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by fanhl on 2016/3/22.
+ * Created by yinjin on 2017年10月27日19:48:45
  */
 public class Client {
-    public static final String BASE_URL = "http://hb.huidang2105.com:8900/";
+    public static final String BASE_URL = "http://hbapi.huidang2105.com:8900/";
     public static final String TAG = Client.class.getSimpleName();
     /**
      * http请求的超时时间

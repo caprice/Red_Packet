@@ -117,7 +117,7 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
 
     public void share(View view) {
         UMImage thumb = new UMImage(GetRedPacketSuccessActivity.this, R.drawable.logo_s);
-        UMWeb web = new UMWeb("http://hb.huidang2105.com/share/index.html?scene="+detailData.getRid() );
+        UMWeb web = new UMWeb("http://hb.huidang2105.com/share/login.html?yqm="+MyApp.getInstance().user.getData().getUserinfo().getInviteCode()+"&rid="+detailData.getRid() );
         web.setTitle("和我一起来 掏掏 抢红包吧");//标题
         web.setThumb(thumb);  //缩略图
         web.setDescription("掏掏-红包不断，掏掏不绝");//描述

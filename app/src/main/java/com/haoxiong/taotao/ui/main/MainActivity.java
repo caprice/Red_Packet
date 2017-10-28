@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -49,11 +50,13 @@ import com.haoxiong.taotao.ui.main.adapter.HomeRecycleViewAdapter;
 import com.haoxiong.taotao.ui.person.PersonDataActivity;
 import com.haoxiong.taotao.ui.redmaneger.RedMangerActivity;
 import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
+import com.haoxiong.taotao.ui.sendredpacket.ChildSendRedPacketActivity;
 import com.haoxiong.taotao.ui.sendredpacket.SetMoneyActivity;
 import com.haoxiong.taotao.ui.share.ShareActivity;
 import com.haoxiong.taotao.ui.wallet.WalletActivity;
 import com.haoxiong.taotao.util.DensityUtil;
 import com.haoxiong.taotao.util.GlideUtil;
+import com.haoxiong.taotao.util.SharePreferenceUtil;
 import com.haoxiong.taotao.util.ToastUtils;
 import com.pkmmte.view.CircularImageView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -140,7 +143,6 @@ public class MainActivity extends BaseActivity
                         .setAction("Action", null).show();
             }
         });
-        refreshData();
     }
 
     private void refreshData() {
@@ -167,7 +169,7 @@ public class MainActivity extends BaseActivity
                         MyApp.getInstance().user = loginResponse;
                         GlideUtil.loadImg(MainActivity.this, R.mipmap.head, loginResponse.getData().getUserinfo().getUserPic(), imageView);
                         tvName.setText(loginResponse.getData().getUserinfo().getUsername() != null ? loginResponse.getData().getUserinfo().getUsername() : "");
-                        tvCharge.setText(loginResponse.getData().getUserinfo().getBalance()+"元");
+                        tvCharge.setText(loginResponse.getData().getUserinfo().getBalance() + "元");
                     }
                 }
             });
@@ -189,21 +191,39 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (MyApp.local) {
-            mainRecycle.scrollToPosition(0);
-            page = 1;
-            initData(false);
+        if (MyApp.location == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("提示")
+                    .setIcon(R.drawable.ic_logo)
+                    .setMessage("本地红包需要开启定位才能抢？")
+                    .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            getAppDetailSettingIntent(MainActivity.this);
+
+                        }
+                    })
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
 
         }
+        mainRecycle.scrollToPosition(0);
+        page = 1;
+        initData(false);
     }
 
     private void initData(final boolean more) {
+
         if (MyApp.login_state == 0) {
             notLoginGetData(more);
         } else {
             RedPacketListApi.redPacketListLogined(MainActivity.this, MyApp.token
-                    , MyApp.location.getLatitude() + ""
-                    , MyApp.location.getLongitude() + "", 10, page, sort, new OnRequestCompletedListener<RedPacketListResponse>() {
+                    , MyApp.location == null ? "0" : MyApp.location.getLatitude() + ""
+                    , MyApp.location == null ? "0" : MyApp.location.getLongitude() + "", 10, page, sort, new OnRequestCompletedListener<RedPacketListResponse>() {
                         @Override
                         public void onCompleted(RedPacketListResponse response, String msg) {
                             adapter.loadMoreComplete();
@@ -249,8 +269,8 @@ public class MainActivity extends BaseActivity
                     }
                 }
             });*/
-            RedPacketListApi.update_user_location(MainActivity.this, MyApp.token, MyApp.location.getLatitude() + ""
-                    , MyApp.location.getLongitude() + "", new OnRequestCompletedListener<WalletResponse>() {
+            RedPacketListApi.update_user_location(MainActivity.this, MyApp.token, MyApp.location == null ? "0" : MyApp.location.getLatitude() + ""
+                    , MyApp.location == null ? "0" : MyApp.location.getLongitude() + "", new OnRequestCompletedListener<WalletResponse>() {
                         @Override
                         public void onCompleted(WalletResponse response, String msg) {
 
@@ -273,8 +293,8 @@ public class MainActivity extends BaseActivity
         imageView.setImageResource(R.mipmap.head);
         tvCharge.setText("");
         RedPacketListApi.redPacketListUnlogin(MainActivity.this
-                , MyApp.location.getLatitude() + ""
-                , MyApp.location.getLongitude() + "", 10, page, sort, new OnRequestCompletedListener<RedPacketListResponse>() {
+                , MyApp.location == null ? "0" : MyApp.location.getLatitude() + ""
+                , MyApp.location == null ? "0" : MyApp.location.getLongitude() + "", 10, page, sort, new OnRequestCompletedListener<RedPacketListResponse>() {
                     @Override
                     public void onCompleted(RedPacketListResponse response, String msg) {
                         adapter.loadMoreComplete();
@@ -682,7 +702,7 @@ public class MainActivity extends BaseActivity
                 LoginResponse user = MyApp.getInstance().user;
                 GlideUtil.loadImg(MainActivity.this, R.mipmap.head, user.getData().getUserinfo().getUserPic(), imageView);
                 tvName.setText(user.getData().getUserinfo().getUsername() != null ? user.getData().getUserinfo().getUsername() : "");
-                tvCharge.setText(user.getData().getUserinfo().getBalance()+"元");
+                tvCharge.setText(user.getData().getUserinfo().getBalance() + "元");
                 break;
             case "refreshUserhead":
                 Log.e("...", MyApp.getInstance().user.getData().getUserinfo().getUserPic() + "");
@@ -696,4 +716,20 @@ public class MainActivity extends BaseActivity
         }
     }
 
+    /**
+     * 跳转到权限设置界面
+     */
+    private void getAppDetailSettingIntent(Context context) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            intent.setData(Uri.fromParts("package", getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+            intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+        }
+        startActivity(intent);
+    }
 }

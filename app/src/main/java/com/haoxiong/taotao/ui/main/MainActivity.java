@@ -140,6 +140,38 @@ public class MainActivity extends BaseActivity
                         .setAction("Action", null).show();
             }
         });
+        refreshData();
+    }
+
+    private void refreshData() {
+        if (MyApp.login_state == 1) {
+            PersonServiceApi.getUserInfor(MainActivity.this, MyApp.token, new OnRequestCompletedListener<PersonDateResponse>() {
+                @Override
+                public void onCompleted(PersonDateResponse response, String msg) {
+                    Log.e(">>.", MyApp.login_state + msg);
+                    if (response.getErr() == 0) {
+                        LoginResponse loginResponse = new LoginResponse();
+                        loginResponse.setMsg(response.getMsg());
+                        loginResponse.setErr(response.getErr());
+                        LoginResponse.DataBean.UserinfoBean userinfoBean = new LoginResponse.DataBean.UserinfoBean();
+                        userinfoBean.setBalance(response.getData().getUserinfo().getBalance());
+                        userinfoBean.setGender(response.getData().getUserinfo().getGender());
+                        userinfoBean.setUsername(response.getData().getUserinfo().getUsername());
+                        userinfoBean.setBirthday(response.getData().getUserinfo().getBirthday());
+                        userinfoBean.setUserPic(response.getData().getUserinfo().getUserPic());
+                        userinfoBean.setMobile(response.getData().getUserinfo().getMobile());
+                        userinfoBean.setInviteCode(response.getData().getUserinfo().getInviteCode());
+                        LoginResponse.DataBean dataBean = new LoginResponse.DataBean();
+                        dataBean.setUserinfo(userinfoBean);
+                        loginResponse.setData(dataBean);
+                        MyApp.getInstance().user = loginResponse;
+                        GlideUtil.loadImg(MainActivity.this, R.mipmap.head, loginResponse.getData().getUserinfo().getUserPic(), imageView);
+                        tvName.setText(loginResponse.getData().getUserinfo().getUsername() != null ? loginResponse.getData().getUserinfo().getUsername() : "");
+                        tvCharge.setText(loginResponse.getData().getUserinfo().getBalance()+"元");
+                    }
+                }
+            });
+        }
     }
 
     private class Task extends TimerTask {
@@ -161,6 +193,7 @@ public class MainActivity extends BaseActivity
             mainRecycle.scrollToPosition(0);
             page = 1;
             initData(false);
+
         }
     }
 
@@ -231,31 +264,7 @@ public class MainActivity extends BaseActivity
                     }
                 });
             }
-            PersonServiceApi.getUserInfor(MainActivity.this, MyApp.token, new OnRequestCompletedListener<PersonDateResponse>() {
-                @Override
-                public void onCompleted(PersonDateResponse response, String msg) {
-                    if (response.getErr() == 0) {
-                        LoginResponse loginResponse = new LoginResponse();
-                        loginResponse.setMsg(response.getMsg());
-                        loginResponse.setErr(response.getErr());
-                        LoginResponse.DataBean.UserinfoBean userinfoBean = new LoginResponse.DataBean.UserinfoBean();
-                        userinfoBean.setBalance(response.getData().getUserinfo().getBalance());
-                        userinfoBean.setGender(response.getData().getUserinfo().getGender());
-                        userinfoBean.setUsername(response.getData().getUserinfo().getUsername());
-                        userinfoBean.setBirthday(response.getData().getUserinfo().getBirthday());
-                        userinfoBean.setUserPic(response.getData().getUserinfo().getUserPic());
-                        userinfoBean.setMobile(response.getData().getUserinfo().getMobile());
-                        userinfoBean.setInviteCode(response.getData().getUserinfo().getInviteCode());
-                        LoginResponse.DataBean dataBean = new LoginResponse.DataBean();
-                        dataBean.setUserinfo(userinfoBean);
-                        loginResponse.setData(dataBean);
-                        MyApp.getInstance().user = loginResponse;
-                        GlideUtil.loadImg(MainActivity.this, R.mipmap.head, loginResponse.getData().getUserinfo().getUserPic(), imageView);
-                        tvName.setText(loginResponse.getData().getUserinfo().getUsername() != null ? loginResponse.getData().getUserinfo().getUsername() : "");
-                        tvCharge.setText(loginResponse.getData().getUserinfo().getBalance()+"元");
-                    }
-                }
-            });
+            refreshData();
         }
     }
 

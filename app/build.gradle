@@ -13,9 +13,9 @@ android {
         versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
-                GETUI_APP_ID : "czku0Bzx4x72LpxJARpYs6",
-                GETUI_APP_KEY : "uFKKi9pW799N3J9ENbLVRA",
-                GETUI_APP_SECRET : "oDhGMdmZ7G8adrN5FifBU1"
+                GETUI_APP_ID    : "czku0Bzx4x72LpxJARpYs6",
+                GETUI_APP_KEY   : "uFKKi9pW799N3J9ENbLVRA",
+                GETUI_APP_SECRET: "oDhGMdmZ7G8adrN5FifBU1"
         ]
         ndk {
             abiFilters "armeabi"
@@ -106,6 +106,12 @@ dependencies {
     compile files('libs/httpmime-4.5.jar')
     compile files('libs/libammsdk.jar')
     compile files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
+    compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    compile 'com.github.bumptech.glide:glide:4.2.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
 }
 apt {
     arguments {

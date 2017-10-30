@@ -1,6 +1,7 @@
 package com.haoxiong.taotao;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import com.haoxiong.taotao.ui.main.MainActivity;
 import com.haoxiong.taotao.util.SharePreferenceUtil;
 import com.haoxiong.taotao.util.ToastUtils;
 import com.igexin.sdk.PushManager;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.whoislcj.eventbus.MyEventBusIndex;
@@ -48,6 +50,7 @@ public class MyApp extends RetrofitApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashReport.initCrashReport(getApplicationContext(), "424587a86d", true);
         myApp = this;
         UMShareAPI.get(this);
         EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
@@ -65,4 +68,6 @@ public class MyApp extends RetrofitApplication {
         }
         return myApp;
     }
+
+
 }

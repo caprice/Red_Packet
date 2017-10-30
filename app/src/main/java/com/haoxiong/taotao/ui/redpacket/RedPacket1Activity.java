@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -37,6 +36,11 @@ import com.haoxiong.taotao.ui.redpacket.adapter.RecycleRedPacketWinerAdapter;
 import com.haoxiong.taotao.util.GlideUtil;
 import com.haoxiong.taotao.util.SignUtils;
 import com.haoxiong.taotao.util.ToastUtils;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -108,6 +112,8 @@ public class RedPacket1Activity extends BaseActivity {
     TextView textView3;
     @BindView(R.id.liner_all)
     LinearLayout linerAll;
+    @BindView(R.id.liner_red_packet_share)
+    LinearLayout linerRedPacketShare;
     private SendRedPacketRequest sendRedPacketRequest;
     private RedPacketListResponse.DataBean dataBean;
     private RedManagerResponse.DataBean.RedsOnBean redsOnBean;
@@ -273,7 +279,9 @@ public class RedPacket1Activity extends BaseActivity {
         love = detailResponse.isIscollect();
     }
 
-    @OnClick({R.id.liner_red_packet_back, R.id.liner_red_packet_love, R.id.tv_rea_packet_answer1, R.id.tv_rea_packet_answer2, R.id.tv_rea_packet_answer3})
+    @OnClick({R.id.liner_red_packet_back, R.id.liner_red_packet_love
+            , R.id.tv_rea_packet_answer1, R.id.tv_rea_packet_answer2
+            , R.id.tv_rea_packet_answer3,R.id.liner_red_packet_share})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.liner_red_packet_back:
@@ -310,9 +318,70 @@ public class RedPacket1Activity extends BaseActivity {
                 tvReaPacketAnswer2.setBackgroundResource(R.drawable.answer_wrong);
                 tvReaPacketAnswer1.setBackgroundResource(R.drawable.answer_wrong);
                 break;
+            case R.id.liner_red_packet_share:
+                share(linerRedPacketShare);
+                break;
         }
     }
+    public void share(View view) {
+        int rid = 0;
+        switch (MyApp.TYPE) {
+            case 1:
+                rid = sendRedPacketRequest.getRid();
+                break;
+            case 2:
+                rid = dataBean.getRid();
+                break;
+            case 3:
+                rid = collcetbean.getRId();
+                break;
+            case 4:
 
+                rid = redsOnBean.getRid();
+                break;
+
+            case 5:
+                rid = dataBean.getRid();
+                break;
+            case 6:
+                rid = dataBean.getRid();
+                break;
+        }
+        UMImage thumb = new UMImage(RedPacket1Activity.this, R.drawable.logo_s);
+        UMWeb web = new UMWeb("http://hb.huidang2105.com/share/login.html?yqm=" + MyApp.getInstance().user.getData().getUserinfo().getInviteCode() + "&rid=" + rid);
+        web.setTitle("和我一起来 掏掏 抢红包吧");//标题
+        web.setThumb(thumb);  //缩略图
+        web.setDescription("掏掏-红包不断，掏掏不绝");//描述
+        new ShareAction(RedPacket1Activity.this).withMedia(web)
+                .setDisplayList(SHARE_MEDIA.QZONE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                .setCallback(umShareListener).open();
+    }
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            //分享开始的回调
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            com.umeng.socialize.utils.Log.d("plat", "platform" + platform);
+            ToastUtils.toTosat(RedPacket1Activity.this, "分享成功");
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            ToastUtils.toTosat(RedPacket1Activity.this,  t.getMessage());
+            if (t != null) {
+                com.umeng.socialize.utils.Log.e("throw:" + t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            ToastUtils.toTosat(RedPacket1Activity.this, "分享取消了");
+        }
+    };
     private void love() {
         /**
          * 1 发红包 2 抢红包 3 收藏 4 红包管理 5一抢过

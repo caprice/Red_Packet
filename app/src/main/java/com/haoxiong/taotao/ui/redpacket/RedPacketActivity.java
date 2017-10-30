@@ -8,12 +8,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -50,7 +51,6 @@ import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.pay.PayResult;
 import com.haoxiong.taotao.ui.login.LoginActivity;
-import com.haoxiong.taotao.ui.main.MainActivity;
 import com.haoxiong.taotao.ui.redmaneger.RedMangerActivity;
 import com.haoxiong.taotao.ui.redpacket.adapter.RecycleRedPacketWinerAdapter;
 import com.haoxiong.taotao.ui.sendredpacket.GetRedPacketSuccessActivity;
@@ -63,6 +63,11 @@ import com.haoxiong.taotao.util.Util;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -97,6 +102,8 @@ public class RedPacketActivity extends BaseActivity {
     TextView textView3;
     @BindView(R.id.liner_all)
     LinearLayout linerAll;
+    @BindView(R.id.liner_red_packet_share)
+    LinearLayout linerRedPacketShare;
     //    public static final String PARTNER = "2088621558884290";
 //    // 商户收款账号
 //    public static final String SELLER = "haoxiong2017@163.com";
@@ -104,7 +111,7 @@ public class RedPacketActivity extends BaseActivity {
     private Map<String, String> resultunifiedorder;
     private PayReq req;
     private final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
-
+    private AlertDialog.Builder builder;
     // 商户私钥，pkcs8格式
     public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANJiz8dPeKgcgV0I" +
             "1oZCo/D//5Kuw1GQHznZfKBAqi21M6wYKR/HbiVSji97fVdfmMHbQiDHsTRszafb" +
@@ -374,7 +381,9 @@ public class RedPacketActivity extends BaseActivity {
         love = detailResponse.isIscollect();
     }
 
-    @OnClick({R.id.liner_red_packet_back, R.id.liner_red_packet_love, R.id.tv_rea_packet_answer1, R.id.tv_rea_packet_answer2, R.id.tv_rea_packet_answer3})
+    @OnClick({R.id.liner_red_packet_back, R.id.liner_red_packet_love
+            , R.id.tv_rea_packet_answer1, R.id.tv_rea_packet_answer2
+            , R.id.tv_rea_packet_answer3,R.id.liner_red_packet_share})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.liner_red_packet_back:
@@ -414,9 +423,70 @@ public class RedPacketActivity extends BaseActivity {
                 tvReaPacketAnswer1.setBackgroundResource(R.drawable.answer_wrong);
                 answer = 2;
                 break;
+            case R.id.liner_red_packet_share:
+                share(linerRedPacketShare);
+                break;
         }
     }
 
+    public void share(View view) {
+        int rid = 0;
+        switch (MyApp.TYPE) {
+            case 1:
+                rid = sendRedPacketRequest.getRid();
+                break;
+            case 2:
+                 rid = dataBean.getRid();
+                break;
+            case 3:
+
+                break;
+            case 4:
+                rid = redsOnBean.getRid();
+                break;
+
+            case 5:
+                rid = dataBean.getRid();
+                break;
+            case 6:
+                rid = dataBean.getRid();
+                break;
+        }
+        UMImage thumb = new UMImage(RedPacketActivity.this, R.drawable.logo_s);
+        UMWeb web = new UMWeb("http://hb.huidang2105.com/share/login.html?yqm=" + MyApp.getInstance().user.getData().getUserinfo().getInviteCode() + "&rid=" + rid);
+        web.setTitle("和我一起来 掏掏 抢红包吧");//标题
+        web.setThumb(thumb);  //缩略图
+        web.setDescription("掏掏-红包不断，掏掏不绝");//描述
+        new ShareAction(RedPacketActivity.this).withMedia(web)
+                .setDisplayList(SHARE_MEDIA.QZONE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                .setCallback(umShareListener).open();
+    }
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            //分享开始的回调
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            com.umeng.socialize.utils.Log.d("plat", "platform" + platform);
+            ToastUtils.toTosat(RedPacketActivity.this, "分享成功");
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            ToastUtils.toTosat(RedPacketActivity.this,  t.getMessage());
+            if (t != null) {
+                com.umeng.socialize.utils.Log.e("throw:" + t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            ToastUtils.toTosat(RedPacketActivity.this, "分享取消了");
+        }
+    };
     private void love() {
         /**
          * 1 发红包 2 抢红包 3 收藏 4 红包管理 5一抢过
@@ -468,34 +538,58 @@ public class RedPacketActivity extends BaseActivity {
                 showPopwin();
                 break;
             case 2:
+
                 if (MyApp.login_state == 0) {
                     LoginActivity.luncher(RedPacketActivity.this);
                 } else {
-                    if (answer != -1) {
-                        RedPacketListApi.getRedPacket(RedPacketActivity.this, MyApp.token, dataBean.getRid(), answer, new OnRequestCompletedListener<GetRedPacketResponse>() {
-                            @Override
-                            public void onCompleted(GetRedPacketResponse response, String msg) {
-                                if (response != null) {
-                                    if (response.getErr() == 0) {
-                                        GetRedPacketSuccessActivity.luncher(RedPacketActivity.this, detailResponse, response);
+                    if (MyApp.location == null) {
+                        if (builder == null) {
+                            builder = new AlertDialog.Builder(RedPacketActivity.this);
+                        }
+                        builder.setTitle("提示")
+                                .setIcon(R.drawable.ic_logo)
+                                .setMessage("需要开启定位才能抢红包？")
+                                .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        getAppDetailSettingIntent(RedPacketActivity.this);
+
+                                    }
+                                })
+                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                })
+                                .show();
+
+                    } else {
+                        if (answer != -1) {
+                            RedPacketListApi.getRedPacket(RedPacketActivity.this, MyApp.token, dataBean.getRid(), answer, new OnRequestCompletedListener<GetRedPacketResponse>() {
+                                @Override
+                                public void onCompleted(GetRedPacketResponse response, String msg) {
+                                    if (response != null) {
+                                        if (response.getErr() == 0) {
+                                            GetRedPacketSuccessActivity.luncher(RedPacketActivity.this, detailResponse, response);
+                                        } else {
+                                            MyApp.TYPE = 5;
+                                            imgRedPacketBottom.setVisibility(View.VISIBLE);
+                                            tvRedPacketBottom.setText("抢红包");
+                                            linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
+                                            ToastUtils.toTosat(RedPacketActivity.this, response.getMsg());
+                                        }
                                     } else {
+                                        ToastUtils.toTosat(RedPacketActivity.this, msg);
                                         MyApp.TYPE = 5;
                                         imgRedPacketBottom.setVisibility(View.VISIBLE);
                                         tvRedPacketBottom.setText("抢红包");
                                         linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
-                                        ToastUtils.toTosat(RedPacketActivity.this, response.getMsg());
                                     }
-                                } else {
-                                    ToastUtils.toTosat(RedPacketActivity.this, msg);
-                                    MyApp.TYPE = 5;
-                                    imgRedPacketBottom.setVisibility(View.VISIBLE);
-                                    tvRedPacketBottom.setText("抢红包");
-                                    linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
                                 }
-                            }
-                        });
-                    } else {
-                        ToastUtils.toTosat(RedPacketActivity.this, "请选择答案");
+                            });
+                        } else {
+                            ToastUtils.toTosat(RedPacketActivity.this, "请选择答案");
+                        }
                     }
 
                 }
@@ -1016,4 +1110,20 @@ public class RedPacketActivity extends BaseActivity {
         SharePreferenceUtil.remove(RedPacketActivity.this, "filecode");
     }
 
+    /**
+     * 跳转到权限设置界面
+     */
+    private void getAppDetailSettingIntent(Context context) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            intent.setData(Uri.fromParts("package", getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+            intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+        }
+        startActivity(intent);
+    }
 }

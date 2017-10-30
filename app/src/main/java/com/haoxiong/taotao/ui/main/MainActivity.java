@@ -126,6 +126,7 @@ public class MainActivity extends BaseActivity
     private final Timer timer = new Timer();
     private View footView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +144,7 @@ public class MainActivity extends BaseActivity
                         .setAction("Action", null).show();
             }
         });
+
     }
 
     private void refreshData() {
@@ -191,26 +193,7 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (MyApp.location == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("提示")
-                    .setIcon(R.drawable.ic_logo)
-                    .setMessage("本地红包需要开启定位才能抢？")
-                    .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            getAppDetailSettingIntent(MainActivity.this);
 
-                        }
-                    })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .show();
-
-        }
         mainRecycle.scrollToPosition(0);
         page = 1;
         initData(false);
@@ -489,7 +472,6 @@ public class MainActivity extends BaseActivity
                 mainSwiperefreshlayout.setEnabled(true);
                 MyApp.location = aMapLocation;
                 if (!MyApp.local) {
-                    initData(false);
                     MyApp.local = true;
                 }
             }
@@ -716,20 +698,5 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    /**
-     * 跳转到权限设置界面
-     */
-    private void getAppDetailSettingIntent(Context context) {
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (Build.VERSION.SDK_INT >= 9) {
-            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-            intent.setData(Uri.fromParts("package", getPackageName(), null));
-        } else if (Build.VERSION.SDK_INT <= 8) {
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
-            intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
-        }
-        startActivity(intent);
-    }
+
 }

@@ -44,7 +44,7 @@ public class HomeRecycleViewAdapter extends BaseQuickAdapter<RedPacketListRespon
         } else {
             helper.setVisible(R.id.item_distance, true);
             if (MyApp.location == null) {
-                helper.setText(R.id.item_distance, "0.0km");
+                helper.setVisible(R.id.item_distance, false);
             } else {
                 helper.setText(R.id.item_distance, item.getRealdistance());
             }
@@ -71,6 +71,6 @@ public class HomeRecycleViewAdapter extends BaseQuickAdapter<RedPacketListRespon
                 }
                 break;
         }
-        GlideUtil.loadImg(context, "http://hb.huidang2105.com:8900/public/" + item.getMer_pics(), imageView);
+        GlideUtil.loadImg(context, "http://hbapi.huidang2105.com:8900/public/" + item.getMer_pics(), imageView);
     }
 }

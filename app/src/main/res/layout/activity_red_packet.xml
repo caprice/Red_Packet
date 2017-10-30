@@ -70,24 +70,49 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_logo" />
         </LinearLayout>
-
         <LinearLayout
-            android:id="@+id/liner_red_packet_love"
-            android:layout_width="46dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical|end"
-            android:paddingRight="16dp">
+            >
+            <LinearLayout
+                android:id="@+id/liner_red_packet_love"
+                android:layout_width="46dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical|end"
+                android:paddingRight="16dp">
 
-            <ImageView
-                android:id="@+id/img_red_packet_love"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_love_unselect" />
+                <ImageView
+                    android:id="@+id/img_red_packet_love"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_love_unselect" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/liner_red_packet_share"
+                android:layout_width="46dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical|end"
+                android:paddingRight="16dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/share1" />
+            </LinearLayout>
         </LinearLayout>
+
+
     </RelativeLayout>
 
     <ScrollView

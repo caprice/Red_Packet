@@ -41,7 +41,7 @@ public class BalanceDetailAdapter extends BaseQuickAdapter<BalanceDetailResponse
                 break;
             case "3":
                 helper.setText(R.id.tv_balance_money, item.getMoney());
-                helper.setText(R.id.tv_balance_content, item.getTitle() != null ? "(奖金)"+item.getTitle() : "其他");
+                helper.setText(R.id.tv_balance_content, item.getTitle() != null ? item.getTitle() : "其他");
                 helper.setImageResource(R.id.img_balance_type, R.drawable.diamond);
                 break;
             case "4":

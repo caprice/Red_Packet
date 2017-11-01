@@ -330,10 +330,11 @@
                 android:layout_marginRight="15dp"
                 android:background="#B9B9B9" />
 
-            <android.support.v7.widget.RecyclerView
+            <com.haoxiong.taotao.ui.redpacket.MyRecycleView
+                android:nestedScrollingEnabled="true"
                 android:id="@+id/recycle_red_packet_winer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content"></com.haoxiong.taotao.ui.redpacket.MyRecycleView>
         </LinearLayout>
     </ScrollView>
 

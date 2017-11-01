@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -93,7 +94,7 @@ public class RedPacket1Activity extends BaseActivity {
     @BindView(R.id.tv_rea_packet_answer3)
     TextView tvReaPacketAnswer3;
     @BindView(R.id.recycle_red_packet_winer)
-    RecyclerView recycleRedPacketWiner;
+    MyRecycleView recycleRedPacketWiner;
     @BindView(R.id.activity_red_packet)
     RelativeLayout activityRedPacket;
     @BindView(R.id.img_red_packet_bottom)
@@ -271,6 +272,7 @@ public class RedPacket1Activity extends BaseActivity {
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
         GlideUtil.loadImg(RedPacket1Activity.this, detailResponse.getUserPic(), imgRedPacketPic);
         if (detailResponse.getGetter() != null) {
+            Log.e("...", detailResponse.getGetter().size() + "");
             adapter.setNewData(detailResponse.getGetter());
         }
         if (detailResponse.isIscollect()) {

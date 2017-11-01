@@ -472,6 +472,8 @@ public class MainActivity extends BaseActivity
                 mainSwiperefreshlayout.setEnabled(true);
                 MyApp.location = aMapLocation;
                 if (!MyApp.local) {
+                    page = 1;
+                    initData(false);
                     MyApp.local = true;
                 }
             }
@@ -657,7 +659,7 @@ public class MainActivity extends BaseActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("询问")
                 .setIcon(R.drawable.ic_logo)
-                .setMessage("是否联系客服：028-83037383")
+                .setMessage("是否联系客服：028-64095902")
                 .setPositiveButton("拨打", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

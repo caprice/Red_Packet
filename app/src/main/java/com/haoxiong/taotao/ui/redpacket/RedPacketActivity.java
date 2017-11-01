@@ -162,7 +162,7 @@ public class RedPacketActivity extends BaseActivity {
     @BindView(R.id.tv_rea_packet_answer3)
     TextView tvReaPacketAnswer3;
     @BindView(R.id.recycle_red_packet_winer)
-    RecyclerView recycleRedPacketWiner;
+    MyRecycleView recycleRedPacketWiner;
     @BindView(R.id.activity_red_packet)
     RelativeLayout activityRedPacket;
     @BindView(R.id.img_red_packet_bottom)
@@ -218,7 +218,6 @@ public class RedPacketActivity extends BaseActivity {
 
     private void assignView() {
         switch (MyApp.TYPE) {
-
             case 4:
                 linerRedPacketBottom.setVisibility(View.GONE);
                 break;
@@ -373,6 +372,7 @@ public class RedPacketActivity extends BaseActivity {
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
         GlideUtil.loadImg(RedPacketActivity.this, detailResponse.getUserPic(), imgRedPacketPic);
         if (detailResponse.getGetter() != null) {
+            Log.e("...", detailResponse.getGetter().size() + "");
             adapter.setNewData(detailResponse.getGetter());
         }
         if (detailResponse.isIscollect()) {

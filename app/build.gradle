@@ -9,8 +9,8 @@ android {
         applicationId "com.haoxiong.taotao"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 4
-        versionName "1.0.2"
+        versionCode 6
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 GETUI_APP_ID    : "czku0Bzx4x72LpxJARpYs6",

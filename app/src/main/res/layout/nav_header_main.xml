@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+
         <com.pkmmte.view.CircularImageView
             android:id="@+id/imageView"
             android:layout_gravity="center_horizontal"

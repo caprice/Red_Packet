@@ -169,7 +169,11 @@ public class MainActivity extends BaseActivity
                         dataBean.setUserinfo(userinfoBean);
                         loginResponse.setData(dataBean);
                         MyApp.getInstance().user = loginResponse;
-                        GlideUtil.loadImg(MainActivity.this, R.mipmap.head, loginResponse.getData().getUserinfo().getUserPic(), imageView);
+                        try {
+                            GlideUtil.loadImg(MainActivity.this, R.mipmap.head, loginResponse.getData().getUserinfo().getUserPic(), imageView);
+                        } catch (Exception e) {
+                            imageView.setImageResource(R.mipmap.head);
+                        }
                         tvName.setText(loginResponse.getData().getUserinfo().getUsername() != null ? loginResponse.getData().getUserinfo().getUsername() : "");
                         tvCharge.setText(loginResponse.getData().getUserinfo().getBalance() + "元");
                     }
@@ -684,13 +688,22 @@ public class MainActivity extends BaseActivity
             case "refreshUser":
                 Log.e("refreshUser", "进来了");
                 LoginResponse user = MyApp.getInstance().user;
-                GlideUtil.loadImg(MainActivity.this, R.mipmap.head, user.getData().getUserinfo().getUserPic(), imageView);
+                try {
+                    GlideUtil.loadImg(MainActivity.this, R.mipmap.head, user.getData().getUserinfo().getUserPic(), imageView);
+                } catch (Exception e) {
+                    imageView.setImageResource(R.mipmap.head);
+                }
+
                 tvName.setText(user.getData().getUserinfo().getUsername() != null ? user.getData().getUserinfo().getUsername() : "");
                 tvCharge.setText(user.getData().getUserinfo().getBalance() + "元");
                 break;
             case "refreshUserhead":
                 Log.e("...", MyApp.getInstance().user.getData().getUserinfo().getUserPic() + "");
-                GlideUtil.loadImg(MainActivity.this, R.mipmap.head, MyApp.getInstance().user.getData().getUserinfo().getUserPic(), imageView);
+                try {
+                    GlideUtil.loadImg(MainActivity.this, R.mipmap.head, MyApp.getInstance().user.getData().getUserinfo().getUserPic(), imageView);
+                } catch (Exception e) {
+                    imageView.setImageResource(R.mipmap.head);
+                }
                 break;
             case "refreshUserNothing":
                 tvName.setText("未登录");

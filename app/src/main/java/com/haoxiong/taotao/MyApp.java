@@ -8,15 +8,8 @@ import android.text.TextUtils;
 
 
 import com.amap.api.location.AMapLocation;
-import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.RetrofitApplication;
-import com.fan.service.api.LoginServiceApi;
-import com.fan.service.response.LoginResponse;
-import com.haoxiong.taotao.ui.login.InviteCodeActivity;
-import com.haoxiong.taotao.ui.login.LoginActivity;
-import com.haoxiong.taotao.ui.main.MainActivity;
-import com.haoxiong.taotao.util.SharePreferenceUtil;
-import com.haoxiong.taotao.util.ToastUtils;
+
 import com.igexin.sdk.PushManager;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.socialize.PlatformConfig;

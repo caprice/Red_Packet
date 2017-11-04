@@ -30,10 +30,10 @@ import okhttp3.RequestBody;
 public class BalanceServiceApi {
     public static String TAG = BalanceServiceApi.class.getSimpleName();
 
-    public static void balanceDetail(final Context context, String token, final OnRequestCompletedListener<BalanceDetailResponse> listener) {
+    public static void balanceDetail(final Context context, String token,int page,int num, final OnRequestCompletedListener<BalanceDetailResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getBalanceService()
-                .balanceDetail(token)
+                .balanceDetail(token,page,num)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BalanceDetailResponse>() {

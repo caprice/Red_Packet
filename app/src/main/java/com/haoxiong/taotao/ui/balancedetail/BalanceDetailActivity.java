@@ -36,28 +36,50 @@ public class BalanceDetailActivity extends BaseActivity {
     RecyclerView recycleContent;
     private BalanceDetailAdapter adapter;
     private List<BalanceDetailResponse.DataBean.RecordsBean.RecordBean> recordBeens = new ArrayList<>();
-
+    private int page = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance_detail);
         ButterKnife.bind(this);
         assign();
-        refreshData();
+        page = 1;
+        refreshData(false);
     }
 
-    private void refreshData() {
-        BalanceServiceApi.balanceDetail(BalanceDetailActivity.this, MyApp.token, new OnRequestCompletedListener<BalanceDetailResponse>() {
+    private void refreshData(final boolean more) {
+        BalanceServiceApi.balanceDetail(BalanceDetailActivity.this, MyApp.token, page,10,new OnRequestCompletedListener<BalanceDetailResponse>() {
             @Override
             public void onCompleted(BalanceDetailResponse response, String msg) {
+                if (response == null) {
+                    adapter.setEnableLoadMore(true);
+                    ToastUtils.toTosat(BalanceDetailActivity.this, msg);
+                    return;
+                }
                 if (response.getErr() == 0) {
+                    if (response.getData() == null) {
+                        adapter.setEnableLoadMore(false);
+                        adapter.loadMoreEnd();
+                        return;
+                    }
                     List<BalanceDetailResponse.DataBean.RecordsBean> records = response.getData().getRecords();
+                    recordBeens.clear();
                     for (int i = 0; i < records.size(); i++) {
                         recordBeens.addAll(records.get(i).getRecord());
                     }
-                    adapter.setNewData(recordBeens);
+                    if (more) {
+                        adapter.addData(recordBeens);
+                    } else {
+                        adapter.setNewData(recordBeens);
+                    }
+                    if (response.getData().getRecords() != null && response.getData().getRecords().size() > 0) {
+                        adapter.setEnableLoadMore(true);
+                    } else {
+                        adapter.setEnableLoadMore(false);
+                        adapter.loadMoreEnd();
+                    }
                 } else {
-                    ToastUtils.toTosat(BalanceDetailActivity.this,response.getMsg());
+                    ToastUtils.toTosat(BalanceDetailActivity.this, response.getMsg());
                 }
 
             }
@@ -71,6 +93,13 @@ public class BalanceDetailActivity extends BaseActivity {
         adapter = new BalanceDetailAdapter(recordBeens);
         recycleContent.setAdapter(adapter);
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                page++;
+                refreshData(true);
+            }
+        }, recycleContent);
     }
 
     @OnClick(R.id.liner_balance_back)

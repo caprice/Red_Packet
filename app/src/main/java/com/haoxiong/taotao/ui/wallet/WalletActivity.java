@@ -59,7 +59,7 @@ public class WalletActivity extends BaseActivity {
     }
 
     private void refreshData() {
-        BalanceServiceApi.balanceDetail(WalletActivity.this, MyApp.token, new OnRequestCompletedListener<BalanceDetailResponse>() {
+        BalanceServiceApi.balanceDetail(WalletActivity.this, MyApp.token,1,10, new OnRequestCompletedListener<BalanceDetailResponse>() {
             @Override
             public void onCompleted(BalanceDetailResponse response, String msg) {
                 if (response.getErr() == 0) {

@@ -66,7 +66,13 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         exit = getIntent().getBooleanExtra("exit", false);
-        KeyboardUtil.showKeyBoardDelay(LoginActivity.this, etLoginPhone);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                KeyboardUtil.showKeyBoardDelay(LoginActivity.this, etLoginPhone);
+            }
+        });
+
     }
 
     @Override

@@ -79,14 +79,19 @@ public class ShareActivity extends BaseActivity {
     };
 
     public void share(View view) {
-        UMImage thumb = new UMImage(ShareActivity.this, R.drawable.logo_s);
-        UMWeb web = new UMWeb("http://hb.huidang2105.com/share/share.html?yqm=" + MyApp.getInstance().user.getData().getUserinfo().getInviteCode());
-        web.setTitle("和我一起来 掏掏 抢红包吧");//标题
-        web.setThumb(thumb);  //缩略图
-        web.setDescription("掏掏-红包不断，掏掏不绝");//描述
-        new ShareAction(ShareActivity.this).withMedia(web)
-                .setDisplayList(SHARE_MEDIA.QZONE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
-                .setCallback(umShareListener).open();
+        try {
+            UMImage thumb = new UMImage(ShareActivity.this, R.drawable.logo_s);
+            UMWeb web = new UMWeb("http://hb.huidang2105.com/share/share.html?yqm=" + MyApp.getInstance().user.getData().getUserinfo().getInviteCode());
+            web.setTitle("和我一起来 掏掏 抢红包吧");//标题
+            web.setThumb(thumb);  //缩略图
+            web.setDescription("掏掏-红包不断，掏掏不绝");//描述
+            new ShareAction(ShareActivity.this).withMedia(web)
+                    .setDisplayList(SHARE_MEDIA.QZONE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setCallback(umShareListener).open();
+        } catch (Exception e) {
+            ToastUtils.toTosat(ShareActivity.this,"获取邀请码失败...");
+        }
+
     }
 
     @Override

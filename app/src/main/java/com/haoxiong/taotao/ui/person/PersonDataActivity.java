@@ -37,6 +37,7 @@ import com.fan.service.rest.service.PersonService;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.ui.login.LoginActivity;
+import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
 import com.haoxiong.taotao.ui.sendredpacket.ChildSendRedPacketActivity;
 import com.haoxiong.taotao.ui.sendredpacket.SendRedPacketActivity;
 import com.haoxiong.taotao.util.DensityUtil;
@@ -97,7 +98,6 @@ public class PersonDataActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_data);
         ButterKnife.bind(this);
-        assign();
         refreshData();
     }
 
@@ -129,31 +129,7 @@ public class PersonDataActivity extends BaseActivity {
 
     }
 
-    private void assign() {
-        RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
 
-            }
-
-            @Override
-            public void onNext(@NonNull Boolean aBoolean) {
-                Log.e("....", aBoolean.toString());
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-
-    }
 
     @OnClick({R.id.liner_person_back, R.id.liner_save_persondata, R.id.img_person_head, R.id.et_person_sex, R.id.et_person_birthday, R.id.tv_person_logout})
     public void onClick(View view) {
@@ -165,7 +141,47 @@ public class PersonDataActivity extends BaseActivity {
                 savePersonData();
                 break;
             case R.id.img_person_head:
-                changeHeadImg();
+                RxPermissions rxPermissions = new RxPermissions(this);
+                rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Boolean aBoolean) {
+                        if (!aBoolean) {
+                            new AlertDialog.Builder(PersonDataActivity.this).setTitle("提示")
+                                    .setIcon(R.drawable.ic_logo)
+                                    .setMessage("需要开启相机权限和读写才能拍照？")
+                                    .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            getAppDetailSettingIntent(PersonDataActivity.this);
+
+                                        }
+                                    })
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    })
+                                    .show();
+                        } else {
+                            changeHeadImg();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
                 break;
             case R.id.et_person_sex:
                 changeSex();
@@ -536,5 +552,21 @@ public class PersonDataActivity extends BaseActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         headImgPath = savedInstanceState.getString("headImgPath");
+    }
+    /**
+     * 跳转到权限设置界面
+     */
+    private void getAppDetailSettingIntent(Context context) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            intent.setData(Uri.fromParts("package", getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+            intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+        }
+        startActivity(intent);
     }
 }

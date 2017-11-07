@@ -102,7 +102,12 @@ public class ListMapActivity extends BaseActivity {
     };
 
     private void assignView() {
-        KeyboardUtil.showKeyBoardDelay(ListMapActivity.this,etMapSearch);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                KeyboardUtil.showKeyBoardDelay(ListMapActivity.this,etMapSearch);
+            }
+        });
         distance = getIntent().getIntExtra(SendRedPacketActivity.EXTRA_DISTANCE, 1000);
 
         etMapSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {

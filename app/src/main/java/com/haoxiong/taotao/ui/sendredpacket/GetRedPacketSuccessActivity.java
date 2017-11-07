@@ -116,14 +116,20 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
     };
 
     public void share(View view) {
-        UMImage thumb = new UMImage(GetRedPacketSuccessActivity.this, R.drawable.logo_s);
-        UMWeb web = new UMWeb("http://hb.huidang2105.com/share/login.html?yqm="+MyApp.getInstance().user.getData().getUserinfo().getInviteCode()+"&rid="+detailData.getRid() );
-        web.setTitle("和我一起来 掏掏 抢红包吧");//标题
-        web.setThumb(thumb);  //缩略图
-        web.setDescription("掏掏-红包不断，掏掏不绝");//描述
-        new ShareAction(GetRedPacketSuccessActivity.this).withMedia(web)
-                .setDisplayList(SHARE_MEDIA.QZONE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
-                .setCallback(umShareListener).open();
+        try {
+            UMImage thumb = new UMImage(GetRedPacketSuccessActivity.this, R.drawable.logo_s);
+            UMWeb web = new UMWeb("http://hb.huidang2105.com/share/login.html?yqm="+MyApp.getInstance().user.getData().getUserinfo().getInviteCode()+"&rid="+detailData.getRid() );
+            web.setTitle("和我一起来 掏掏 抢红包吧");//标题
+            web.setThumb(thumb);  //缩略图
+            web.setDescription("掏掏-红包不断，掏掏不绝");//描述
+            new ShareAction(GetRedPacketSuccessActivity.this).withMedia(web)
+                    .setDisplayList(SHARE_MEDIA.QZONE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setCallback(umShareListener).open();
+
+        } catch (Exception e) {
+            ToastUtils.toTosat(GetRedPacketSuccessActivity.this, "邀请码获取失败...");
+        }
+
     }
 
     @Override

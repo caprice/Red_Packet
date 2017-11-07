@@ -1,7 +1,9 @@
 package com.haoxiong.taotao.ui.sendredpacket;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -34,10 +37,12 @@ import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.eventbean.MessageEvent;
 import com.haoxiong.taotao.ui.map.ListMapActivity;
+import com.haoxiong.taotao.ui.person.PersonDataActivity;
 import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
 import com.haoxiong.taotao.util.SharePreferenceUtil;
 import com.haoxiong.taotao.util.ToastUtils;
 import com.haoxiong.taotao.util.WindowUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yalantis.ucrop.UCrop;
 
 import org.greenrobot.eventbus.EventBus;
@@ -203,7 +208,48 @@ public class SendRedPacketActivity extends BaseActivity {
                 ChildSendRedPacketActivity.luncher(SendRedPacketActivity.this, 1, 1);
                 break;
             case R.id.liner_send_red_packet_advice:
-                showAdviceImg();
+                RxPermissions rxPermissions = new RxPermissions(this);
+                rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Boolean aBoolean) {
+                        if (!aBoolean) {
+                            new AlertDialog.Builder(SendRedPacketActivity.this).setTitle("提示")
+                                    .setIcon(R.drawable.ic_logo)
+                                    .setMessage("需要开启相机权限和读写才能拍照？")
+                                    .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            getAppDetailSettingIntent(SendRedPacketActivity.this);
+
+                                        }
+                                    })
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    })
+                                    .show();
+                        } else {
+                            showAdviceImg();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
                 break;
             case R.id.liner_send_red_packet_contact:
                 ChildSendRedPacketActivity.luncher(SendRedPacketActivity.this, 2, 2);
@@ -688,5 +734,21 @@ public class SendRedPacketActivity extends BaseActivity {
         super.onRestoreInstanceState(savedInstanceState);
         adviceImgPath1 = savedInstanceState.getString("tmpPhotoFile1");
         adviceImgPath = savedInstanceState.getString("tmpPhotoFile");
+    }
+    /**
+     * 跳转到权限设置界面
+     */
+    private void getAppDetailSettingIntent(Context context) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            intent.setData(Uri.fromParts("package", getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+            intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+        }
+        startActivity(intent);
     }
 }

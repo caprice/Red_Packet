@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.haoxiong.taotao.base.BaseActivity;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,32 +48,10 @@ public class KeyboardUtil {
         timer.schedule(new TimerTask() {
                            public void run() {
                                KeyboardUtil.showKeybord(mEditText, context);
-                               /*InputMethodManager inputManager =
-                                       (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                               inputManager.showSoftInput(mEditText, 0);*/
+
                            }
                        },
                 200);
-        /*try {
-            Handler handler = mEditText.getHandler();
-            if (handler == null) {
-                return;
-            }
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    context.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            KeyboardUtil.showKeybord(mEditText, context);
-                        }
-                    });
-                }
-            }, 300);
-        } catch (Exception ex) {
-            Log.i(TAG, "showKeyBoardDelay: " + ex.toString());
-            ex.printStackTrace();
-        }*/
     }
 
     /**

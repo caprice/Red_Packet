@@ -85,7 +85,12 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
             case 0:
                 String merchant = SharePreferenceUtil.get(ChildSendRedPacketActivity.this, "merchant");
                 etSendRedPacketChildOne.setText(merchant);
-                KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                    }
+                });
                 text_num = 20;
                 linerSendRedPacketChildOne.setVisibility(View.VISIBLE);
                 tvSendRedPacketChildRule.setText("标题内容不得超过20个字");
@@ -98,7 +103,13 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
             case 1:
                 String merchant_des = SharePreferenceUtil.get(ChildSendRedPacketActivity.this, "merchant_des");
                 etSendRedPacketChildThree.setText(merchant_des);
-                KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildThree);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildThree);
+                    }
+                });
+
                 text_num = 50;
                 linerSendRedPacketChildThree.setVisibility(View.VISIBLE);
                 tvSendRedPacketChildRule.setText("文字内容不得超过50个字");
@@ -112,7 +123,12 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
                 etSendRedPacketChildOne.setText(SharePreferenceUtil.get(ChildSendRedPacketActivity.this, "tel"));
                 String address = SharePreferenceUtil.get(ChildSendRedPacketActivity.this, "address");
                 etSendRedPacketChildThree.setText(address);
-                KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                    }
+                });
                 text_num = 50;
                 linerSendRedPacketChildOne.setVisibility(View.VISIBLE);
                 tvSendRedPacketChildRule.setText("联系地址不得超过50个字");
@@ -131,7 +147,13 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
             case 3:
                 String question = SharePreferenceUtil.get(ChildSendRedPacketActivity.this, "question");
                 etSendRedPacketChildOne.setText(question);
-                KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                    }
+                });
+
                 text_num = 15;
                 linerSendRedPacketChildOne.setVisibility(View.VISIBLE);
                 tvSendRedPacketChildRule.setText("红包提问不得超过15个字");
@@ -145,7 +167,12 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
             case 4:
                 String first_answer = SharePreferenceUtil.get(ChildSendRedPacketActivity.this, "first_answer");
                 etSendRedPacketChildOne.setText(first_answer);
-                KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                    }
+                });
                 text_num = 15;
                 linerSendRedPacketChildOne.setVisibility(View.VISIBLE);
                 tvSendRedPacketChildRule.setText("选项内容不得超过15个字");
@@ -160,7 +187,12 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
                 etSendRedPacketChildOne.setText(second_answer);
                 String third_answer = SharePreferenceUtil.get(ChildSendRedPacketActivity.this, "third_answer");
                 etSendRedPacketChildTwo.setText(third_answer);
-                KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                    }
+                });
                 text_num = 15;
                 linerSendRedPacketChildOne.setVisibility(View.VISIBLE);
                 tvSendRedPacketChildRule.setText("选项内容不得超过15个字");
@@ -178,6 +210,7 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
             case 6:
                 Boolean type = SharePreferenceUtil.getBoolean(ChildSendRedPacketActivity.this, "type", false);
                 String distance = SharePreferenceUtil.get(ChildSendRedPacketActivity.this, "distance");
+
                 if (type) {
                     etSendRedPacketChildOne.setEnabled(false);
                     etSendRedPacketChildOne.setText("");
@@ -185,7 +218,12 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
                     etSendRedPacketChildOne.setEnabled(true);
                     etSendRedPacketChildOne.setText(distance);
                 }
-                KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        KeyboardUtil.showKeyBoardDelay(ChildSendRedPacketActivity.this, etSendRedPacketChildOne);
+                    }
+                });
                 cbSendRedPacketChildRule.setVisibility(View.VISIBLE);
                 cbSendRedPacketChildRule.setChecked(type);
 

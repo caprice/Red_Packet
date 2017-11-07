@@ -452,14 +452,19 @@ public class RedPacketActivity extends BaseActivity {
                 rid = dataBean.getRid();
                 break;
         }
-        UMImage thumb = new UMImage(RedPacketActivity.this, R.drawable.logo_s);
-        UMWeb web = new UMWeb("http://hb.huidang2105.com/share/login.html?yqm=" + MyApp.getInstance().user.getData().getUserinfo().getInviteCode() + "&rid=" + rid);
-        web.setTitle("和我一起来 掏掏 抢红包吧");//标题
-        web.setThumb(thumb);  //缩略图
-        web.setDescription("掏掏-红包不断，掏掏不绝");//描述
-        new ShareAction(RedPacketActivity.this).withMedia(web)
-                .setDisplayList(SHARE_MEDIA.QZONE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
-                .setCallback(umShareListener).open();
+        try {
+            UMImage thumb = new UMImage(RedPacketActivity.this, R.drawable.logo_s);
+            UMWeb web = new UMWeb("http://hb.huidang2105.com/share/login.html?yqm=" + MyApp.getInstance().user.getData().getUserinfo().getInviteCode() + "&rid=" + rid);
+            web.setTitle("和我一起来 掏掏 抢红包吧");//标题
+            web.setThumb(thumb);  //缩略图
+            web.setDescription("掏掏-红包不断，掏掏不绝");//描述
+            new ShareAction(RedPacketActivity.this).withMedia(web)
+                    .setDisplayList(SHARE_MEDIA.QZONE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setCallback(umShareListener).open();
+        } catch (Exception e) {
+            ToastUtils.toTosat(RedPacketActivity.this, "邀请码获取失败...");
+        }
+
     }
     private UMShareListener umShareListener = new UMShareListener() {
         @Override

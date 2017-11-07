@@ -381,7 +381,7 @@ public class MainActivity extends BaseActivity
 
             @Override
             public void onNext(@NonNull Boolean aBoolean) {
-                Log.e("....", aBoolean.toString());
+
             }
 
             @Override

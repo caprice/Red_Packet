@@ -74,8 +74,12 @@ public class SetMoneyActivity extends BaseActivity {
         etSetMoneyNum.setText(SharePreferenceUtil.get(SetMoneyActivity.this, "money"));
         etSetMoneyRedNum.setText(SharePreferenceUtil.get(SetMoneyActivity.this, "pcount"));
 
-
-        KeyboardUtil.showKeyBoardDelay(SetMoneyActivity.this, etSetMoneyNum);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                KeyboardUtil.showKeyBoardDelay(SetMoneyActivity.this, etSetMoneyNum);
+            }
+        });
         etSetMoneyNum.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

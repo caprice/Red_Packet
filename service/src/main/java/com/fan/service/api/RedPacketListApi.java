@@ -286,6 +286,7 @@ public class RedPacketListApi {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.e("...", e.toString());
+                        listener.onCompleted(null, "服务器异常...");
                     }
 
                     @Override

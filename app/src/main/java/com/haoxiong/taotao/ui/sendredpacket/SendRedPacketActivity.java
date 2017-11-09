@@ -291,7 +291,7 @@ public class SendRedPacketActivity extends BaseActivity {
     @OnClick(R.id.tv_send_red_packet_scan)
     public void onClick() {
 
-        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)&& !TextUtils.isEmpty(question) && !TextUtils.isEmpty(right) &&!TextUtils.isEmpty(wrong) ) {
+        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content) && !TextUtils.isEmpty(question) && !TextUtils.isEmpty(right) && !TextUtils.isEmpty(wrong)) {
             redPacketRequest = new SendRedPacketRequest();
             Boolean aBoolean = SharePreferenceUtil.getBoolean(SendRedPacketActivity.this, "type", false);
             if (aBoolean) {//全国红包
@@ -360,7 +360,7 @@ public class SendRedPacketActivity extends BaseActivity {
                     @Override
                     public void onCompleted(SendRedPacketResponse response, String msg) {
                         if (response == null) {
-                            ToastUtils.toTosat(SendRedPacketActivity.this,"预览失败");
+                            ToastUtils.toTosat(SendRedPacketActivity.this, "预览失败");
                             return;
                         }
                         if (response.getErr() == 0) {
@@ -384,7 +384,7 @@ public class SendRedPacketActivity extends BaseActivity {
                     @Override
                     public void onCompleted(SendRedPacketResponse response, String msg) {
                         if (response == null) {
-                            ToastUtils.toTosat(SendRedPacketActivity.this,"预览失败");
+                            ToastUtils.toTosat(SendRedPacketActivity.this, "预览失败");
                             return;
                         }
                         if (response.getErr() == 0) {
@@ -405,6 +405,8 @@ public class SendRedPacketActivity extends BaseActivity {
             final Uri resultUri = UCrop.getOutput(data);
             luban();
         } else if (resultCode == UCrop.RESULT_ERROR) {
+            Throwable error = UCrop.getError(data);
+            ToastUtils.toTosat(SendRedPacketActivity.this, error.toString());
         }
         //拍照
         if (requestCode == 20 && resultCode == RESULT_OK) {
@@ -426,9 +428,9 @@ public class SendRedPacketActivity extends BaseActivity {
             case 2:
                 contact = result;
                 try {
-                    address =contact != null ? contact.split("--")[1] : "";
+                    address = contact != null ? contact.split("--")[1] : "";
                 } catch (Exception e) {
-                    address ="";
+                    address = "";
                 }
                 tvSendRedPacketContact.setText(contact);
                 break;
@@ -479,10 +481,6 @@ public class SendRedPacketActivity extends BaseActivity {
                         }
                         cursor.close();
                         adviceImgPath = res;
-                        String filename1 = "redPacket1" + System.currentTimeMillis() + ".PNG";
-                        String saveDir = Environment.getExternalStorageDirectory() + "/redPacket";
-                        File dir = new File(saveDir);
-                        adviceImgPath1 = saveDir + "/" + filename1;
                         cropRawPhoto(Uri.fromFile(new File(adviceImgPath)));
                     } else {
                         ToastUtils.toTosat(SendRedPacketActivity.this, "请选择照片");
@@ -536,7 +534,7 @@ public class SendRedPacketActivity extends BaseActivity {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        ToastUtils.toTosat(SendRedPacketActivity.this,e.toString());
+                        ToastUtils.toTosat(SendRedPacketActivity.this, e.toString());
                     }
 
                     @Override
@@ -628,8 +626,6 @@ public class SendRedPacketActivity extends BaseActivity {
         }
         String filename = "redPacket" + System.currentTimeMillis() + ".PNG";
         adviceImgPath = saveDir + "/" + filename;
-        String filename1 = "redPacket1" + System.currentTimeMillis() + ".PNG";
-        adviceImgPath1 = saveDir + "/" + filename1;
         File file = new File(adviceImgPath);
         try {
             if (file.exists()) {
@@ -659,6 +655,20 @@ public class SendRedPacketActivity extends BaseActivity {
      * 裁剪原始的图片
      */
     public void cropRawPhoto(Uri uri) {
+        String filename = "redPacket1" + System.currentTimeMillis() + ".PNG";
+        adviceImgPath1 = Environment.getExternalStorageDirectory() + "/" + filename;
+        File file = new File(adviceImgPath1);
+        try {
+            if (file.exists()) {
+                file.delete();
+            }
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Uri localUri = Uri.fromFile(file);
+        Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
+        sendBroadcast(localIntent);
         Log.e("....", uri.toString());
        /* Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image*//*");
@@ -677,7 +687,7 @@ public class SendRedPacketActivity extends BaseActivity {
         startActivityForResult(intent, 30);*/
         UCrop.of(uri, Uri.fromFile(new File(adviceImgPath1)))
                 .withAspectRatio(16f, 9f)
-                .withMaxResultSize(WindowUtil.getWidth(SendRedPacketActivity.this), (int) (WindowUtil.getWidth(SendRedPacketActivity.this) *0.5))
+                .withMaxResultSize(WindowUtil.getWidth(SendRedPacketActivity.this), (int) (WindowUtil.getWidth(SendRedPacketActivity.this) * 0.5))
                 .start(SendRedPacketActivity.this);
     }
 
@@ -706,7 +716,7 @@ public class SendRedPacketActivity extends BaseActivity {
                     fileCode = response.getFilecode();
                     tvSendRedPacketAdvice.setText("已设置");
                     SharePreferenceUtil.put(SendRedPacketActivity.this, "pic", response.getPreview_url());
-                    SharePreferenceUtil.put(SendRedPacketActivity.this, "filecode",response.getFilecode());
+                    SharePreferenceUtil.put(SendRedPacketActivity.this, "filecode", response.getFilecode());
                     netAdviceImgPath = response.getPreview_url();
                     ToastUtils.toTosat(SendRedPacketActivity.this, "图片上传成功");
                 } else {
@@ -735,6 +745,7 @@ public class SendRedPacketActivity extends BaseActivity {
         adviceImgPath1 = savedInstanceState.getString("tmpPhotoFile1");
         adviceImgPath = savedInstanceState.getString("tmpPhotoFile");
     }
+
     /**
      * 跳转到权限设置界面
      */

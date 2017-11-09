@@ -362,7 +362,6 @@ public class RedPacketActivity extends BaseActivity {
             tvReaPacketAdd.setText(detailResponse.getAddress());
         } else {
             linerAddress.setVisibility(View.GONE);
-
         }
         if (TextUtils.isEmpty(detailResponse.getTel()) && TextUtils.isEmpty(detailResponse.getAddress())) {
             linerAll.setVisibility(View.GONE);

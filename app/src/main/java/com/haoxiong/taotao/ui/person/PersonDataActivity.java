@@ -83,6 +83,7 @@ public class PersonDataActivity extends BaseActivity {
     @BindView(R.id.tv_person_logout)
     TextView tvPersonLogout;
     private String headImgPath;
+    private String headImgPath1;
     private PopupWindow popupwindowShow;
     private PersonDateResponse dateResponse;
 
@@ -401,7 +402,7 @@ public class PersonDataActivity extends BaseActivity {
 
     private void luban() {
 //        imgPersonHead.setImageBitmap(BitmapUtils.createImageThumbnail(headImgPath, 200, 200));
-        final File file = new File(headImgPath);
+        final File file = new File(headImgPath1);
         Observable
                 .create(new ObservableOnSubscribe<File>() {
                     @Override
@@ -491,7 +492,20 @@ public class PersonDataActivity extends BaseActivity {
      * 裁剪原始的图片
      */
     public void cropRawPhoto(Uri uri) {
-
+        String filename = "redPacket1" + System.currentTimeMillis() + ".PNG";
+        headImgPath1 = Environment.getExternalStorageDirectory() + "/" + filename;
+        File file = new File(headImgPath1);
+        try {
+            if (file.exists()) {
+                file.delete();
+            }
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Uri localUri = Uri.fromFile(file);
+        Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
+        sendBroadcast(localIntent);
       /*  Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image*//*");
 
@@ -506,11 +520,10 @@ public class PersonDataActivity extends BaseActivity {
         intent.putExtra("outputX", 200);
         intent.putExtra("outputY", 200);
         intent.putExtra("return-data", true);
-
         startActivityForResult(intent, 1);*/
-        UCrop.of(uri, uri)
+        UCrop.of(uri, Uri.fromFile(new File(headImgPath1)))
                 .withAspectRatio(9, 9)
-                .withMaxResultSize(DensityUtil.dip2px(PersonDataActivity.this,60),DensityUtil.dip2px(PersonDataActivity.this,60))
+                .withMaxResultSize(DensityUtil.dip2px(PersonDataActivity.this,200),DensityUtil.dip2px(PersonDataActivity.this,200))
                 .start(PersonDataActivity.this);
     }
 

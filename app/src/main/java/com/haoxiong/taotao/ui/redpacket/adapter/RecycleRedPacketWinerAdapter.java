@@ -13,6 +13,8 @@ import com.haoxiong.taotao.util.GlideUtil;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * 类描述：
  * 作者： YinJin
@@ -33,7 +35,7 @@ public class RecycleRedPacketWinerAdapter extends BaseQuickAdapter<RedPacketDeta
         helper.setText(R.id.tv_item_red_add, item.getAddress());
         helper.setText(R.id.tv_item_red_time, item.getGetTime());
         helper.setText(R.id.tv_item_red_money, item.getMoney()+"元");
-        ImageView img_item_red_pic = helper.getView(R.id.img_item_red_pic);
-        GlideUtil.loadImg(context, item.getUserPic(), img_item_red_pic);
+        CircleImageView img_item_red_pic = (CircleImageView)helper.getView(R.id.img_item_red_pic);
+        GlideUtil.loadImg(context,R.mipmap.head, item.getUserPic(), img_item_red_pic);
     }
 }

@@ -15,6 +15,8 @@ import com.haoxiong.taotao.util.GlideUtil;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * 类描述：
  * 作者： YinJin

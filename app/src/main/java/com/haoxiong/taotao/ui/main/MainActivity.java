@@ -458,8 +458,8 @@ public class MainActivity extends BaseActivity
                     page = 1;
                     initData(false);
                     MyApp.local = true;
-                    Log.e("...", aMapLocation.getAddress());
                 }
+                Log.e("...", aMapLocation.getAddress());
             }
         }
     };

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -94,7 +95,7 @@ public class RedPacket1Activity extends BaseActivity {
     @BindView(R.id.tv_rea_packet_answer3)
     TextView tvReaPacketAnswer3;
     @BindView(R.id.recycle_red_packet_winer)
-    MyRecycleView recycleRedPacketWiner;
+    RecyclerView recycleRedPacketWiner;
     @BindView(R.id.activity_red_packet)
     RelativeLayout activityRedPacket;
     @BindView(R.id.img_red_packet_bottom)
@@ -104,7 +105,7 @@ public class RedPacket1Activity extends BaseActivity {
     @BindView(R.id.liner_red_packet_bottom)
     LinearLayout linerRedPacketBottom;
     @BindView(R.id.srl_red_packet)
-    ScrollView srlRedPacket;
+    NestedScrollView srlRedPacket;
     @BindView(R.id.liner_tel)
     LinearLayout linerTel;
     @BindView(R.id.liner_address)

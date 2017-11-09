@@ -536,7 +536,7 @@ public class SendRedPacketActivity extends BaseActivity {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        ToastUtils.toTosat(SendRedPacketActivity.this,e.toString());
                     }
 
                     @Override

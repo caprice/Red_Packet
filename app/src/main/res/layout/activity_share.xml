@@ -61,7 +61,7 @@
     <TextView style="@style/view_h_without_margin" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        app:civ_border_color="#666666"
+        app:civ_border_color="#ffffff"
         app:civ_border_width="1px"
         android:id="@+id/img_share_head"
         android:layout_gravity="center_horizontal"

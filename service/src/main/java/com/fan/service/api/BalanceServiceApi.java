@@ -33,7 +33,7 @@ public class BalanceServiceApi {
     public static void balanceDetail(final Context context, String token,int page,int num, final OnRequestCompletedListener<BalanceDetailResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getBalanceService()
-                .balanceDetail(token,page,num)
+                .balanceDetail(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BalanceDetailResponse>() {

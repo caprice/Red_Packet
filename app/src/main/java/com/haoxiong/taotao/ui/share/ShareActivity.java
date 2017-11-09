@@ -15,7 +15,6 @@ import com.haoxiong.taotao.ui.friendslist.FriendsListActivity;
 import com.haoxiong.taotao.ui.main.MainActivity;
 import com.haoxiong.taotao.util.GlideUtil;
 import com.haoxiong.taotao.util.ToastUtils;
-import com.pkmmte.view.CircularImageView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -26,6 +25,7 @@ import com.umeng.socialize.utils.Log;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ShareActivity extends BaseActivity {
 
@@ -34,7 +34,7 @@ public class ShareActivity extends BaseActivity {
     @BindView(R.id.liner_share_friend)
     LinearLayout linerShareFriend;
     @BindView(R.id.img_share_head)
-    CircularImageView imgShareHead;
+    CircleImageView imgShareHead;
     @BindView(R.id.tv_share)
     ImageView tvShare;
     @BindView(R.id.tv_share_rule)

@@ -15,8 +15,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,23 +31,17 @@ import com.fan.service.api.PersonServiceApi;
 import com.fan.service.response.ChangePersonDetaResponse;
 import com.fan.service.response.ChangePersonImgResponse;
 import com.fan.service.response.PersonDateResponse;
-import com.fan.service.rest.service.PersonService;
 import com.haoxiong.taotao.MyApp;
+import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
+import com.haoxiong.taotao.callback.Icallback;
 import com.haoxiong.taotao.ui.login.LoginActivity;
-import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
-import com.haoxiong.taotao.ui.sendredpacket.ChildSendRedPacketActivity;
-import com.haoxiong.taotao.ui.sendredpacket.SendRedPacketActivity;
+import com.haoxiong.taotao.ui.main.MainActivity;
 import com.haoxiong.taotao.util.DensityUtil;
 import com.haoxiong.taotao.util.GlideUtil;
 import com.haoxiong.taotao.util.SharePreferenceUtil;
-import com.haoxiong.taotao.util.WindowUtil;
-import com.igexin.sdk.PushManager;
-import com.pkmmte.view.CircularImageView;
-import com.haoxiong.taotao.R;
-import com.haoxiong.taotao.callback.Icallback;
-import com.haoxiong.taotao.ui.main.MainActivity;
 import com.haoxiong.taotao.util.ToastUtils;
+import com.igexin.sdk.PushManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yalantis.ucrop.UCrop;
 
@@ -62,6 +54,7 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -80,7 +73,7 @@ public class PersonDataActivity extends BaseActivity {
     @BindView(R.id.liner_save_persondata)
     LinearLayout linerSavePersondata;
     @BindView(R.id.img_person_head)
-    CircularImageView imgPersonHead;
+    CircleImageView imgPersonHead;
     @BindView(R.id.et_person_nickname)
     EditText etPersonNickname;
     @BindView(R.id.et_person_sex)

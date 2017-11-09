@@ -57,11 +57,6 @@ public class BalanceDetailActivity extends BaseActivity {
                     return;
                 }
                 if (response.getErr() == 0) {
-                    if (response.getData() == null) {
-                        adapter.setEnableLoadMore(false);
-                        adapter.loadMoreEnd();
-                        return;
-                    }
                     List<BalanceDetailResponse.DataBean.RecordsBean> records = response.getData().getRecords();
                     recordBeens.clear();
                     for (int i = 0; i < records.size(); i++) {
@@ -74,6 +69,7 @@ public class BalanceDetailActivity extends BaseActivity {
                     }
                     if (response.getData().getRecords() != null && response.getData().getRecords().size() > 0) {
                         adapter.setEnableLoadMore(true);
+                        adapter.loadMoreEnd();
                     } else {
                         adapter.setEnableLoadMore(false);
                         adapter.loadMoreEnd();
@@ -93,13 +89,13 @@ public class BalanceDetailActivity extends BaseActivity {
         adapter = new BalanceDetailAdapter(recordBeens);
         recycleContent.setAdapter(adapter);
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
-        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+      /*  adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 page++;
                 refreshData(true);
             }
-        }, recycleContent);
+        }, recycleContent);*/
     }
 
     @OnClick(R.id.liner_balance_back)

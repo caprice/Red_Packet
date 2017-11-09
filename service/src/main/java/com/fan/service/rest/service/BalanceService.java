@@ -28,7 +28,7 @@ public interface BalanceService {
      */
     @FormUrlEncoded
     @POST("public/index.php/myyelist")
-    Observable<BalanceDetailResponse> balanceDetail(@Field("token") String token, @Field("page") int page, @Field("num") int num
+    Observable<BalanceDetailResponse> balanceDetail(@Field("token") String token
     );
 
 }

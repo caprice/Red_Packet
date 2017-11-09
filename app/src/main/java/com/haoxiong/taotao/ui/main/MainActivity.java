@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -50,30 +49,25 @@ import com.haoxiong.taotao.ui.main.adapter.HomeRecycleViewAdapter;
 import com.haoxiong.taotao.ui.person.PersonDataActivity;
 import com.haoxiong.taotao.ui.redmaneger.RedMangerActivity;
 import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
-import com.haoxiong.taotao.ui.sendredpacket.ChildSendRedPacketActivity;
 import com.haoxiong.taotao.ui.sendredpacket.SetMoneyActivity;
 import com.haoxiong.taotao.ui.share.ShareActivity;
 import com.haoxiong.taotao.ui.wallet.WalletActivity;
 import com.haoxiong.taotao.util.DensityUtil;
 import com.haoxiong.taotao.util.GlideUtil;
-import com.haoxiong.taotao.util.SharePreferenceUtil;
 import com.haoxiong.taotao.util.ToastUtils;
-import com.pkmmte.view.CircularImageView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -81,7 +75,7 @@ import io.reactivex.disposables.Disposable;
 public class MainActivity extends BaseActivity
         implements View.OnClickListener {
     @BindView(R.id.imageView)
-    CircularImageView imageView;
+    CircleImageView imageView;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_charge)
@@ -122,8 +116,6 @@ public class MainActivity extends BaseActivity
     private boolean isloadMore = false;
     public AMapLocationClient mLocationClient = null;
     public AMapLocationClientOption mLocationOption = null;
-    private TimerTask timerTask;
-    private final Timer timer = new Timer();
     private View footView;
 
 
@@ -133,8 +125,6 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        timerTask = new Task();
-        timer.schedule(timerTask, 0, 5000);
         assinview();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -182,17 +172,6 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    private class Task extends TimerTask {
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    startLocal();
-                }
-            });
-        }
-    }
 
     @Override
     protected void onResume() {
@@ -479,6 +458,7 @@ public class MainActivity extends BaseActivity
                     page = 1;
                     initData(false);
                     MyApp.local = true;
+                    Log.e("...", aMapLocation.getAddress());
                 }
             }
         }
@@ -495,6 +475,8 @@ public class MainActivity extends BaseActivity
         mLocationOption.setOnceLocationLatest(true);
         mLocationOption.setNeedAddress(true);
         mLocationOption.setHttpTimeOut(20000);
+        mLocationOption.setHttpTimeOut(20000);
+        mLocationOption.setInterval(2000);
         mLocationOption.setLocationCacheEnable(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);

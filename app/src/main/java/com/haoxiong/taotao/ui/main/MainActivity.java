@@ -701,7 +701,6 @@ public class MainActivity extends BaseActivity
     public void onMessageEvent(Intent intent) {
         switch (intent.getAction()) {
             case "refreshUser":
-                Log.e("refreshUser", "进来了");
                 LoginResponse user = MyApp.getInstance().user;
                 try {
                     GlideUtil.loadImg(MainActivity.this, R.mipmap.head, user.getData().getUserinfo().getUserPic(), imageView);
@@ -713,7 +712,6 @@ public class MainActivity extends BaseActivity
                 tvCharge.setText(user.getData().getUserinfo().getBalance() + "元");
                 break;
             case "refreshUserhead":
-                Log.e("...", MyApp.getInstance().user.getData().getUserinfo().getUserPic() + "");
                 try {
                     GlideUtil.loadImg(MainActivity.this, R.mipmap.head, MyApp.getInstance().user.getData().getUserinfo().getUserPic(), imageView);
                 } catch (Exception e) {

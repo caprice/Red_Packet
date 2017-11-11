@@ -53,16 +53,12 @@ public class GeTuiIntentService extends GTIntentService {
         String cid = msg.getClientId();
         // 第三方回执调用接口，actionid范围为90000-90999，可根据业务场景执行
         boolean result = PushManager.getInstance().sendFeedbackMessage(context, taskid, messageid, 90001);
-        Log.e(TAG, "call sendFeedbackMessage = " + (result ? "success" : "failed"));
 
-        Log.e(TAG, "onReceiveMessageData -> " + "appid = " + appid + "\ntaskid = " + taskid + "\nmessageid = " + messageid + "\npkg = " + pkg
-                + "\ncid = " + cid);
+
 
         if (payload == null) {
-            Log.e(TAG, "receiver payload = null");
         } else {
             String data = new String(payload);
-            Log.e(TAG, "receiver payload = " + data);
 
             // 测试消息为了观察数据变化
             if (data.equals(getResources().getString(R.string.push_transmission_data))) {
@@ -71,24 +67,20 @@ public class GeTuiIntentService extends GTIntentService {
             }
         }
 
-        Log.e(TAG, "----------------------------------------------------------------------------------------------");
     }
 
     @Override
     public void onReceiveClientId(Context context, String clientid) {
         MyApp.clientid = clientid;
-        Log.e(TAG, "onReceiveClientId -> " + "clientid = " + clientid);
 
     }
 
     @Override
     public void onReceiveOnlineState(Context context, boolean online) {
-        Log.e(TAG, "onReceiveOnlineState -> " + (online ? "online" : "offline"));
     }
 
     @Override
     public void onReceiveCommandResult(Context context, GTCmdMessage cmdMessage) {
-        Log.e(TAG, "onReceiveCommandResult -> " + cmdMessage);
 
         int action = cmdMessage.getAction();
 
@@ -149,7 +141,6 @@ public class GeTuiIntentService extends GTIntentService {
                 break;
         }
 
-        Log.e(TAG, "settag result sn = " + sn + ", code = " + code + ", text = " + getResources().getString(text));
     }
 
     private void feedbackResult(FeedbackCmdMessage feedbackCmdMsg) {
@@ -160,8 +151,6 @@ public class GeTuiIntentService extends GTIntentService {
         long timestamp = feedbackCmdMsg.getTimeStamp();
         String cid = feedbackCmdMsg.getClientId();
 
-        Log.e(TAG, "onReceiveCommandResult -> " + "appid = " + appid + "\ntaskid = " + taskid + "\nactionid = " + actionid + "\nresult = " + result
-                + "\ncid = " + cid + "\ntimestamp = " + timestamp);
     }
 
 

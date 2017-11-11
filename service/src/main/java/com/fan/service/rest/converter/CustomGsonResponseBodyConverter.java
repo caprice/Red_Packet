@@ -72,7 +72,6 @@ final class CustomGsonResponseBodyConverter<T> implements Converter<ResponseBody
             }
             Reader reader = new StringReader(original);
             JsonReader jsonReader = gson.newJsonReader(reader);
-            Log.e("....", original);
             return adapter.read(jsonReader);
 
         } finally {

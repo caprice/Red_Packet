@@ -108,7 +108,6 @@ public class GaodelocationService extends Service {
                 if (!MyApp.local) {
                     MyApp.local = true;
                 }
-                Log.e("...", aMapLocation.getAddress());
             }
         }
     };

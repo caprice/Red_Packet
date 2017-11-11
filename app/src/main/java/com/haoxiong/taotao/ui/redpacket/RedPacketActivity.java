@@ -372,7 +372,6 @@ public class RedPacketActivity extends BaseActivity {
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
         GlideUtil.loadImg(RedPacketActivity.this, detailResponse.getUserPic(), imgRedPacketPic);
         if (detailResponse.getGetter() != null) {
-            Log.e("...", detailResponse.getGetter().size() + "");
             adapter.setNewData(detailResponse.getGetter());
         }
         if (detailResponse.isIscollect()) {
@@ -483,7 +482,6 @@ public class RedPacketActivity extends BaseActivity {
         public void onError(SHARE_MEDIA platform, Throwable t) {
             ToastUtils.toTosat(RedPacketActivity.this,  t.getMessage());
             if (t != null) {
-                com.umeng.socialize.utils.Log.e("throw:" + t.getMessage());
             }
         }
 
@@ -710,7 +708,6 @@ public class RedPacketActivity extends BaseActivity {
     }
 
     private void zhifubaopay(final String orderInfo) {
-        Log.e("...", orderInfo);
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {
@@ -718,7 +715,6 @@ public class RedPacketActivity extends BaseActivity {
                 PayTask alipay = new PayTask(RedPacketActivity.this);
                 // 调用支付接口，获取支付结果
                 String result = alipay.pay(orderInfo, true);
-                Log.e("...", result);
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
                 msg.obj = result;
@@ -770,7 +766,6 @@ public class RedPacketActivity extends BaseActivity {
         sb.append("sign\n" + req.sign + "\n\n");
 
 
-        Log.e("Simon", "----" + signParams.toString());
 
     }
 
@@ -788,7 +783,6 @@ public class RedPacketActivity extends BaseActivity {
 
         this.sb.append("sign str\n" + sb.toString() + "\n\n");
         String appSign = MD5.getMessageDigest(sb.toString().getBytes());
-        Log.e("Simon", "----" + appSign);
         return appSign;
     }
 
@@ -808,10 +802,8 @@ public class RedPacketActivity extends BaseActivity {
             // TODO Auto-generated method stub
             String url = String.format(params[0]);
             String entity = getProductArgs();
-            Log.e("Simon", ">>>>" + entity);
             byte[] buf = Util.httpPost(url, entity);
             String content = new String(buf);
-            Log.e("orion", "----" + content);
             Map<String, String> xml = decodeXml(content);
 
             return xml;
@@ -860,14 +852,12 @@ public class RedPacketActivity extends BaseActivity {
 
             return xml;
         } catch (Exception e) {
-            Log.e("Simon", "----" + e.toString());
         }
         return null;
 
     }
 
     private String getProductArgs() {
-        Log.e("......", getLocalIpAddress());
         // TODO Auto-generated method stub
         StringBuffer xml = new StringBuffer();
         try {
@@ -923,7 +913,6 @@ public class RedPacketActivity extends BaseActivity {
 
 
         String packageSign = MD5.getMessageDigest(sb.toString().getBytes()).toUpperCase();
-        Log.e("Simon", ">>>>" + packageSign);
         return packageSign;
     }
 
@@ -942,7 +931,6 @@ public class RedPacketActivity extends BaseActivity {
         }
         sb.append("</xml>");
 
-        Log.e("Simon", ">>>>" + sb.toString());
         return sb.toString();
     }
 
@@ -958,7 +946,6 @@ public class RedPacketActivity extends BaseActivity {
                 }
             }
         } catch (SocketException ex) {
-            Log.e("sadsad", ex.toString());
         }
         return null;
     }

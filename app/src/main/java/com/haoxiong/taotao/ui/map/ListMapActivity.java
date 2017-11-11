@@ -90,7 +90,6 @@ public class ListMapActivity extends BaseActivity {
     PoiSearch.OnPoiSearchListener onPoiSearchListener = new PoiSearch.OnPoiSearchListener() {
         @Override
         public void onPoiSearched(PoiResult poiResult, int i) {
-            Log.e("...", poiResult.getPois().toString());
             allPoi = poiResult.getPois();
             adapter.setNewData(allPoi);
         }

@@ -68,7 +68,6 @@ public class ShareActivity extends BaseActivity {
         public void onError(SHARE_MEDIA platform, Throwable t) {
             ToastUtils.toTosat(ShareActivity.this, t.getMessage());
             if (t != null) {
-                Log.e("throw:" + t.getMessage());
             }
         }
 

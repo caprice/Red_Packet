@@ -42,23 +42,19 @@ public class PersonServiceApi {
                 .subscribe(new Observer<PersonDateResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull PersonDateResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -72,23 +68,19 @@ public class PersonServiceApi {
                 .subscribe(new Observer<ChangePersonDetaResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull ChangePersonDetaResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("onError", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -105,7 +97,6 @@ public class PersonServiceApi {
                 .subscribe(new Observer<ChangePersonImgResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -115,12 +106,10 @@ public class PersonServiceApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("onError", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -136,7 +125,6 @@ public class PersonServiceApi {
                 .subscribe(new Observer<ChangePersonImgResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -146,12 +134,10 @@ public class PersonServiceApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("onError", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }

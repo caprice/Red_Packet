@@ -37,7 +37,6 @@ import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.eventbean.MessageEvent;
 import com.haoxiong.taotao.ui.map.ListMapActivity;
-import com.haoxiong.taotao.ui.person.PersonDataActivity;
 import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
 import com.haoxiong.taotao.util.SharePreferenceUtil;
 import com.haoxiong.taotao.util.ToastUtils;
@@ -51,8 +50,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -503,12 +500,10 @@ public class SendRedPacketActivity extends BaseActivity {
                                 .setCompressListener(new OnCompressListener() { //设置回调
                                     @Override
                                     public void onStart() {
-                                        Log.e("....", file.length() / 1024 / 1024 + "");
                                     }
 
                                     @Override
                                     public void onSuccess(File file) {
-                                        Log.e("....", file.length() / 1024 + "");
                                         e.onNext(file);
 
                                     }
@@ -669,7 +664,6 @@ public class SendRedPacketActivity extends BaseActivity {
         Uri localUri = Uri.fromFile(file);
         Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
         sendBroadcast(localIntent);
-        Log.e("....", uri.toString());
        /* Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image*//*");
 
@@ -699,7 +693,6 @@ public class SendRedPacketActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent messageEvent) {
-        Log.e("...", messageEvent.getAddress());
         message = messageEvent;
         lat = message.getLatLng().getLatitude() + "";
         lng = message.getLatLng().getLongitude() + "";
@@ -731,11 +724,9 @@ public class SendRedPacketActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         if (adviceImgPath1 != null) {
             outState.putString("tmpPhotoFile1", adviceImgPath1);
-            Log.e("onSaveInstanceState", adviceImgPath1);
         }
         if (adviceImgPath != null) {
             outState.putString("tmpPhotoFile", adviceImgPath);
-            Log.e("onSaveInstanceState", adviceImgPath1);
         }
     }
 

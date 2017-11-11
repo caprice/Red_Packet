@@ -354,7 +354,6 @@ public class PersonDataActivity extends BaseActivity {
             luban();
         } else if (resultCode == UCrop.RESULT_ERROR) {
             final Throwable cropError = UCrop.getError(data);
-            Log.e("...", cropError.toString() + "");
         }
         switch (requestCode) {
             case 1:
@@ -412,12 +411,10 @@ public class PersonDataActivity extends BaseActivity {
                                 .setCompressListener(new OnCompressListener() { //设置回调
                                     @Override
                                     public void onStart() {
-                                        Log.e("....", file.length() / 1024 / 1024 + "");
                                     }
 
                                     @Override
                                     public void onSuccess(File file) {
-                                        Log.e("....", file.length() / 1024 + "");
                                         e.onNext(file);
 
                                     }
@@ -550,7 +547,6 @@ public class PersonDataActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         if (headImgPath != null) {
             outState.putString("headImgPath", headImgPath);
-            Log.e("onSaveInstanceState", headImgPath);
         }
     }
 

@@ -49,7 +49,6 @@ public class RedPacketListApi {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -80,13 +79,11 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                         listener.onCompleted(null, "网络连接失败");
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -107,7 +104,6 @@ public class RedPacketListApi {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -118,7 +114,6 @@ public class RedPacketListApi {
                             int err = object.optInt("err");
                             switch (err) {
                                 case 0:
-                                    Log.e("json", json);
                                     RedPacketListResponse detailResponse = new Gson().fromJson(json, RedPacketListResponse.class);
                                     listener.onCompleted(detailResponse, "成功");
                                     break;
@@ -140,13 +135,11 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                         listener.onCompleted(null, "网络连接失败");
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -162,7 +155,6 @@ public class RedPacketListApi {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -173,7 +165,6 @@ public class RedPacketListApi {
                             int err = object.optInt("err");
                             switch (err) {
                                 case 0:
-                                    Log.e("json", json);
                                     RedPacketDetailResponse detailResponse = new Gson().fromJson(json, RedPacketDetailResponse.class);
                                     listener.onCompleted(detailResponse, "成功");
                                     break;
@@ -195,12 +186,10 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e(null, "数据加载失败");
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -216,7 +205,6 @@ public class RedPacketListApi {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -227,9 +215,7 @@ public class RedPacketListApi {
                             int err = object.optInt("err");
                             switch (err) {
                                 case 0:
-                                    Log.e("json", json);
                                     RedPacketDetailResponse detailResponse = new Gson().fromJson(json, RedPacketDetailResponse.class);
-                                    Log.e("json", detailResponse.getMsg());
                                     listener.onCompleted(detailResponse, "成功");
                                     break;
                                 default:
@@ -251,13 +237,10 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
-                        Log.e(null, "数据加载失败");
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -273,25 +256,21 @@ public class RedPacketListApi {
                 .subscribe(new Observer<SaveResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull SaveResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
 
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                         listener.onCompleted(null, "服务器异常...");
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -307,7 +286,6 @@ public class RedPacketListApi {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -318,9 +296,7 @@ public class RedPacketListApi {
                             int err = object.optInt("err");
                             switch (err) {
                                 case 0:
-                                    Log.e("json", json);
                                     GetRedPacketResponse detailResponse = new Gson().fromJson(json, GetRedPacketResponse.class);
-                                    Log.e("json", detailResponse.getMsg());
                                     listener.onCompleted(detailResponse, "成功");
                                     break;
                                 default:
@@ -345,7 +321,6 @@ public class RedPacketListApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -375,12 +350,10 @@ public class RedPacketListApi {
                 .subscribe(new Observer<SendRedPacketResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull SendRedPacketResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
@@ -391,7 +364,6 @@ public class RedPacketListApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -418,12 +390,10 @@ public class RedPacketListApi {
                 .subscribe(new Observer<SendRedPacketResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull SendRedPacketResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
@@ -434,7 +404,6 @@ public class RedPacketListApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -448,12 +417,10 @@ public class RedPacketListApi {
                 .subscribe(new Observer<Object>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull Object response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
@@ -464,7 +431,6 @@ public class RedPacketListApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -478,12 +444,10 @@ public class RedPacketListApi {
                 .subscribe(new Observer<Object>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull Object response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
@@ -494,7 +458,6 @@ public class RedPacketListApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -508,12 +471,10 @@ public class RedPacketListApi {
                 .subscribe(new Observer<AlipayResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull AlipayResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
@@ -524,7 +485,6 @@ public class RedPacketListApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -570,12 +530,10 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -600,12 +558,10 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -629,12 +585,10 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }

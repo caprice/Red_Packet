@@ -42,23 +42,19 @@ public class FriendListServiceApi {
                 .subscribe(new Observer<FriendListResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull FriendListResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -72,7 +68,6 @@ public class FriendListServiceApi {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -83,7 +78,6 @@ public class FriendListServiceApi {
                             int err = object.optInt("err");
                             switch (err) {
                                 case 0:
-                                    Log.e("json", json);
                                     WithDrawResponse detailResponse = new Gson().fromJson(json, WithDrawResponse.class);
                                     listener.onCompleted(detailResponse, "成功");
                                     break;
@@ -109,7 +103,6 @@ public class FriendListServiceApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }

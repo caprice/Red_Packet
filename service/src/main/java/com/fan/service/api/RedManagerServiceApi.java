@@ -33,23 +33,19 @@ public class RedManagerServiceApi {
                 .subscribe(new Observer<RedManagerResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull RedManagerResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -62,23 +58,19 @@ public class RedManagerServiceApi {
                 .subscribe(new Observer<StopOrNotResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull StopOrNotResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }

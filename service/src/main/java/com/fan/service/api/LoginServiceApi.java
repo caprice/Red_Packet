@@ -41,23 +41,19 @@ public class LoginServiceApi {
                 .subscribe(new Observer<SendMessageResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull SendMessageResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e("...", e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -71,7 +67,6 @@ public class LoginServiceApi {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("login", "onSubscribe");
                     }
 
                     @Override
@@ -108,7 +103,6 @@ public class LoginServiceApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -122,7 +116,6 @@ public class LoginServiceApi {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -158,7 +151,6 @@ public class LoginServiceApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }
@@ -172,7 +164,6 @@ public class LoginServiceApi {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
@@ -207,7 +198,6 @@ public class LoginServiceApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }

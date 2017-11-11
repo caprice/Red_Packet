@@ -273,7 +273,6 @@ public class RedPacket1Activity extends BaseActivity {
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
         GlideUtil.loadImg(RedPacket1Activity.this, detailResponse.getUserPic(), imgRedPacketPic);
         if (detailResponse.getGetter() != null) {
-            Log.e("...", detailResponse.getGetter().size() + "");
             adapter.setNewData(detailResponse.getGetter());
         }
         if (detailResponse.isIscollect()) {

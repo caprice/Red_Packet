@@ -32,12 +32,10 @@ public class CollectServiceApi {
                 .subscribe(new Observer<CollectRedPacketResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.e("...", "onSubscribe");
                     }
 
                     @Override
                     public void onNext(@NonNull CollectRedPacketResponse response) {
-                        Log.e("...", response.toString());
                         listener.onCompleted(response, "成功");
                     }
 
@@ -48,7 +46,6 @@ public class CollectServiceApi {
 
                     @Override
                     public void onComplete() {
-                        Log.e("...", "onComplete");
                     }
                 });
     }

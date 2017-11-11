@@ -53,7 +53,7 @@
             android:adjustViewBounds="true"
             android:id="@+id/img_get_red_packet_bg"
             android:layout_width="match_parent"
-            android:layout_height="172dp" />
+            android:layout_height="200dp" />
         <TextView
             android:id="@+id/tv_get_red_packet_name"
             android:textColor="#d43c33"
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <LinearLayout
-            android:layout_marginTop="59dp"
+            android:layout_marginTop="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView

@@ -43,6 +43,7 @@ import com.fan.service.response.WalletResponse;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
+import com.haoxiong.taotao.service.GaodelocationService;
 import com.haoxiong.taotao.ui.collect.CollectActivity;
 import com.haoxiong.taotao.ui.login.LoginActivity;
 import com.haoxiong.taotao.ui.main.adapter.HomeRecycleViewAdapter;
@@ -343,9 +344,9 @@ public class MainActivity extends BaseActivity
 
 
     private void assinview() {
+//        startActivity(new Intent(MainActivity.this, GaodelocationService.class));
         mainSwiperefreshlayout.setEnabled(false);
         showProgressDialog("请稍后...");
-
         startLocal();
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE
@@ -468,22 +469,54 @@ public class MainActivity extends BaseActivity
 
         mLocationClient = new AMapLocationClient(getApplicationContext());
         mLocationClient.setLocationListener(mLocationListener);
-        mLocationOption = new AMapLocationClientOption();
+      /*  mLocationOption = new AMapLocationClientOption();
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setOnceLocation(false);
+        mLocationOption.setOnceLocation(true);
 //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
         mLocationOption.setOnceLocationLatest(true);
         mLocationOption.setNeedAddress(true);
         mLocationOption.setHttpTimeOut(20000);
         mLocationOption.setHttpTimeOut(20000);
         mLocationOption.setInterval(2000);
+        mLocationOption.setLocationCacheEnable(true);*/
+
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+//        //设置定位模式为AMapLocationMode.Battery_Saving，低功耗模式。
+//        aMapLocationClientOption.setLocationMode(AMapLocationMode.Battery_Saving);
+//        //设置定位模式为AMapLocationMode.Device_Sensors，仅设备模式。
+//        aMapLocationClientOption.setLocationMode(AMapLocationMode.Device_Sensors);
+
+        //获取一次定位结果：
+        //该方法默认为false。
+        //aMapLocationClientOption.setOnceLocation(true);
+        //获取最近3s内精度最高的一次定位结果：
+        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。
+        // 如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
+        //aMapLocationClientOption.setOnceLocationLatest(true);
+
+        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。 如果设置了上面的一次定位，则这里的连续定位无效，所以一次定位的方法是默认为false
+        mLocationOption.setInterval(2000);
+
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+
+        //设置是否强制刷新WIFI，默认为true，强制刷新。
+        mLocationOption.setWifiActiveScan(false);
+
+        //设置是否允许模拟位置,默认为false，不允许模拟位置
+        mLocationOption.setMockEnable(false);
+
+        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+        mLocationOption.setHttpTimeOut(20000);
+
+        //关闭缓存机制
         mLocationOption.setLocationCacheEnable(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
 //启动定位
         mLocationClient.startLocation();
-
-
     }
 
     @Override

@@ -116,13 +116,20 @@ public class PersonDataActivity extends BaseActivity {
     }
 
     private void refreshView() {
-        GlideUtil.loadImg(PersonDataActivity.this, R.mipmap.head, MyApp.getInstance().user.getData().getUserinfo().getUserPic(), imgPersonHead);
+        if (MyApp.getInstance().user.getData() != null) {
+            if (MyApp.getInstance().user.getData().getUserinfo() != null) {
+                GlideUtil.loadImg(PersonDataActivity.this, R.mipmap.head, MyApp.getInstance().user.getData().getUserinfo().getUserPic(), imgPersonHead);
+            } else {
+                imgPersonHead.setImageResource(R.mipmap.head);
+            }
+        } else {
+            imgPersonHead.setImageResource(R.mipmap.head);
+        }
         etPersonNickname.setText(dateResponse.getData().getUserinfo().getUsername() != null ? dateResponse.getData().getUserinfo().getUsername() : "");
         etPersonSex.setText(dateResponse.getData().getUserinfo().getGender() != null ? dateResponse.getData().getUserinfo().getGender() : "男");
         etPersonBirthday.setText(dateResponse.getData().getUserinfo().getBirthday() != null ? dateResponse.getData().getUserinfo().getBirthday() : "");
 
     }
-
 
 
     @OnClick({R.id.liner_person_back, R.id.liner_save_persondata, R.id.img_person_head, R.id.et_person_sex, R.id.et_person_birthday, R.id.tv_person_logout})
@@ -197,14 +204,14 @@ public class PersonDataActivity extends BaseActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        PushManager.getInstance().unBindAlias(PersonDataActivity.this,MyApp.getInstance().user.getData().getUserinfo().getMobile(),false);
+                        PushManager.getInstance().unBindAlias(PersonDataActivity.this, MyApp.getInstance().user.getData().getUserinfo().getMobile(), false);
                         MyApp.token = null;
-                        SharePreferenceUtil.remove(PersonDataActivity.this,"token");
+                        SharePreferenceUtil.remove(PersonDataActivity.this, "token");
                         MyApp.login_state = 0;
-                        SharePreferenceUtil.put(PersonDataActivity.this,"phone","");
+                        SharePreferenceUtil.put(PersonDataActivity.this, "phone", "");
                         Intent event = new Intent("refreshUserNothing");
                         EventBus.getDefault().post(event);
-                        LoginActivity.luncher(PersonDataActivity.this,true);
+                        LoginActivity.luncher(PersonDataActivity.this, true);
 
                     }
                 })
@@ -520,7 +527,7 @@ public class PersonDataActivity extends BaseActivity {
         startActivityForResult(intent, 1);*/
         UCrop.of(uri, Uri.fromFile(new File(headImgPath1)))
                 .withAspectRatio(9, 9)
-                .withMaxResultSize(DensityUtil.dip2px(PersonDataActivity.this,200),DensityUtil.dip2px(PersonDataActivity.this,200))
+                .withMaxResultSize(DensityUtil.dip2px(PersonDataActivity.this, 200), DensityUtil.dip2px(PersonDataActivity.this, 200))
                 .start(PersonDataActivity.this);
     }
 
@@ -542,6 +549,7 @@ public class PersonDataActivity extends BaseActivity {
             }
         });
     }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -555,6 +563,7 @@ public class PersonDataActivity extends BaseActivity {
         super.onRestoreInstanceState(savedInstanceState);
         headImgPath = savedInstanceState.getString("headImgPath");
     }
+
     /**
      * 跳转到权限设置界面
      */

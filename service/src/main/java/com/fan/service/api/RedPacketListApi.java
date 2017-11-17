@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.RetrofitApplication;
+import com.fan.service.response.ActiveResponse;
 import com.fan.service.response.AlipayResponse;
 import com.fan.service.response.GetRedPacketResponse;
 import com.fan.service.response.RedPacketDetailResponse;
@@ -585,6 +586,34 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+    public static void getActive(final Context context, String token,
+                                     final OnRequestCompletedListener<ActiveResponse> listener) {
+        ((RetrofitApplication) context.getApplicationContext()).getClient()
+                .getRedPacketListService()
+                .getActive(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ActiveResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ActiveResponse response) {
+                        listener.onCompleted(response,"成功");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        listener.onCompleted(null,"服务器数据异常");
                     }
 
                     @Override

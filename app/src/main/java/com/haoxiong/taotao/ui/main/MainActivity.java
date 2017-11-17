@@ -36,6 +36,7 @@ import com.chad.library.adapter.base.loadmore.LoadMoreView;
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.PersonServiceApi;
 import com.fan.service.api.RedPacketListApi;
+import com.fan.service.response.ActiveResponse;
 import com.fan.service.response.LoginResponse;
 import com.fan.service.response.PersonDateResponse;
 import com.fan.service.response.RedPacketListResponse;
@@ -43,11 +44,14 @@ import com.fan.service.response.WalletResponse;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
+import com.haoxiong.taotao.callback.Icallback;
 import com.haoxiong.taotao.service.GaodelocationService;
 import com.haoxiong.taotao.ui.collect.CollectActivity;
 import com.haoxiong.taotao.ui.login.LoginActivity;
 import com.haoxiong.taotao.ui.main.adapter.HomeRecycleViewAdapter;
+import com.haoxiong.taotao.ui.main.fragment.ActiveFragment;
 import com.haoxiong.taotao.ui.person.PersonDataActivity;
+import com.haoxiong.taotao.ui.person.SexFragment;
 import com.haoxiong.taotao.ui.redmaneger.RedMangerActivity;
 import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
 import com.haoxiong.taotao.ui.sendredpacket.SetMoneyActivity;
@@ -118,6 +122,7 @@ public class MainActivity extends BaseActivity
     public AMapLocationClient mLocationClient = null;
     public AMapLocationClientOption mLocationOption = null;
     private View footView;
+    private FloatingActionButton fab1;
 
 
     @Override
@@ -127,12 +132,12 @@ public class MainActivity extends BaseActivity
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         assinview();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab1 = (FloatingActionButton) findViewById(R.id.fab);
+        fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mainRecycle.scrollToPosition(0);
+                fab1.setVisibility(View.GONE);
             }
         });
 
@@ -178,7 +183,7 @@ public class MainActivity extends BaseActivity
     protected void onResume() {
         super.onResume();
 
-        mainRecycle.scrollToPosition(0);
+//        mainRecycle.scrollToPosition(0);
         page = 1;
         initData(false);
     }
@@ -344,6 +349,22 @@ public class MainActivity extends BaseActivity
 
 
     private void assinview() {
+        RedPacketListApi.getActive(MainActivity.this, MyApp.token, new OnRequestCompletedListener<ActiveResponse>() {
+            @Override
+            public void onCompleted(ActiveResponse response, String msg) {
+                if (response != null&&response.getErr()==0) {
+                    List<ActiveResponse.DataBean> data = response.getData();
+                    ArrayList<ActiveResponse.DataBean> data1 = new ArrayList<>();
+                    if (data != null && data.size() > 0) {
+                        for (int i = 0; i < data.size(); i++) {
+                            data1.add(data.get(i));
+                        }
+                        ActiveFragment activeFragment = new ActiveFragment(data1);
+                        activeFragment.show(getFragmentManager(), "2");
+                    }
+                }
+            }
+        });
 //        startActivity(new Intent(MainActivity.this, GaodelocationService.class));
         mainSwiperefreshlayout.setEnabled(false);
         showProgressDialog("请稍后...");
@@ -443,6 +464,20 @@ public class MainActivity extends BaseActivity
             @Override
             public void onDrawerStateChanged(int newState) {
 
+            }
+        });
+        mainRecycle.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 10) {
+                    fab1.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -610,7 +645,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void showOrder() {
-        popupOrder = new PopupWindow(mainactivitySelectLiner, DensityUtil.dip2px(MainActivity.this, 150), DensityUtil.dip2px(MainActivity.this, 90));
+        popupOrder = new PopupWindow(mainactivitySelectLiner, DensityUtil.dip2px(MainActivity.this, 150), DensityUtil.dip2px(MainActivity.this, 140));
         View view = getLayoutInflater().inflate(R.layout.popup_order_layout, null);
         WindowManager.LayoutParams attributes = getWindow().getAttributes();
         attributes.alpha = 0.5f;
@@ -725,6 +760,5 @@ public class MainActivity extends BaseActivity
                 break;
         }
     }
-
 
 }

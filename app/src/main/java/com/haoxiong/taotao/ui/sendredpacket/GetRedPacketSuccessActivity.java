@@ -53,7 +53,7 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
     private GetRedPacketResponse successData;
     private RedPacketDetailResponse.DataBean detailData;
 
-    public static void luncher(Context context, @NonNull RedPacketDetailResponse.DataBean dataBean,GetRedPacketResponse response) {
+    public static void luncher(Context context, @NonNull RedPacketDetailResponse.DataBean dataBean, GetRedPacketResponse response) {
         Intent intent = new Intent(context, GetRedPacketSuccessActivity.class);
         intent.putExtra("content1", dataBean);
         intent.putExtra("content2", response);
@@ -71,10 +71,14 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
     private void assignView() {
         detailData = getIntent().getParcelableExtra("content1");
         successData = getIntent().getParcelableExtra("content2");
-        GlideUtil.loadImg(GetRedPacketSuccessActivity.this, detailData.getUserPic(), imgGetRedPacketBg);
+        try {
+            GlideUtil.loadImg(GetRedPacketSuccessActivity.this, detailData.getUserPic(), imgGetRedPacketBg);
+        } catch (Exception e) {
+            imgGetRedPacketBg.setImageResource(R.mipmap.item);
+        }
         tvGetRedPacketName.setText(detailData.getMerchant());
         tvGetRedPacketMoney.setText(successData.getData().getMoney());
-        tvGetRedPacketLeft.setText(successData.getData().getRemainCount()+"");
+        tvGetRedPacketLeft.setText(successData.getData().getRemainCount() + "");
     }
 
     @OnClick({R.id.liner_get_red_packet_back, R.id.tv_get_red_packet_share})
@@ -88,6 +92,7 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
                 break;
         }
     }
+
     private UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onStart(SHARE_MEDIA platform) {
@@ -103,7 +108,7 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            ToastUtils.toTosat(GetRedPacketSuccessActivity.this,  t.getMessage());
+            ToastUtils.toTosat(GetRedPacketSuccessActivity.this, t.getMessage());
             if (t != null) {
                 Log.e("throw:" + t.getMessage());
             }
@@ -118,7 +123,7 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
     public void share(View view) {
         try {
             UMImage thumb = new UMImage(GetRedPacketSuccessActivity.this, R.drawable.logo_s);
-            UMWeb web = new UMWeb("http://hb.huidang2105.com/share/login.html?yqm="+MyApp.getInstance().user.getData().getUserinfo().getInviteCode()+"&rid="+detailData.getRid() );
+            UMWeb web = new UMWeb("http://hb.huidang2105.com/share/login.html?yqm=" + MyApp.getInstance().user.getData().getUserinfo().getInviteCode() + "&rid=" + detailData.getRid());
             web.setTitle("和我一起来 掏掏 抢红包吧");//标题
             web.setThumb(thumb);  //缩略图
             web.setDescription("掏掏-红包不断，掏掏不绝");//描述

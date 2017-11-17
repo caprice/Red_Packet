@@ -1,5 +1,6 @@
 package com.fan.service.rest.service;
 
+import com.fan.service.response.ActiveResponse;
 import com.fan.service.response.AlipayResponse;
 import com.fan.service.response.GetRedPacketResponse;
 import com.fan.service.response.LoginResponse;
@@ -229,5 +230,15 @@ public interface RedPacketListService {
             @Field("token") String token,
             @Field("device") String device
     );
-
+    /**
+     * 支付宝支付成功回调接口
+     * mobile
+     * xh checked 20170424
+     * http://hb.huidang2105.com:8900/public/index.php/update_device?token=wwk0mT0MlSDssTcmrPkQYue9aBMArlDzeAsFd5Sa&device=554929
+     */
+    @FormUrlEncoded
+    @POST("http://hb.huidang2105.com:8900/public/index.php/get_activity_lb")
+    Observable<ActiveResponse> getActive(
+            @Field("token") String token
+    );
 }

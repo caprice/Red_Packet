@@ -9,8 +9,8 @@ android {
         applicationId "com.haoxiong.taotao"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 8
-        versionName "1.0.4"
+        versionCode 10
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 GETUI_APP_ID    : "czku0Bzx4x72LpxJARpYs6",
@@ -112,6 +112,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.2.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }
 apt {
     arguments {

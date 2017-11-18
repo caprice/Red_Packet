@@ -37,6 +37,7 @@ import com.fan.service.api.RedPacketListApi;
 import com.fan.service.response.ActiveResponse;
 import com.fan.service.response.LoginResponse;
 import com.fan.service.response.PersonDateResponse;
+import com.fan.service.response.RedPacketDetailResponse;
 import com.fan.service.response.RedPacketListResponse;
 import com.fan.service.response.WalletResponse;
 import com.haoxiong.taotao.MyApp;
@@ -118,6 +119,10 @@ public class MainActivity extends BaseActivity
     public AMapLocationClientOption mLocationOption = null;
     private View footView;
     private ImageView fab1;
+    private int isFresh = 0;
+    private int clickPosition = -1;
+    private int clickRid = -1;
+    private RedPacketListResponse.DataBean clickDataBean;
 
 
     @Override
@@ -135,6 +140,8 @@ public class MainActivity extends BaseActivity
                 fab1.setVisibility(View.GONE);
             }
         });
+        refreshAlways();
+
 
     }
 
@@ -176,11 +183,36 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void onResume() {
-        super.onResume();
+        refreshAlways();
+        switch (isFresh) {
+            case 2:
+                fab1.setVisibility(View.GONE);
+                mainRecycle.scrollToPosition(0);
+                page = 1;
+                initData(false);
+                break;
+            case 1:
+                if (clickPosition != -1 && clickRid != -1) {
+                    RedPacketListApi.redPacketDetailUnLogin(MainActivity.this, clickRid, new OnRequestCompletedListener<RedPacketDetailResponse>() {
+                        @Override
+                        public void onCompleted(RedPacketDetailResponse response, String msg) {
+                            dismissProgressDialog();
+                            if (response != null) {
+                                RedPacketDetailResponse.DataBean data = response.getData();
 
-//        mainRecycle.scrollToPosition(0);
-        page = 1;
-        initData(false);
+                                adapter.replaceItem(clickPosition,data);
+                            } else {
+                                ToastUtils.toTosat(MainActivity.this, msg);
+                            }
+                        }
+                    });
+                }
+                break;
+            default:
+
+        }
+
+        super.onResume();
     }
 
     private void initData(final boolean more) {
@@ -236,23 +268,27 @@ public class MainActivity extends BaseActivity
                     }
                 }
             });*/
-            RedPacketListApi.update_user_location(MainActivity.this, MyApp.token, MyApp.location == null ? "0" : MyApp.location.getLatitude() + ""
-                    , MyApp.location == null ? "0" : MyApp.location.getLongitude() + "", new OnRequestCompletedListener<WalletResponse>() {
-                        @Override
-                        public void onCompleted(WalletResponse response, String msg) {
 
-                        }
-                    });
-            if (!TextUtils.isEmpty(MyApp.clientid)) {
-                RedPacketListApi.update_device(MainActivity.this, MyApp.token, MyApp.clientid, new OnRequestCompletedListener<WalletResponse>() {
+        }
+    }
+
+    private void refreshAlways() {
+        RedPacketListApi.update_user_location(MainActivity.this, MyApp.token, MyApp.location == null ? "0" : MyApp.location.getLatitude() + ""
+                , MyApp.location == null ? "0" : MyApp.location.getLongitude() + "", new OnRequestCompletedListener<WalletResponse>() {
                     @Override
                     public void onCompleted(WalletResponse response, String msg) {
 
                     }
                 });
-            }
-            refreshData();
+        if (!TextUtils.isEmpty(MyApp.clientid)) {
+            RedPacketListApi.update_device(MainActivity.this, MyApp.token, MyApp.clientid, new OnRequestCompletedListener<WalletResponse>() {
+                @Override
+                public void onCompleted(WalletResponse response, String msg) {
+
+                }
+            });
         }
+        refreshData();
     }
 
     private void notLoginGetData(final boolean more) {
@@ -310,19 +346,21 @@ public class MainActivity extends BaseActivity
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                RedPacketListResponse.DataBean dataBean = (RedPacketListResponse.DataBean) adapter.getData().get(position);
-                switch (dataBean.getGot()) {
+                clickDataBean = (RedPacketListResponse.DataBean) adapter.getData().get(position);
+                clickPosition = position;
+                clickRid = clickDataBean.getRid();
+                switch (clickDataBean.getGot()) {
                     case 1:
                         MyApp.TYPE = 5;
-                        RedPacketActivity.luncher(MainActivity.this, dataBean);
+                        RedPacketActivity.luncher(MainActivity.this, clickDataBean);
                         break;
                     case 2:
-                        if (dataBean.getRemainCount() != 0) {
+                        if (clickDataBean.getRemainCount() != 0) {
                             MyApp.TYPE = 2;
-                            RedPacketActivity.luncher(MainActivity.this, dataBean);
+                            RedPacketActivity.luncher(MainActivity.this, clickDataBean);
                         } else {
                             MyApp.TYPE = 6;
-                            RedPacketActivity.luncher(MainActivity.this, dataBean);
+                            RedPacketActivity.luncher(MainActivity.this, clickDataBean);
                         }
                         break;
                 }
@@ -477,7 +515,7 @@ public class MainActivity extends BaseActivity
                         activeFragment.show(getFragmentManager(), "2");
                     }
                 } else {
-                    ToastUtils.toTosat(MainActivity.this,msg);
+                    ToastUtils.toTosat(MainActivity.this, msg);
                 }
             }
         });
@@ -569,7 +607,7 @@ public class MainActivity extends BaseActivity
     @OnClick({R.id.tv_red, R.id.tv_prize_invited, R.id.tv_red_maneger
             , R.id.tv_save, R.id.tv_contect_phone, R.id.mainactivity_person_liner
             , R.id.mainactivity_select_liner, R.id.send_red_packet_img
-            , R.id.imageView,R.id.tv_active})
+            , R.id.imageView, R.id.tv_active})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_red:
@@ -761,6 +799,12 @@ public class MainActivity extends BaseActivity
                 tvName.setText("未登录");
                 imageView.setImageResource(R.mipmap.head);
                 tvCharge.setText("");
+                break;
+            case "REFRESH":
+                isFresh = 2;
+                break;
+            case "REFRESH_POSITION":
+                isFresh = 1;
                 break;
         }
     }

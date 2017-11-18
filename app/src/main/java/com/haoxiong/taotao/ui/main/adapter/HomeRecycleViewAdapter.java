@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.fan.service.Client;
 import com.fan.service.api.RedPacketListApi;
+import com.fan.service.response.RedPacketDetailResponse;
 import com.fan.service.response.RedPacketListResponse;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
@@ -71,6 +73,13 @@ public class HomeRecycleViewAdapter extends BaseQuickAdapter<RedPacketListRespon
                 }
                 break;
         }
-        GlideUtil.loadImg(context, "http://hbapi.huidang2105.com:8900/public/" + item.getMer_pics(), imageView);
+        GlideUtil.loadImg(context, Client.BASE_URL+"public/" + item.getMer_pics(), imageView);
+    }
+
+    public void replaceItem(int position, RedPacketDetailResponse.DataBean dataBean) {
+        getData().get(position).setGot(getData().get(position).getGot());
+        getData().get(position).setRemainCount(dataBean.getRemainCount());
+        notifyItemRemoved(position);
+        notifyItemInserted(position);
     }
 }

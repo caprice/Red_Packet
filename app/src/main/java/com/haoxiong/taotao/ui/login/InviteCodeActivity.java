@@ -101,6 +101,7 @@ public class InviteCodeActivity extends BaseActivity {
 
     }
     private void register() {
+        EventBus.getDefault().post(new Intent("REFRESH"));
         String etInviteCodeText = etInviteCode.getText().toString();
         if (TextUtils.isEmpty(etInviteCodeText)) {
             etInviteCodeText = null;

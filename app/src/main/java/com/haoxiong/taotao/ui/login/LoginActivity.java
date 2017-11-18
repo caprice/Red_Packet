@@ -148,6 +148,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
+        EventBus.getDefault().post(new Intent("REFRESH"));
         LoginServiceApi.login(LoginActivity.this, etLoginPhone.getText().toString(), etLoginCode.getText().toString(), "Android", new OnRequestCompletedListener<LoginResponse>() {
             @Override
             public void onCompleted(LoginResponse response, String msg) {
@@ -165,6 +166,7 @@ public class LoginActivity extends BaseActivity {
                     EventBus.getDefault().post(event);
                     if (exit) {
                         MainActivity.luncher(LoginActivity.this);
+
                     } else {
                         finish();
                     }

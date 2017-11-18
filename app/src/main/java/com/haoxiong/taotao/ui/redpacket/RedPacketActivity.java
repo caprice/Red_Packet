@@ -187,6 +187,7 @@ public class RedPacketActivity extends BaseActivity {
     private PopupWindow popupwindowShow;
     private int page=1;
     private int rid;
+    private boolean isGetRedPacket=false;
 
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacketActivity.class);
@@ -422,6 +423,14 @@ public class RedPacketActivity extends BaseActivity {
         love = detailResponse.isIscollect();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!isGetRedPacket) {
+            EventBus.getDefault().post(new Intent("REFRESH_POSITION"));
+        }
+        super.onBackPressed();
+    }
+
     @OnClick({R.id.liner_red_packet_back, R.id.liner_red_packet_love
             , R.id.tv_rea_packet_answer1, R.id.tv_rea_packet_answer2
             , R.id.tv_rea_packet_answer3,R.id.liner_red_packet_share})
@@ -583,7 +592,8 @@ public class RedPacketActivity extends BaseActivity {
                 showPopwin();
                 break;
             case 2:
-
+                isGetRedPacket = true;
+                EventBus.getDefault().post(new Intent("REFRESH"));
                 if (MyApp.login_state == 0) {
                     LoginActivity.luncher(RedPacketActivity.this);
                 } else {
@@ -609,6 +619,7 @@ public class RedPacketActivity extends BaseActivity {
                                 .show();
 
                     } else {
+
                         if (answer != -1) {
                             RedPacketListApi.getRedPacket(RedPacketActivity.this, MyApp.token, dataBean.getRid(), answer, new OnRequestCompletedListener<GetRedPacketResponse>() {
                                 @Override
@@ -647,12 +658,16 @@ public class RedPacketActivity extends BaseActivity {
 
                 break;
             case 5:
+                isGetRedPacket = true;
+                EventBus.getDefault().post(new Intent("REFRESH"));
                 ToastUtils.toTosat(RedPacketActivity.this, "您已抢过此红包");
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
                 tvRedPacketBottom.setText("抢红包");
                 linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
                 break;
             case 6:
+                isGetRedPacket = true;
+                EventBus.getDefault().post(new Intent("REFRESH"));
                 ToastUtils.toTosat(RedPacketActivity.this, "此红包已抢完");
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
                 tvRedPacketBottom.setText("抢红包");

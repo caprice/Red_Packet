@@ -8,6 +8,7 @@ import com.fan.service.RetrofitApplication;
 import com.fan.service.response.ActiveResponse;
 import com.fan.service.response.AlipayResponse;
 import com.fan.service.response.GetRedPacketResponse;
+import com.fan.service.response.RedOwerResponse;
 import com.fan.service.response.RedPacketDetailResponse;
 import com.fan.service.response.RedPacketListResponse;
 import com.fan.service.response.SaveResponse;
@@ -80,7 +81,6 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        listener.onCompleted(null, "网络连接失败");
                     }
 
                     @Override
@@ -608,6 +608,35 @@ public class RedPacketListApi {
 
                     @Override
                     public void onNext(@NonNull ActiveResponse response) {
+                            listener.onCompleted(response, response.getMsg());
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        listener.onCompleted(null,"服务器数据异常");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+    public static void redpostterList(final Context context, int page,  int rid,
+                                 final OnRequestCompletedListener<RedOwerResponse> listener) {
+        ((RetrofitApplication) context.getApplicationContext()).getClient()
+                .getRedPacketListService()
+                .redpostterList(page,10,rid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RedOwerResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull RedOwerResponse response) {
                         listener.onCompleted(response,"成功");
                     }
 

@@ -21,11 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.RedPacketListApi;
 import com.fan.service.request.SendRedPacketRequest;
 import com.fan.service.response.CollectRedPacketResponse;
 import com.fan.service.response.RedManagerResponse;
+import com.fan.service.response.RedOwerResponse;
 import com.fan.service.response.RedPacketDetailResponse;
 import com.fan.service.response.RedPacketListResponse;
 import com.fan.service.response.SaveResponse;
@@ -121,9 +123,11 @@ public class RedPacket1Activity extends BaseActivity {
     private RedManagerResponse.DataBean.RedsOnBean redsOnBean;
     private RedPacketDetailResponse.DataBean detailResponse;
     private CollectRedPacketResponse.DataBean collcetbean;
-    private List<RedPacketDetailResponse.DataBean.GetterBean> data = new ArrayList<>();
+    private List<RedOwerResponse.DataBean> data = new ArrayList<>();
     private RecycleRedPacketWinerAdapter adapter;
     private boolean love;
+    private int page = 1;
+    private int rid;
 
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacket1Activity.class);
@@ -168,6 +172,13 @@ public class RedPacket1Activity extends BaseActivity {
         recycleRedPacketWiner.setLayoutManager(new FullyLinearLayoutManager(RedPacket1Activity.this, LinearLayoutManager.VERTICAL, false));
         adapter = new RecycleRedPacketWinerAdapter(R.layout.item_red_packet_winer_adapter, RedPacket1Activity.this, data);
         recycleRedPacketWiner.setAdapter(adapter);
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                page++;
+                getOwener(page,rid);
+            }
+        },recycleRedPacketWiner);
         switch (MyApp.TYPE) {
             case 1:
                 sendRedPacketRequest = getIntent().getParcelableExtra("content");
@@ -184,24 +195,28 @@ public class RedPacket1Activity extends BaseActivity {
                 GlideUtil.loadImg(RedPacket1Activity.this, sendRedPacketRequest.getPic1_filecode(), imgRedPacketPic);
                 imgRedPacketBottom.setVisibility(View.GONE);
                 tvRedPacketBottom.setText("塞钱进红包");
+                rid = sendRedPacketRequest.getRid();
                 break;
             case 2:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
                 tvRedPacketBottom.setText("抢红包");
                 dataBean = getIntent().getParcelableExtra("content");
                 getDetailData(dataBean.getRid());
+                rid = dataBean.getRid();
                 break;
             case 3:
                 imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
                 linerRedPacketBottom.setVisibility(View.GONE);
                 collcetbean = getIntent().getParcelableExtra("content");
                 getDetailData(collcetbean.getRId());
+                rid = collcetbean.getRId();
                 break;
             case 4:
                 linerRedPacketLove.setVisibility(View.GONE);
                 linerRedPacketBottom.setVisibility(View.GONE);
                 redsOnBean = getIntent().getParcelableExtra("content");
                 getDetailData(redsOnBean.getRid());
+                rid = redsOnBean.getRid();
                 break;
             case 5:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
@@ -209,12 +224,14 @@ public class RedPacket1Activity extends BaseActivity {
                 dataBean = getIntent().getParcelableExtra("content");
                 linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
                 getDetailData(dataBean.getRid());
+                rid = dataBean.getRid();
                 break;
         }
 
     }
 
     private void getDetailData(int rid) {
+        getOwener(page, rid);
         showProgressDialog("数据加载中...");
         switch (MyApp.login_state) {
             case 0:
@@ -250,6 +267,35 @@ public class RedPacket1Activity extends BaseActivity {
         }
     }
 
+    private void getOwener(final int page1, final int rid) {
+        RedPacketListApi.redpostterList(RedPacket1Activity.this, page1, rid, new OnRequestCompletedListener<RedOwerResponse>() {
+            @Override
+            public void onCompleted(RedOwerResponse response, String msg) {
+                adapter.loadMoreComplete();
+                if (response == null) {
+                    adapter.setEnableLoadMore(false);
+                    adapter.loadMoreEnd();
+                    ToastUtils.toTosat(RedPacket1Activity.this, "网络跑丢了");
+                }
+                if (response.getErr() == 0) {
+                    if (response.getData() != null && response.getData().size() > 0) {
+                        if (page1 == 1) {
+                            adapter.setNewData(response.getData());
+                        } else {
+                            adapter.addData(response.getData());
+                        }
+                        adapter.setEnableLoadMore(true);
+                    } else {
+                        adapter.setEnableLoadMore(false);
+                        adapter.loadMoreEnd();
+                    }
+                } else {
+                    ToastUtils.toTosat(RedPacket1Activity.this, response.getMsg());
+                }
+            }
+        });
+    }
+
     private void refreshView() {
         tvRedPacketMoney.setText(detailResponse.getMoney() + "元/" + detailResponse.getPCount() + "个");
         tvRedPacketNum.setText(detailResponse.getRemainCount() + "个");
@@ -272,9 +318,7 @@ public class RedPacket1Activity extends BaseActivity {
         tvReaPacketAnswer2.setText(detailResponse.getAnswer1());
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
         GlideUtil.loadImg(RedPacket1Activity.this, detailResponse.getUserPic(), imgRedPacketPic);
-        if (detailResponse.getGetter() != null) {
-            adapter.setNewData(detailResponse.getGetter());
-        }
+
         if (detailResponse.isIscollect()) {
             imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
         }
@@ -419,7 +463,7 @@ public class RedPacket1Activity extends BaseActivity {
             @Override
             public void onCompleted(SaveResponse response, String msg) {
                 if (response == null) {
-                    ToastUtils.toTosat(RedPacket1Activity.this,msg);
+                    ToastUtils.toTosat(RedPacket1Activity.this, msg);
                     return;
                 }
                 if (response.getErr() == 0) {

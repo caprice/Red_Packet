@@ -476,6 +476,8 @@ public class MainActivity extends BaseActivity
                         ActiveFragment activeFragment = new ActiveFragment(data1);
                         activeFragment.show(getFragmentManager(), "2");
                     }
+                } else {
+                    ToastUtils.toTosat(MainActivity.this,msg);
                 }
             }
         });

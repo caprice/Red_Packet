@@ -98,7 +98,6 @@ public class LoginServiceApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        listener.onCompleted(null, "网络连接失败");
                     }
 
                     @Override

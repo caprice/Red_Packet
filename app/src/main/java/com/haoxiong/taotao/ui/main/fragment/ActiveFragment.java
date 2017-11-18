@@ -63,8 +63,8 @@ public class ActiveFragment extends DialogFragment {
         getDialog().setCanceledOnTouchOutside(false);
         if (data != null && data.size() > 0) {
             for (int i = 0; i < data.size(); i++) {
-//                imgs.add(data.get(i).getHdtp());
-                imgs.add("https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D220/sign=04bcb05cc3177f3e0f34fb0f40ce3bb9/faedab64034f78f02242b81973310a55b2191c8a.jpg");
+                imgs.add(data.get(i).getHdtp());
+//                imgs.add("https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D220/sign=04bcb05cc3177f3e0f34fb0f40ce3bb9/faedab64034f78f02242b81973310a55b2191c8a.jpg");
             }
 
             convenientBanner.setPages(
@@ -87,7 +87,7 @@ public class ActiveFragment extends DialogFragment {
                 public void onItemClick(int position) {
                  /*   ToastUtils.toTosat(getActivity(), position + "");
                     WebViewActivity.lunch(getActivity(), imgs.get(position));*/
-                    WebViewActivity.lunch(getActivity(), "https://www.baidu.com/");
+                    WebViewActivity.lunch(getActivity(), data.get(position).getHdurl());
                 }
             });
 

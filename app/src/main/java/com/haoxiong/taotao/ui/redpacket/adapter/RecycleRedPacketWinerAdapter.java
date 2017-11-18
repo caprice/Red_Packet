@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.fan.service.response.RedOwerResponse;
 import com.fan.service.response.RedPacketDetailResponse;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.util.GlideUtil;
@@ -21,16 +22,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 创建时间：2017/9/10.0:29
  */
 
-public class RecycleRedPacketWinerAdapter extends BaseQuickAdapter<RedPacketDetailResponse.DataBean.GetterBean, BaseViewHolder> {
+public class RecycleRedPacketWinerAdapter extends BaseQuickAdapter<RedOwerResponse.DataBean, BaseViewHolder> {
     Context context;
 
-    public RecycleRedPacketWinerAdapter(@LayoutRes int layoutResId, Context context, @Nullable List<RedPacketDetailResponse.DataBean.GetterBean> data) {
+    public RecycleRedPacketWinerAdapter(@LayoutRes int layoutResId, Context context, @Nullable List<RedOwerResponse.DataBean> data) {
         super(layoutResId, data);
         this.context = context;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, RedPacketDetailResponse.DataBean.GetterBean item) {
+    protected void convert(BaseViewHolder helper,RedOwerResponse.DataBean item) {
         if (getData().indexOf(item) == 0) {
             helper.setVisible(R.id.tv_item_red_money_pic, true);
         } else {

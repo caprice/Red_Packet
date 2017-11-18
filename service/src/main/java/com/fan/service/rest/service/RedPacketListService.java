@@ -4,6 +4,7 @@ import com.fan.service.response.ActiveResponse;
 import com.fan.service.response.AlipayResponse;
 import com.fan.service.response.GetRedPacketResponse;
 import com.fan.service.response.LoginResponse;
+import com.fan.service.response.RedOwerResponse;
 import com.fan.service.response.RedPacketDetailResponse;
 import com.fan.service.response.RedPacketListResponse;
 import com.fan.service.response.SaveResponse;
@@ -237,8 +238,21 @@ public interface RedPacketListService {
      * http://hb.huidang2105.com:8900/public/index.php/update_device?token=wwk0mT0MlSDssTcmrPkQYue9aBMArlDzeAsFd5Sa&device=554929
      */
     @FormUrlEncoded
-    @POST("http://hb.huidang2105.com:8900/public/index.php/get_activity_lb")
+    @POST("public/index.php/get_activity_lb")
     Observable<ActiveResponse> getActive(
             @Field("token") String token
+    );
+
+    /**
+     * 红包得主
+     * mobile
+     * xh checked 20170424
+     */
+    @FormUrlEncoded
+    @POST("public/index.php/redpostterList")
+    Observable<RedOwerResponse> redpostterList(
+            @Field("page") int page,
+            @Field("num") int num,
+            @Field("rid") int rid
     );
 }

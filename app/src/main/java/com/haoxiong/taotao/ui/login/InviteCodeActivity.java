@@ -108,6 +108,7 @@ public class InviteCodeActivity extends BaseActivity {
         LoginServiceApi.register(InviteCodeActivity.this,phone, etInviteCodeText, new OnRequestCompletedListener<RegisterResponse>() {
             @Override
             public void onCompleted(RegisterResponse response, String msg) {
+                dismissProgressDialog();
                 if (response == null) {
                     ToastUtils.toTosat(InviteCodeActivity.this, msg);
                     return;

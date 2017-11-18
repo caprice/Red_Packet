@@ -141,8 +141,6 @@ public class MainActivity extends BaseActivity
             }
         });
         refreshAlways();
-
-
     }
 
     private void refreshData() {
@@ -513,6 +511,8 @@ public class MainActivity extends BaseActivity
                         }
                         ActiveFragment activeFragment = new ActiveFragment(data1);
                         activeFragment.show(getFragmentManager(), "2");
+                    } else {
+                        ToastUtils.toTosat(MainActivity.this, "不好意思，暂无活动");
                     }
                 } else {
                     ToastUtils.toTosat(MainActivity.this, msg);

@@ -267,7 +267,7 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        listener.onCompleted(null, "服务器异常...");
+                        listener.onCompleted(null, "网络跑丢了...");
                     }
 
                     @Override
@@ -317,7 +317,7 @@ public class RedPacketListApi {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        listener.onCompleted(null, "服务器错误");
+                        listener.onCompleted(null, "网络跑丢了");
                     }
 
                     @Override

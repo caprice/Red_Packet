@@ -113,7 +113,7 @@ public class WalletActivity extends BaseActivity {
                                     }
 
                                 } else {
-                                    ToastUtils.toTosat(WalletActivity.this, "服务器错误");
+                                    ToastUtils.toTosat(WalletActivity.this, "网络跑丢了");
                                 }
 
                             }

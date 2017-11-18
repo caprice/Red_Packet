@@ -31,11 +31,17 @@ public class RecycleRedPacketWinerAdapter extends BaseQuickAdapter<RedPacketDeta
 
     @Override
     protected void convert(BaseViewHolder helper, RedPacketDetailResponse.DataBean.GetterBean item) {
+        if (getData().indexOf(item) == 0) {
+            helper.setVisible(R.id.tv_item_red_money_pic, true);
+        } else {
+            helper.setVisible(R.id.tv_item_red_money_pic, false);
+        }
         helper.setText(R.id.tv_item_red_name, item.getUserName());
         helper.setText(R.id.tv_item_red_add, item.getAddress());
         helper.setText(R.id.tv_item_red_time, item.getGetTime());
-        helper.setText(R.id.tv_item_red_money, item.getMoney()+"元");
-        CircleImageView img_item_red_pic = (CircleImageView)helper.getView(R.id.img_item_red_pic);
-        GlideUtil.loadImg(context,R.mipmap.head, item.getUserPic(), img_item_red_pic);
+        helper.setText(R.id.tv_item_red_money, item.getMoney() + "元");
+        CircleImageView img_item_red_pic = (CircleImageView) helper.getView(R.id.img_item_red_pic);
+        GlideUtil.loadImg(context, R.mipmap.head, item.getUserPic(), img_item_red_pic);
     }
+
 }

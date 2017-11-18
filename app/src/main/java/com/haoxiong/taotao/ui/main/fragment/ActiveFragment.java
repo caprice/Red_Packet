@@ -17,6 +17,7 @@ import com.fan.service.response.ActiveResponse;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.util.GlideUtil;
 import com.haoxiong.taotao.util.ToastUtils;
+import com.haoxiong.taotao.webview.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class ActiveFragment extends DialogFragment {
     private com.bigkoo.convenientbanner.ConvenientBanner convenientBanner;
     private ArrayList<ActiveResponse.DataBean> data;
     private List<String> imgs = new ArrayList<>();
+    private ImageView imgactiveclose;
+
     public ActiveFragment(ArrayList<ActiveResponse.DataBean> data) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("img", data);
@@ -41,9 +44,16 @@ public class ActiveFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_activity, container, false);
+        this.imgactiveclose = (ImageView) view.findViewById(R.id.img_active_close);
         this.convenientBanner = (ConvenientBanner) view.findViewById(R.id.convenientBanner);
         Bundle bundle = getArguments();
         data = bundle.getParcelableArrayList("img");
+        imgactiveclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         return view;
     }
 
@@ -71,24 +81,24 @@ public class ActiveFragment extends DialogFragment {
                     .startTurning(2000)     //设置自动切换（同时设置了切换时间间隔）
                     .setManualPageable(true);  //设置手动影响（设置了该项无法手动切换）
 
-                    //设置翻页的效果，不需要翻页效果可用不设
-            convenientBanner.setOnItemClickListener(new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(int position) {
-                            ToastUtils.toTosat(getActivity(), position + "");
-                        }
-                    });
             //设置翻页的效果，不需要翻页效果可用不设
-            //.setPageTransformer(Transformer.DefaultTransformer);    集成特效之后会有白屏现象，新版已经分离，如果要集成特效的例子可以看Demo的点击响应。
-//        convenientBanner.setManualPageable(false);//设置不能手动影响
+            convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                 /*   ToastUtils.toTosat(getActivity(), position + "");
+                    WebViewActivity.lunch(getActivity(), imgs.get(position));*/
+                    WebViewActivity.lunch(getActivity(), "https://www.baidu.com/");
+                }
+            });
 
         } else {
             dismiss();
         }
-
     }
-     class LocalImageHolderView implements Holder<String> {
+
+    class LocalImageHolderView implements Holder<String> {
         private ImageView imageView;
+
         @Override
         public View createView(Context context) {
             imageView = new ImageView(context);
@@ -99,7 +109,7 @@ public class ActiveFragment extends DialogFragment {
         @Override
         public void UpdateUI(Context context, final int position, String data) {
             imageView.setImageResource(R.mipmap.item);
-            GlideUtil.loadImg(context, "http://hbapi.huidang2105.com:8900/public/" + data, imageView);
+            GlideUtil.loadImg(context, data, imageView);
         }
     }
 }

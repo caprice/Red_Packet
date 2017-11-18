@@ -8,8 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -44,14 +42,11 @@ import com.fan.service.response.WalletResponse;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
-import com.haoxiong.taotao.callback.Icallback;
-import com.haoxiong.taotao.service.GaodelocationService;
 import com.haoxiong.taotao.ui.collect.CollectActivity;
 import com.haoxiong.taotao.ui.login.LoginActivity;
 import com.haoxiong.taotao.ui.main.adapter.HomeRecycleViewAdapter;
 import com.haoxiong.taotao.ui.main.fragment.ActiveFragment;
 import com.haoxiong.taotao.ui.person.PersonDataActivity;
-import com.haoxiong.taotao.ui.person.SexFragment;
 import com.haoxiong.taotao.ui.redmaneger.RedMangerActivity;
 import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
 import com.haoxiong.taotao.ui.sendredpacket.SetMoneyActivity;
@@ -101,8 +96,6 @@ public class MainActivity extends BaseActivity
     ImageView imageView3;
     @BindView(R.id.mainactivity_select_liner)
     LinearLayout mainactivitySelectLiner;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
     @BindView(R.id.main_recycle)
     RecyclerView mainRecycle;
     @BindView(R.id.content_main)
@@ -111,6 +104,8 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawerLayout;
     @BindView(R.id.main_swiperefreshlayout)
     SwipeRefreshLayout mainSwiperefreshlayout;
+    @BindView(R.id.tv_active)
+    TextView tvActive;
 
     private List<RedPacketListResponse.DataBean> data = new ArrayList<>();
     private LinearLayoutManager manager;
@@ -122,7 +117,7 @@ public class MainActivity extends BaseActivity
     public AMapLocationClient mLocationClient = null;
     public AMapLocationClientOption mLocationOption = null;
     private View footView;
-    private FloatingActionButton fab1;
+    private ImageView fab1;
 
 
     @Override
@@ -132,7 +127,7 @@ public class MainActivity extends BaseActivity
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         assinview();
-        fab1 = (FloatingActionButton) findViewById(R.id.fab);
+        fab1 = (ImageView) findViewById(R.id.fab);
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -349,22 +344,7 @@ public class MainActivity extends BaseActivity
 
 
     private void assinview() {
-        RedPacketListApi.getActive(MainActivity.this, MyApp.token, new OnRequestCompletedListener<ActiveResponse>() {
-            @Override
-            public void onCompleted(ActiveResponse response, String msg) {
-                if (response != null&&response.getErr()==0) {
-                    List<ActiveResponse.DataBean> data = response.getData();
-                    ArrayList<ActiveResponse.DataBean> data1 = new ArrayList<>();
-                    if (data != null && data.size() > 0) {
-                        for (int i = 0; i < data.size(); i++) {
-                            data1.add(data.get(i));
-                        }
-                        ActiveFragment activeFragment = new ActiveFragment(data1);
-                        activeFragment.show(getFragmentManager(), "2");
-                    }
-                }
-            }
-        });
+        getActive();
 //        startActivity(new Intent(MainActivity.this, GaodelocationService.class));
         mainSwiperefreshlayout.setEnabled(false);
         showProgressDialog("请稍后...");
@@ -482,6 +462,25 @@ public class MainActivity extends BaseActivity
         });
     }
 
+    private void getActive() {
+        RedPacketListApi.getActive(MainActivity.this, MyApp.token, new OnRequestCompletedListener<ActiveResponse>() {
+            @Override
+            public void onCompleted(ActiveResponse response, String msg) {
+                if (response != null && response.getErr() == 0) {
+                    List<ActiveResponse.DataBean> data = response.getData();
+                    ArrayList<ActiveResponse.DataBean> data1 = new ArrayList<>();
+                    if (data != null && data.size() > 0) {
+                        for (int i = 0; i < data.size(); i++) {
+                            data1.add(data.get(i));
+                        }
+                        ActiveFragment activeFragment = new ActiveFragment(data1);
+                        activeFragment.show(getFragmentManager(), "2");
+                    }
+                }
+            }
+        });
+    }
+
     AMapLocationListener mLocationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation aMapLocation) {
@@ -568,7 +567,7 @@ public class MainActivity extends BaseActivity
     @OnClick({R.id.tv_red, R.id.tv_prize_invited, R.id.tv_red_maneger
             , R.id.tv_save, R.id.tv_contect_phone, R.id.mainactivity_person_liner
             , R.id.mainactivity_select_liner, R.id.send_red_packet_img
-            , R.id.imageView})
+            , R.id.imageView,R.id.tv_active})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_red:
@@ -640,6 +639,9 @@ public class MainActivity extends BaseActivity
                         PersonDataActivity.luncher(MainActivity.this);
                         break;
                 }
+                break;
+            case R.id.tv_active:
+                getActive();
                 break;
         }
     }

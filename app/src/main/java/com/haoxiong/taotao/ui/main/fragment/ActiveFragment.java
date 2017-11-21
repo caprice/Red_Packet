@@ -4,9 +4,11 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -14,7 +16,9 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.fan.service.response.ActiveResponse;
+import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
+import com.haoxiong.taotao.ui.login.LoginActivity;
 import com.haoxiong.taotao.util.GlideUtil;
 import com.haoxiong.taotao.util.ToastUtils;
 import com.haoxiong.taotao.webview.WebViewActivity;
@@ -43,6 +47,7 @@ public class ActiveFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         View view = inflater.inflate(R.layout.fragment_activity, container, false);
         this.imgactiveclose = (ImageView) view.findViewById(R.id.img_active_close);
         this.convenientBanner = (ConvenientBanner) view.findViewById(R.id.convenientBanner);
@@ -87,7 +92,12 @@ public class ActiveFragment extends DialogFragment {
                 public void onItemClick(int position) {
                  /*   ToastUtils.toTosat(getActivity(), position + "");
                     WebViewActivity.lunch(getActivity(), imgs.get(position));*/
-                    WebViewActivity.lunch(getActivity(), data.get(position).getHdurl());
+                    if (MyApp.login_state == 1) {
+                        WebViewActivity.lunch(getActivity(), data.get(position).getHdurl()+"?token="+MyApp.token);
+                    } else {
+                        LoginActivity.luncher(getActivity());
+                    }
+
                 }
             });
 

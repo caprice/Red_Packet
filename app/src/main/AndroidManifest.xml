@@ -360,7 +360,8 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".webview.WebViewActivity"></activity>
+        <activity android:name=".webview.WebViewActivity" />
+        <activity android:name=".ui.redpacket.AllOwnerActivity"></activity>
     </application>
 
 </manifest>

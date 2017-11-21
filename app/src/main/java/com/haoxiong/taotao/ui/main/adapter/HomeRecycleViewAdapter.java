@@ -79,7 +79,6 @@ public class HomeRecycleViewAdapter extends BaseQuickAdapter<RedPacketListRespon
     public void replaceItem(int position, RedPacketDetailResponse.DataBean dataBean) {
         getData().get(position).setGot(getData().get(position).getGot());
         getData().get(position).setRemainCount(dataBean.getRemainCount());
-        notifyItemRemoved(position);
-        notifyItemInserted(position);
+        notifyItemChanged(position);
     }
 }

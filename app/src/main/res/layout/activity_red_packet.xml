@@ -4,8 +4,8 @@
     android:id="@+id/activity_red_packet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#ffffff"
+    android:orientation="vertical"
     tools:context="com.haoxiong.taotao.ui.redpacket.RedPacketActivity">
 
     <LinearLayout
@@ -37,9 +37,9 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:background="@color/colorPrimary"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:background="@color/colorPrimary">
 
         <LinearLayout
             android:id="@+id/liner_red_packet_back"
@@ -70,13 +70,14 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_logo" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackground"
-            android:gravity="center_vertical|end"
-            >
+            android:gravity="center_vertical|end">
+
             <LinearLayout
                 android:id="@+id/liner_red_packet_love"
                 android:layout_width="46dp"
@@ -94,6 +95,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_love_unselect" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/liner_red_packet_share"
                 android:layout_width="46dp"
@@ -116,13 +118,13 @@
     </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_marginBottom="44dp"
         android:id="@+id/srl_red_packet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/relativeLayout"
-        android:layout_alignParentStart="true">
+        android:layout_marginBottom="44dp"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,8 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="fitXY"
-                android:src="@mipmap/item"
-                />
+                android:src="@mipmap/item" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -193,17 +194,19 @@
                         tools:text="1000个" />
                 </LinearLayout>
             </RelativeLayout>
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
+                android:layout_marginTop="10dp"
                 android:background="#B9B9B9" />
+
             <TextView
-                android:lineSpacingMultiplier="1.2"
                 android:id="@+id/tv_rea_packet_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:lineSpacingMultiplier="1.2"
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
@@ -222,25 +225,26 @@
 
             <LinearLayout
                 android:id="@+id/liner_all"
-                android:paddingTop="10dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
                 <LinearLayout
                     android:id="@+id/liner_tel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="10dp"
-                    >
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp">
+
                     <TextView
+                        android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="电话："
                         android:textColor="#333333"
-                        android:textSize="13sp"
-                        android:id="@+id/textView3" />
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/tv_rea_packet_tel"
@@ -250,14 +254,14 @@
                         android:textColor="#989898"
                         android:textSize="13sp" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_marginBottom="10dp"
                     android:id="@+id/liner_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    >
+                    android:layout_marginRight="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -267,10 +271,10 @@
                         android:textSize="13sp" />
 
                     <TextView
-                        android:lineSpacingMultiplier="1.2"
                         android:id="@+id/tv_rea_packet_add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:lineSpacingMultiplier="1.2"
                         android:text=""
                         android:textColor="#989898"
                         android:textSize="13sp" />
@@ -331,22 +335,19 @@
                 android:paddingTop="11dp">
 
                 <TextView
-                    android:textSize="13sp"
-                    android:padding="2dp"
-                    android:textColor="#666666"
                     android:id="@+id/tv_rea_packet_answer1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
                     android:background="@drawable/answer_wrong"
                     android:gravity="center"
+                    android:padding="2dp"
+
+                    android:textColor="#666666"
+                    android:textSize="13sp"
                     tools:text="1" />
 
                 <TextView
-                    android:textSize="13sp"
-                    android:padding="2dp"
-                    android:textColor="#666666"
                     android:id="@+id/tv_rea_packet_answer2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -354,12 +355,12 @@
                     android:layout_weight="1"
                     android:background="@drawable/answer_wrong"
                     android:gravity="center"
+                    android:padding="2dp"
+                    android:textColor="#666666"
+                    android:textSize="13sp"
                     tools:text="2" />
 
                 <TextView
-                    android:textSize="13sp"
-                    android:padding="2dp"
-                    android:textColor="#666666"
                     android:id="@+id/tv_rea_packet_answer3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -367,6 +368,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/answer_wrong"
                     android:gravity="center"
+                    android:padding="2dp"
+                    android:textColor="#666666"
+                    android:textSize="13sp"
                     tools:text="3" />
             </LinearLayout>
 
@@ -379,31 +383,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="16dp"
                 android:background="#f3f4f6" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="#B9B9B9" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingBottom="10dp"
+            <RelativeLayout
                 android:paddingLeft="15dp"
-                android:paddingTop="10dp">
+                android:paddingRight="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp"
 
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:src="@drawable/ic_red_winer" />
-
+                    android:paddingTop="10dp">
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_red_winer" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="红包得主"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+                </LinearLayout>
                 <TextView
+                    android:visibility="gone"
+                    android:id="@+id/red_all"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:text="红包得主"
+                    android:text="全部得主"
                     android:textColor="#333333"
                     android:textSize="14sp" />
-            </LinearLayout>
+            </RelativeLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -412,10 +435,10 @@
                 android:background="#B9B9B9" />
 
             <android.support.v7.widget.RecyclerView
-                android:nestedScrollingEnabled="false"
                 android:id="@+id/recycle_red_packet_winer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

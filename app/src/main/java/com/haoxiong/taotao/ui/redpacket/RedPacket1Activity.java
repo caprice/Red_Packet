@@ -172,13 +172,14 @@ public class RedPacket1Activity extends BaseActivity {
         recycleRedPacketWiner.setLayoutManager(new FullyLinearLayoutManager(RedPacket1Activity.this, LinearLayoutManager.VERTICAL, false));
         adapter = new RecycleRedPacketWinerAdapter(R.layout.item_red_packet_winer_adapter, RedPacket1Activity.this, data);
         recycleRedPacketWiner.setAdapter(adapter);
-        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+        View view = getLayoutInflater().inflate(R.layout.footer, null);
+        adapter.addFooterView(view);
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onLoadMoreRequested() {
-                page++;
-                getOwener(page,rid);
+            public void onClick(View v) {
+                AllOwnerActivity.launch(RedPacket1Activity.this, rid);
             }
-        },recycleRedPacketWiner);
+        });
         switch (MyApp.TYPE) {
             case 1:
                 sendRedPacketRequest = getIntent().getParcelableExtra("content");
@@ -271,23 +272,12 @@ public class RedPacket1Activity extends BaseActivity {
         RedPacketListApi.redpostterList(RedPacket1Activity.this, page1, rid, new OnRequestCompletedListener<RedOwerResponse>() {
             @Override
             public void onCompleted(RedOwerResponse response, String msg) {
-                adapter.loadMoreComplete();
                 if (response == null) {
-                    adapter.setEnableLoadMore(false);
-                    adapter.loadMoreEnd();
                     ToastUtils.toTosat(RedPacket1Activity.this, "网络跑丢了");
                 }
                 if (response.getErr() == 0) {
                     if (response.getData() != null && response.getData().size() > 0) {
-                        if (page1 == 1) {
-                            adapter.setNewData(response.getData());
-                        } else {
-                            adapter.addData(response.getData());
-                        }
-                        adapter.setEnableLoadMore(true);
-                    } else {
-                        adapter.setEnableLoadMore(false);
-                        adapter.loadMoreEnd();
+                        adapter.setNewData(response.getData());
                     }
                 } else {
                     ToastUtils.toTosat(RedPacket1Activity.this, response.getMsg());

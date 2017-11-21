@@ -1,6 +1,7 @@
 package com.haoxiong.taotao.ui.main;
 
 import android.Manifest;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -486,13 +487,26 @@ public class MainActivity extends BaseActivity
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                if (layoutManager instanceof LinearLayoutManager) {
+                    int position = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                    Log.e("...", position + "");
+                    if (position >= 6) {
+                        fab1.setVisibility(View.VISIBLE);
+                    }
+                }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 10) {
-                    fab1.setVisibility(View.VISIBLE);
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                if (layoutManager instanceof LinearLayoutManager) {
+                    int position = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                    Log.e("...", position + "");
+                    if (position  >= 6) {
+                        fab1.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });

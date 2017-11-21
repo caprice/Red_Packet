@@ -29,12 +29,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.PayServiceApi;
 import com.fan.service.api.RedPacketListApi;
@@ -107,6 +105,8 @@ public class RedPacketActivity extends BaseActivity {
     LinearLayout linerAll;
     @BindView(R.id.liner_red_packet_share)
     LinearLayout linerRedPacketShare;
+    @BindView(R.id.red_all)
+    TextView redAll;
     //    public static final String PARTNER = "2088621558884290";
 //    // 商户收款账号
 //    public static final String SELLER = "haoxiong2017@163.com";
@@ -185,9 +185,9 @@ public class RedPacketActivity extends BaseActivity {
     private boolean love;
     private int answer = -1;
     private PopupWindow popupwindowShow;
-    private int page=1;
+    private int page = 1;
     private int rid;
-    private boolean isGetRedPacket=false;
+    private boolean isGetRedPacket = false;
 
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacketActivity.class);
@@ -233,13 +233,14 @@ public class RedPacketActivity extends BaseActivity {
         recycleRedPacketWiner.setLayoutManager(new FullyLinearLayoutManager(RedPacketActivity.this, LinearLayoutManager.VERTICAL, false));
         adapter = new RecycleRedPacketWinerAdapter(R.layout.item_red_packet_winer_adapter, RedPacketActivity.this, data);
         recycleRedPacketWiner.setAdapter(adapter);
-        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+        View view = getLayoutInflater().inflate(R.layout.footer, null);
+        adapter.addFooterView(view);
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onLoadMoreRequested() {
-                page++;
-                getOwener(page, rid);
+            public void onClick(View v) {
+                AllOwnerActivity.launch(RedPacketActivity.this, rid);
             }
-        },recycleRedPacketWiner);
+        });
         switch (MyApp.TYPE) {
             case 1:
                 sendRedPacketRequest = getIntent().getParcelableExtra("content");
@@ -366,26 +367,17 @@ public class RedPacketActivity extends BaseActivity {
         }
 
     }
+
     private void getOwener(final int page1, final int rid) {
         RedPacketListApi.redpostterList(RedPacketActivity.this, page1, rid, new OnRequestCompletedListener<RedOwerResponse>() {
             @Override
             public void onCompleted(RedOwerResponse response, String msg) {
-                adapter.loadMoreComplete();
                 if (response == null) {
-                    adapter.loadMoreEnd();
                     ToastUtils.toTosat(RedPacketActivity.this, "网络跑丢了");
                 }
                 if (response.getErr() == 0) {
                     if (response.getData() != null && response.getData().size() > 0) {
-                        if (page1 == 1) {
-                            adapter.setNewData(response.getData());
-                        } else {
-                            adapter.addData(response.getData());
-                        }
-                        adapter.setEnableLoadMore(true);
-                    } else {
-                        adapter.setEnableLoadMore(false);
-                        adapter.loadMoreEnd();
+                        adapter.setNewData(response.getData());
                     }
                 } else {
                     ToastUtils.toTosat(RedPacketActivity.this, response.getMsg());
@@ -393,6 +385,7 @@ public class RedPacketActivity extends BaseActivity {
             }
         });
     }
+
     private void refreshView() {
         linerRedPacketLove.setVisibility(View.VISIBLE);
         tvRedPacketMoney.setText(detailResponse.getMoney() + "元/" + detailResponse.getPCount() + "个");
@@ -416,7 +409,6 @@ public class RedPacketActivity extends BaseActivity {
         tvReaPacketAnswer2.setText(detailResponse.getAnswer1());
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
         GlideUtil.loadImg(RedPacketActivity.this, detailResponse.getUserPic(), imgRedPacketPic);
-
         if (detailResponse.isIscollect()) {
             imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
         }
@@ -433,7 +425,8 @@ public class RedPacketActivity extends BaseActivity {
 
     @OnClick({R.id.liner_red_packet_back, R.id.liner_red_packet_love
             , R.id.tv_rea_packet_answer1, R.id.tv_rea_packet_answer2
-            , R.id.tv_rea_packet_answer3,R.id.liner_red_packet_share})
+            , R.id.tv_rea_packet_answer3, R.id.liner_red_packet_share
+            , R.id.red_all})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.liner_red_packet_back:
@@ -476,6 +469,9 @@ public class RedPacketActivity extends BaseActivity {
             case R.id.liner_red_packet_share:
                 share(linerRedPacketShare);
                 break;
+            case R.id.red_all:
+                AllOwnerActivity.launch(RedPacketActivity.this, rid);
+                break;
         }
     }
 
@@ -486,7 +482,7 @@ public class RedPacketActivity extends BaseActivity {
                 rid = sendRedPacketRequest.getRid();
                 break;
             case 2:
-                 rid = dataBean.getRid();
+                rid = dataBean.getRid();
                 break;
             case 3:
 
@@ -516,6 +512,7 @@ public class RedPacketActivity extends BaseActivity {
         }
 
     }
+
     private UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onStart(SHARE_MEDIA platform) {
@@ -531,7 +528,7 @@ public class RedPacketActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            ToastUtils.toTosat(RedPacketActivity.this,  t.getMessage());
+            ToastUtils.toTosat(RedPacketActivity.this, t.getMessage());
             if (t != null) {
             }
         }
@@ -541,6 +538,7 @@ public class RedPacketActivity extends BaseActivity {
             ToastUtils.toTosat(RedPacketActivity.this, "分享取消了");
         }
     };
+
     private void love() {
         /**
          * 1 发红包 2 抢红包 3 收藏 4 红包管理 5一抢过
@@ -823,7 +821,6 @@ public class RedPacketActivity extends BaseActivity {
         sb.append("sign\n" + req.sign + "\n\n");
 
 
-
     }
 
     private String genAppSign(List<NameValuePair> params) {
@@ -842,6 +839,7 @@ public class RedPacketActivity extends BaseActivity {
         String appSign = MD5.getMessageDigest(sb.toString().getBytes());
         return appSign;
     }
+
 
     private class PrePayIdAsyncTask extends AsyncTask<String, Void, Map<String, String>> {
         private ProgressDialog dialog;

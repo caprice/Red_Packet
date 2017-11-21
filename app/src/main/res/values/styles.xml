@@ -38,7 +38,9 @@
         <item name="android:background">#333333</item>
     </style>
 
-
+    <style name="yourCustomTheme">
+        <item name="windowNoTitle">true</item>
+    </style>
 
 
 </resources>

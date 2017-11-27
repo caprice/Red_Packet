@@ -381,7 +381,7 @@ public class MainActivity extends BaseActivity
 
 
     private void assinview() {
-        getActive();
+        getActive(false);
 //        startActivity(new Intent(MainActivity.this, GaodelocationService.class));
         mainSwiperefreshlayout.setEnabled(false);
         showProgressDialog("请稍后...");
@@ -512,7 +512,7 @@ public class MainActivity extends BaseActivity
         });
     }
 
-    private void getActive() {
+    private void getActive(final boolean isShow) {
         RedPacketListApi.getActive(MainActivity.this, MyApp.token, new OnRequestCompletedListener<ActiveResponse>() {
             @Override
             public void onCompleted(ActiveResponse response, String msg) {
@@ -526,7 +526,9 @@ public class MainActivity extends BaseActivity
                         ActiveFragment activeFragment = new ActiveFragment(data1);
                         activeFragment.show(getFragmentManager(), "2");
                     } else {
-                        ToastUtils.toTosat(MainActivity.this, "不好意思，暂无活动");
+                        if (isShow) {
+                            ToastUtils.toTosat(MainActivity.this, "不好意思，暂无活动");
+                        }
                     }
                 } else {
                     ToastUtils.toTosat(MainActivity.this, msg);
@@ -695,7 +697,7 @@ public class MainActivity extends BaseActivity
                 }
                 break;
             case R.id.tv_active:
-                getActive();
+                getActive(true);
                 break;
         }
     }

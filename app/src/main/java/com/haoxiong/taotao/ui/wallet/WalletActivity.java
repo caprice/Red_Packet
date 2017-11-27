@@ -84,7 +84,7 @@ public class WalletActivity extends BaseActivity {
             @Override
             public void onCompleted(BonusResponse response, String msg) {
                 if (response != null && response.getRet() == 200) {
-                    if (response.getData() != null&&response.getData().getCode() ==200 && response.getData().getList() != null&&response.getData().getList().getSfcz()==0) {
+                    if (response.getData() != null&&response.getData().getCode() ==200 && response.getData().getList() != null&&response.getData().getList().getSfcz()==1) {
                         WindowManager.LayoutParams attributes = getWindow().getAttributes();
                         attributes.alpha = 0.5f;
                         getWindow().setAttributes(attributes);

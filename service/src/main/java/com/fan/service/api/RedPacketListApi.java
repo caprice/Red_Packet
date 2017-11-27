@@ -7,6 +7,8 @@ import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.RetrofitApplication;
 import com.fan.service.response.ActiveResponse;
 import com.fan.service.response.AlipayResponse;
+import com.fan.service.response.Bonus1Response;
+import com.fan.service.response.BonusResponse;
 import com.fan.service.response.GetRedPacketResponse;
 import com.fan.service.response.RedOwerResponse;
 import com.fan.service.response.RedPacketDetailResponse;
@@ -637,6 +639,62 @@ public class RedPacketListApi {
 
                     @Override
                     public void onNext(@NonNull RedOwerResponse response) {
+                        listener.onCompleted(response,"成功");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        listener.onCompleted(null,"服务器数据异常");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+    public static void redRecord(final Context context, String service,  String token,
+                                 final OnRequestCompletedListener<BonusResponse> listener) {
+        ((RetrofitApplication) context.getApplicationContext()).getClient()
+                .getRedPacketListService()
+                .redRecord(service,token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BonusResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull BonusResponse response) {
+                        listener.onCompleted(response,"成功");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        listener.onCompleted(null,"服务器数据异常");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+    public static void getMoney(final Context context, String service,  String token,String account,
+                                 final OnRequestCompletedListener<Bonus1Response> listener) {
+        ((RetrofitApplication) context.getApplicationContext()).getClient()
+                .getRedPacketListService()
+                .getMoney(service,token,account)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Bonus1Response>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Bonus1Response response) {
                         listener.onCompleted(response,"成功");
                     }
 

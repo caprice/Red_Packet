@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,14 +14,18 @@ import android.widget.TextView;
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.BalanceServiceApi;
 import com.fan.service.api.FriendListServiceApi;
+import com.fan.service.api.RedPacketListApi;
 import com.fan.service.response.BalanceDetailResponse;
+import com.fan.service.response.BonusResponse;
 import com.fan.service.response.WithDrawResponse;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.ui.balancedetail.BalanceDetailActivity;
+import com.haoxiong.taotao.ui.wallet.fragment.BonusFragment;
 import com.haoxiong.taotao.util.KeyboardUtil;
 import com.haoxiong.taotao.util.ToastUtils;
+import com.haoxiong.taotao.util.Util;
 
 import java.math.BigDecimal;
 
@@ -48,6 +53,7 @@ public class WalletActivity extends BaseActivity {
     LinearLayout activityWallet;
     @BindView(R.id.rule)
     TextView rule;
+    private BonusFragment bonusFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +65,13 @@ public class WalletActivity extends BaseActivity {
     }
 
     private void refreshData() {
-        BalanceServiceApi.balanceDetail(WalletActivity.this, MyApp.token,1,10, new OnRequestCompletedListener<BalanceDetailResponse>() {
+        BalanceServiceApi.balanceDetail(WalletActivity.this, MyApp.token, 1, 10, new OnRequestCompletedListener<BalanceDetailResponse>() {
             @Override
             public void onCompleted(BalanceDetailResponse response, String msg) {
                 if (response.getErr() == 0) {
                     textView2.setText(response.getData().getBalance() + "");
                 } else {
-                    ToastUtils.toTosat(WalletActivity.this,response.getMsg());
+                    ToastUtils.toTosat(WalletActivity.this, response.getMsg());
                 }
 
             }
@@ -74,6 +80,27 @@ public class WalletActivity extends BaseActivity {
     }
 
     private void assignView() {
+        RedPacketListApi.redRecord(WalletActivity.this, "activity.redRecord", MyApp.token, new OnRequestCompletedListener<BonusResponse>() {
+            @Override
+            public void onCompleted(BonusResponse response, String msg) {
+                if (response != null && response.getRet() == 200) {
+                    if (response.getData() != null&&response.getData().getCode() ==200 && response.getData().getList() != null&&response.getData().getList().getSfcz()==0) {
+                        WindowManager.LayoutParams attributes = getWindow().getAttributes();
+                        attributes.alpha = 0.5f;
+                        getWindow().setAttributes(attributes);
+                        bonusFragment = new BonusFragment(new BonusFragment.CallBack() {
+                            @Override
+                            public void cancel() {
+                                finish();
+                            }
+                        }, String.valueOf(response.getData().getList().getSumMoney()));
+                        bonusFragment.show(getFragmentManager(), "516");
+                    }
+                }
+            }
+        });
+
+
         rule.setText("1.提现将在7个工作日内到账。\n" +
                 "2.提现时，“掏掏”平台将收取提现款的20%作为手续费。\n" +
                 "3.目前只接受支付宝提现，暂不支持其它方式提现。");
@@ -109,7 +136,7 @@ public class WalletActivity extends BaseActivity {
                                         MyApp.getInstance().user.getData().getUserinfo().setBalance(response.getData().getMoney_back() + "");
                                         WithdrawalActivity.luncher(WalletActivity.this);
                                     } else {
-                                        ToastUtils.toTosat(WalletActivity.this,response.getMsg());
+                                        ToastUtils.toTosat(WalletActivity.this, response.getMsg());
                                     }
 
                                 } else {

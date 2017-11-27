@@ -2,6 +2,8 @@ package com.fan.service.rest.service;
 
 import com.fan.service.response.ActiveResponse;
 import com.fan.service.response.AlipayResponse;
+import com.fan.service.response.Bonus1Response;
+import com.fan.service.response.BonusResponse;
 import com.fan.service.response.GetRedPacketResponse;
 import com.fan.service.response.LoginResponse;
 import com.fan.service.response.RedOwerResponse;
@@ -16,7 +18,9 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * 类描述：
@@ -231,6 +235,7 @@ public interface RedPacketListService {
             @Field("token") String token,
             @Field("device") String device
     );
+
     /**
      * 支付宝支付成功回调接口
      * mobile
@@ -254,5 +259,25 @@ public interface RedPacketListService {
             @Field("page") int page,
             @Field("num") int num,
             @Field("rid") int rid
+    );
+
+    /**
+     * 用户可提现总金额和提现状态
+     */
+    @GET("http://hb.huidang2105.com:89/")
+    Observable<BonusResponse> redRecord(
+            @Query("service") String service,
+            @Query("token") String token
+    );
+
+    /**
+     * 用户点击提现成功后的返回状态
+     */
+    @FormUrlEncoded
+    @POST("http://hb.huidang2105.com:89/")
+    Observable<Bonus1Response> getMoney(
+            @Field("service") String service,
+            @Field("token") String token,
+            @Field("account") String account
     );
 }

@@ -42,5 +42,18 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-
+    <style name="popupDialog" parent="@android:style/Theme.Dialog">
+        <!--是否悬浮在activity上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--透明是否-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--activity的背景颜色（一定要设置成#00000000）-->
+        <item name="android:background">#00000000</item>
+        <!--没有标题-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--可以设置Activity的弹出和消失动画（可选）-->
+        <!--<item name="android:windowAnimationStyle">@style/animation_style</item>-->
+    </style>
 </resources>

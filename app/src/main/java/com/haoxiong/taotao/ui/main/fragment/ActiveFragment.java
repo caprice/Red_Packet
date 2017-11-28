@@ -93,7 +93,7 @@ public class ActiveFragment extends DialogFragment {
                  /*   ToastUtils.toTosat(getActivity(), position + "");
                     WebViewActivity.lunch(getActivity(), imgs.get(position));*/
                     if (MyApp.login_state == 1) {
-                        WebViewActivity.lunch(getActivity(), data.get(position).getHdurl()+"?token="+MyApp.token);
+                        WebViewActivity.lunch(getActivity(), data.get(position).getHdurl()+MyApp.token);
                     } else {
                         LoginActivity.luncher(getActivity());
                     }

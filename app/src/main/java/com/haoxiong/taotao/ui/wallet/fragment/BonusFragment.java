@@ -50,6 +50,12 @@ public class BonusFragment extends DialogFragment {
         setArguments(bundle);
     }
 
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        callBack.dismiss();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,5 +107,6 @@ public class BonusFragment extends DialogFragment {
 
     public interface CallBack {
         void cancel();
+        void dismiss();
     }
 }

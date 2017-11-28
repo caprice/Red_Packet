@@ -85,13 +85,20 @@ public class WalletActivity extends BaseActivity {
             public void onCompleted(BonusResponse response, String msg) {
                 if (response != null && response.getRet() == 200) {
                     if (response.getData() != null&&response.getData().getCode() ==200 && response.getData().getList() != null&&response.getData().getList().getSfcz()==1) {
-                        WindowManager.LayoutParams attributes = getWindow().getAttributes();
+                         WindowManager.LayoutParams attributes = getWindow().getAttributes();
                         attributes.alpha = 0.5f;
                         getWindow().setAttributes(attributes);
                         bonusFragment = new BonusFragment(new BonusFragment.CallBack() {
                             @Override
                             public void cancel() {
                                 finish();
+                            }
+
+                            @Override
+                            public void dismiss() {
+                                 WindowManager.LayoutParams attributes = getWindow().getAttributes();
+                                attributes.alpha = 1f;
+                                getWindow().setAttributes(attributes);
                             }
                         }, String.valueOf(response.getData().getList().getSumMoney()));
                         bonusFragment.show(getFragmentManager(), "516");

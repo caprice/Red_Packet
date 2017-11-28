@@ -48,6 +48,7 @@ public class BonusFragment extends DialogFragment {
         Bundle bundle = new Bundle();
         bundle.putString("mun", num);
         setArguments(bundle);
+
     }
 
     @Override

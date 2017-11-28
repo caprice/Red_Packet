@@ -106,6 +106,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/logo_s"
         android:label="@string/app_name"
+        android:hardwareAccelerated="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -360,7 +361,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".webview.WebViewActivity" />
+        <activity android:name=".webview.WebViewActivity"  android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity android:name=".ui.redpacket.AllOwnerActivity"></activity>
     </application>
 

@@ -114,6 +114,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.bigkoo:convenientbanner:2.0.5'
+    compile files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
 }
 apt {
     arguments {

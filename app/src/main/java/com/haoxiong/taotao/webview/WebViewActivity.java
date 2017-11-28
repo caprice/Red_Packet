@@ -2,20 +2,22 @@ package com.haoxiong.taotao.webview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.util.ToastUtils;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.CookieSyncManager;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 
@@ -34,6 +36,9 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         this.webView = (WebView) findViewById(R.id.webView);
         this.linerwebback = (LinearLayout) findViewById(R.id.liner_web_back);
         assignView();
@@ -55,7 +60,7 @@ public class WebViewActivity extends AppCompatActivity {
             }
         });
         String url = getIntent().getStringExtra(URL);
-        //声明WebSettings子类
+      /*  //声明WebSettings子类
         WebSettings webSettings = webView.getSettings();
 
 //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
@@ -71,12 +76,31 @@ public class WebViewActivity extends AppCompatActivity {
         webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
 
 //其他细节操作
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
         webSettings.setAllowFileAccess(true); //设置可以访问文件
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
-        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
+        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片*/
         //方式3：加载手机本地的html页面
-        webView.loadUrl(url);
+
+        WebSettings webSetting = webView.getSettings();
+        webSetting.setJavaScriptEnabled(true);
+        webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSetting.setAllowFileAccess(true);
+        webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSetting.setSupportZoom(true);
+        webSetting.setBuiltInZoomControls(true);
+        webSetting.setUseWideViewPort(true);
+        webSetting.setSupportMultipleWindows(true);
+        // webSetting.setLoadWithOverviewMode(true);
+        webSetting.setAppCacheEnabled(true);
+        // webSetting.setDatabaseEnabled(true);
+        webSetting.setDomStorageEnabled(true);
+        webSetting.setGeolocationEnabled(true);
+        webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
+        // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
+        webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
+        // webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
+
 //步骤3. 复写shouldOverrideUrlLoading()方法，使得打开网页时不调用系统浏览器， 而是在本WebView中显示
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -86,16 +110,15 @@ public class WebViewActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            public void onReceivedError(WebView webView, int i, String s, String s1) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         ToastUtils.toTosat(WebViewActivity.this, "网页加载失败...");
                     }
                 });
-                super.onReceivedError(view, request, error);
+                super.onReceivedError(webView, i, s, s1);
             }
-
         });
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -103,6 +126,6 @@ public class WebViewActivity extends AppCompatActivity {
                 super.onReceivedTitle(view, title);
             }
         });
-
+        webView.loadUrl(url);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
 import android.text.TextUtils;
+import android.util.Log;
 
 
 import com.amap.api.location.AMapLocation;
@@ -12,6 +13,7 @@ import com.fan.service.RetrofitApplication;
 
 import com.igexin.sdk.PushManager;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.whoislcj.eventbus.MyEventBusIndex;
@@ -43,6 +45,18 @@ public class MyApp extends RetrofitApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+                Log.e("app", b + "");
+            }
+        };
+        QbSdk.initX5Environment(this, cb);
         CrashReport.initCrashReport(getApplicationContext(), "424587a86d", true);
         myApp = this;
         UMShareAPI.get(this);

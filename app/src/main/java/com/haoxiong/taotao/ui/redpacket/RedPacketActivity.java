@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.fan.service.Client;
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.PayServiceApi;
 import com.fan.service.api.RedPacketListApi;
@@ -188,6 +189,7 @@ public class RedPacketActivity extends BaseActivity {
     private int page = 1;
     private int rid;
     private boolean isGetRedPacket = false;
+    private View footerView;
 
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacketActivity.class);
@@ -233,9 +235,9 @@ public class RedPacketActivity extends BaseActivity {
         recycleRedPacketWiner.setLayoutManager(new FullyLinearLayoutManager(RedPacketActivity.this, LinearLayoutManager.VERTICAL, false));
         adapter = new RecycleRedPacketWinerAdapter(R.layout.item_red_packet_winer_adapter, RedPacketActivity.this, data);
         recycleRedPacketWiner.setAdapter(adapter);
-        View view = getLayoutInflater().inflate(R.layout.footer, null);
-        adapter.addFooterView(view);
-        view.setOnClickListener(new View.OnClickListener() {
+        footerView = getLayoutInflater().inflate(R.layout.footer, null);
+        adapter.addFooterView(footerView);
+        footerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AllOwnerActivity.launch(RedPacketActivity.this, rid);
@@ -278,6 +280,7 @@ public class RedPacketActivity extends BaseActivity {
                 imgRedPacketBottom.setVisibility(View.GONE);
                 tvRedPacketBottom.setText("塞钱进红包");
                 rid = sendRedPacketRequest.getRid();
+                adapter.removeAllFooterView();
                 break;
             case 2:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
@@ -408,7 +411,7 @@ public class RedPacketActivity extends BaseActivity {
         tvReaPacketAnswer1.setText(detailResponse.getAnswer0());
         tvReaPacketAnswer2.setText(detailResponse.getAnswer1());
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
-        GlideUtil.loadImg(RedPacketActivity.this, detailResponse.getUserPic(), imgRedPacketPic);
+        GlideUtil.loadImg(RedPacketActivity.this, Client.BASE_URL+"public/" +detailResponse.getUserPic(), imgRedPacketPic);
         if (detailResponse.isIscollect()) {
             imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
         }

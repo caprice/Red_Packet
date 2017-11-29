@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fan.service.Client;
 import com.fan.service.response.GetRedPacketResponse;
 import com.fan.service.response.RedManagerResponse;
 import com.fan.service.response.RedPacketDetailResponse;
@@ -72,7 +73,7 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
         detailData = getIntent().getParcelableExtra("content1");
         successData = getIntent().getParcelableExtra("content2");
         try {
-            GlideUtil.loadImg(GetRedPacketSuccessActivity.this, detailData.getUserPic(), imgGetRedPacketBg);
+            GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL+"public/" +detailData.getUserPic(), imgGetRedPacketBg);
         } catch (Exception e) {
             imgGetRedPacketBg.setImageResource(R.mipmap.item);
         }

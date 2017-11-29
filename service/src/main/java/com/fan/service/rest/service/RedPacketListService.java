@@ -264,7 +264,7 @@ public interface RedPacketListService {
     /**
      * 用户可提现总金额和提现状态
      */
-    @GET("http://hb.huidang2105.com:89/")
+    @GET("http://hbapi.huidang2105.com:89/")
     Observable<BonusResponse> redRecord(
             @Query("service") String service,
             @Query("token") String token
@@ -274,7 +274,7 @@ public interface RedPacketListService {
      * 用户点击提现成功后的返回状态
      */
     @FormUrlEncoded
-    @POST("http://hb.huidang2105.com:89/")
+    @POST("http://hbapi.huidang2105.com:89/")
     Observable<Bonus1Response> getMoney(
             @Field("service") String service,
             @Field("token") String token,

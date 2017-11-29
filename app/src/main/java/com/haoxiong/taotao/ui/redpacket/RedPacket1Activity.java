@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.fan.service.Client;
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.RedPacketListApi;
 import com.fan.service.request.SendRedPacketRequest;
@@ -194,9 +195,11 @@ public class RedPacket1Activity extends BaseActivity {
                 tvReaPacketAnswer2.setText(sendRedPacketRequest.getSecond_answer());
                 tvReaPacketAnswer3.setText(sendRedPacketRequest.getThird_answer());
                 GlideUtil.loadImg(RedPacket1Activity.this, sendRedPacketRequest.getPic1_filecode(), imgRedPacketPic);
+
                 imgRedPacketBottom.setVisibility(View.GONE);
                 tvRedPacketBottom.setText("塞钱进红包");
                 rid = sendRedPacketRequest.getRid();
+                adapter.removeAllFooterView();
                 break;
             case 2:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
@@ -307,7 +310,7 @@ public class RedPacket1Activity extends BaseActivity {
         tvReaPacketAnswer1.setText(detailResponse.getAnswer0());
         tvReaPacketAnswer2.setText(detailResponse.getAnswer1());
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
-        GlideUtil.loadImg(RedPacket1Activity.this, detailResponse.getUserPic(), imgRedPacketPic);
+        GlideUtil.loadImg(RedPacket1Activity.this, Client.BASE_URL+"public/" +detailResponse.getUserPic(), imgRedPacketPic);
 
         if (detailResponse.isIscollect()) {
             imgRedPacketLove.setImageResource(R.drawable.ic_love_select);

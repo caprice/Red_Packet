@@ -775,7 +775,7 @@ public class MainActivity extends BaseActivity
                 .setPositiveButton("拨打", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "028 8303 7383"));
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "028-64095902"));
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }

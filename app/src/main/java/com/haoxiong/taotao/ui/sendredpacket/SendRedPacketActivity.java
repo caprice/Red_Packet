@@ -130,6 +130,8 @@ public class SendRedPacketActivity extends BaseActivity {
     private String mapaddress;
     private SendRedPacketRequest redPacketRequest;
     private String fileCode;
+    private String netFfileCode;
+    private String netPicture;
 
     public static void luncher(Context context, @NonNull String money, @NonNull String num) {
         Intent intent = new Intent(context, SendRedPacketActivity.class);
@@ -232,6 +234,7 @@ public class SendRedPacketActivity extends BaseActivity {
                                     })
                                     .show();
                         } else {
+//                            PictureSelectedActivity.launch(SendRedPacketActivity.this, 99);
                             showAdviceImg();
                         }
                     }
@@ -451,7 +454,19 @@ public class SendRedPacketActivity extends BaseActivity {
                     tvSendRedPacketDiatance.setText("全国发放");
                 }
                 break;
-            case 7:
+            case 99:
+                try {
+                    netFfileCode = result.split("%")[0];
+                    netPicture = result.split("%")[1];
+                    if (netFfileCode == null) {
+                        tvSendRedPacketAdvice.setText("未设置");
+                    } else {
+                        tvSendRedPacketAdvice.setText("已设置");
+                    }
+                    Log.e("...", netPicture + "*******" + netFfileCode);
+                } catch (Exception e) {
+                    tvSendRedPacketAdvice.setText("未设置");
+                }
 
                 break;
             case 30:

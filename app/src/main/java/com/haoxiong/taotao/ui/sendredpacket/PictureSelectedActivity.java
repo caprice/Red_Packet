@@ -2,6 +2,7 @@ package com.haoxiong.taotao.ui.sendredpacket;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -210,14 +212,32 @@ public class PictureSelectedActivity extends BaseActivity {
                 deletePicture();
                 break;
             case R.id.liner_picture_back:
-                onBackPressed();
+                back();
                 break;
             case R.id.liner_save_picture:
                 save();
                 break;
         }
     }
-
+    public void back() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示")
+                .setIcon(R.drawable.ic_logo)
+                .setMessage("是否保存修改后的内容？")
+                .setPositiveButton("保存", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        save();
+                    }
+                })
+                .setNegativeButton("不保存", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .show();
+    }
     private void save() {
         if (netPitcure1 == null || netPitcure2 == null) {
             ToastUtils.toTosat(PictureSelectedActivity.this, "请上传封面图片...");
@@ -241,11 +261,6 @@ public class PictureSelectedActivity extends BaseActivity {
             setResult(99, data);
             finish();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-       save();
     }
 
     private void deletePicture() {

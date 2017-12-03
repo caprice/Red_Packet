@@ -78,6 +78,38 @@
             android:clickable="true"
             android:textColor="#333333"
             android:textSize="14sp" />
+        <LinearLayout
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/tv_message"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:drawableLeft="@drawable/prize_invited"
+                android:drawablePadding="12dp"
+                android:paddingLeft="30dp"
+                android:text="我的消息"
+                android:textColor="#333333"
+                android:clickable="false"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/message_num"
+                android:layout_marginLeft="10dp"
+                android:text="99+"
+                android:textSize="10dp"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:background="@drawable/message_count_bg"
+                android:layout_alignParentRight="true"
+                android:layout_width="26dp"
+                android:layout_height="26dp" />
+        </LinearLayout>
 
         <TextView
             android:background="?attr/selectableItemBackground"

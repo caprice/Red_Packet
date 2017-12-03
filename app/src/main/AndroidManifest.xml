@@ -365,7 +365,8 @@
             android:name=".webview.WebViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity android:name=".ui.redpacket.AllOwnerActivity" />
-        <activity android:name=".ui.sendredpacket.PictureSelectedActivity"></activity>
+        <activity android:name=".ui.sendredpacket.PictureSelectedActivity" />
+        <activity android:name=".ui.message.MyMessageActivity"></activity>
     </application>
 
 </manifest>

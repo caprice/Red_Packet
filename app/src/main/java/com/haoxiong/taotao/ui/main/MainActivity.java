@@ -1,7 +1,6 @@
 package com.haoxiong.taotao.ui.main;
 
 import android.Manifest;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,6 +47,7 @@ import com.haoxiong.taotao.ui.collect.CollectActivity;
 import com.haoxiong.taotao.ui.login.LoginActivity;
 import com.haoxiong.taotao.ui.main.adapter.HomeRecycleViewAdapter;
 import com.haoxiong.taotao.ui.main.fragment.ActiveFragment;
+import com.haoxiong.taotao.ui.message.MyMessageActivity;
 import com.haoxiong.taotao.ui.person.PersonDataActivity;
 import com.haoxiong.taotao.ui.redmaneger.RedMangerActivity;
 import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
@@ -108,6 +108,10 @@ public class MainActivity extends BaseActivity
     SwipeRefreshLayout mainSwiperefreshlayout;
     @BindView(R.id.tv_active)
     TextView tvActive;
+    @BindView(R.id.message_num)
+    TextView messageNum;
+    @BindView(R.id.tv_message)
+    LinearLayout tvMessage;
 
     private List<RedPacketListResponse.DataBean> data = new ArrayList<>();
     private LinearLayoutManager manager;
@@ -199,7 +203,7 @@ public class MainActivity extends BaseActivity
                             if (response != null) {
                                 RedPacketDetailResponse.DataBean data = response.getData();
 
-                                adapter.replaceItem(clickPosition,data);
+                                adapter.replaceItem(clickPosition, data);
                             } else {
                                 ToastUtils.toTosat(MainActivity.this, msg);
                             }
@@ -381,6 +385,7 @@ public class MainActivity extends BaseActivity
 
 
     private void assinview() {
+        messageNum.setText("11");
         getActive(false);
 //        startActivity(new Intent(MainActivity.this, GaodelocationService.class));
         mainSwiperefreshlayout.setEnabled(false);
@@ -504,7 +509,7 @@ public class MainActivity extends BaseActivity
                 if (layoutManager instanceof LinearLayoutManager) {
                     int position = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                     Log.e("...", position + "");
-                    if (position  >= 6) {
+                    if (position >= 6) {
                         fab1.setVisibility(View.VISIBLE);
                     }
                 }
@@ -623,7 +628,7 @@ public class MainActivity extends BaseActivity
     @OnClick({R.id.tv_red, R.id.tv_prize_invited, R.id.tv_red_maneger
             , R.id.tv_save, R.id.tv_contect_phone, R.id.mainactivity_person_liner
             , R.id.mainactivity_select_liner, R.id.send_red_packet_img
-            , R.id.imageView, R.id.tv_active})
+            , R.id.imageView, R.id.tv_active, R.id.tv_message})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_red:
@@ -698,6 +703,9 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.tv_active:
                 getActive(true);
+                break;
+            case R.id.tv_message:
+                MyMessageActivity.launch(MainActivity.this);
                 break;
         }
     }
@@ -825,4 +833,5 @@ public class MainActivity extends BaseActivity
         }
     }
 
+   
 }

@@ -22,8 +22,9 @@ public class MessageAdapter extends BaseQuickAdapter<Object, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, Object item) {
-        helper.setText(R.id.message_title, "西南石油大学")
-                .setText(R.id.message_time, "17/10/12")
-                .setText(R.id.message_content, "请阿斯顿奶水多但撒娇阿斯请阿斯顿奶水多但撒娇阿斯达请阿斯顿奶水多但撒娇阿斯达达");
+        int indexOf = getData().indexOf(item);
+        helper.setText(R.id.message_title, "西南石油大学"+indexOf)
+                .setText(R.id.message_time, "17/10/12"+indexOf)
+                .setText(R.id.message_content, "请阿斯顿奶水多但撒娇阿斯请阿斯顿奶水多但撒娇阿斯达请阿斯顿奶水多但撒娇阿斯达达"+indexOf);
     }
 }

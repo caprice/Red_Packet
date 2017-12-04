@@ -166,9 +166,8 @@ public class LoginActivity extends BaseActivity {
                     EventBus.getDefault().post(event);
                     if (exit) {
                         MainActivity.luncher(LoginActivity.this);
-
                     } else {
-                        finish();
+                        MainActivity.luncher(LoginActivity.this);
                     }
                 } else if (response.getErr() == -1) {
                     SharePreferenceUtil.put(LoginActivity.this,"phone",etLoginPhone.getText().toString());

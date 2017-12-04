@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.ui.message.adapter.MessageAdapter;
 
@@ -29,8 +31,9 @@ public class MyMessageActivity extends AppCompatActivity {
     private MessageAdapter adapter;
 
     public static void launch(Context context) {
-        context.startActivity(new Intent(context,MyMessageActivity.class));
+        context.startActivity(new Intent(context, MyMessageActivity.class));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,12 @@ public class MyMessageActivity extends AppCompatActivity {
             data.add(new Object());
         }
         adapter.setNewData(data);
-
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                MessageDetailActivity.launch(MyMessageActivity.this);
+            }
+        });
     }
 
     @OnClick(R.id.liner_message_back)

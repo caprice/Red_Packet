@@ -7,6 +7,7 @@ import com.fan.service.rest.converter.CustomGsonConverterFactory;
 import com.fan.service.rest.service.BalanceService;
 import com.fan.service.rest.service.CollectService;
 import com.fan.service.rest.service.FirendListService;
+import com.fan.service.rest.service.MessageService;
 import com.fan.service.rest.service.PayService;
 import com.fan.service.rest.service.PersonService;
 import com.fan.service.rest.service.RedManagerService;
@@ -31,8 +32,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by yinjin on 2017年10月27日19:48:45
  */
 public class Client {
-    public static final String BASE_URL = "http://hbapi.huidang2105.com:8900/";
-//    public static final String BASE_URL = "http://hb.huidang2105.com:8900/";
+//    public static final String BASE_URL = "http://hbapi.huidang2105.com:8900/";
+    public static final String BASE_URL = "http://hb.huidang2105.com:8900/";
     public static final String TAG = Client.class.getSimpleName();
     /**
      * http请求的超时时间
@@ -46,6 +47,7 @@ public class Client {
     private final CollectService collectService;
     private final FirendListService friendListService;
     private final PayService payService;
+    private final MessageService messageService;
     private final Retrofit retrofit;
 
     public Client(final Context context) {
@@ -65,6 +67,11 @@ public class Client {
         collectService = retrofit.create(CollectService.class);
         friendListService = retrofit.create(FirendListService.class);
         payService = retrofit.create(PayService.class);
+        messageService = retrofit.create(MessageService.class);
+    }
+
+    public MessageService getMessageService() {
+        return messageService;
     }
 
     public PayService getPayService() {

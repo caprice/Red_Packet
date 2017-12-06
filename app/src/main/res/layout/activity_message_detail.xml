@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/write"
     android:orientation="vertical"
-
+    android:background="#F2F2F2"
     tools:context="com.haoxiong.taotao.ui.message.MessageDetailActivity">
 
     <RelativeLayout
@@ -66,12 +65,15 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:gravity="center_vertical"
+        android:background="@color/write"
         android:id="@+id/liner_message_detail_red_packet"
         android:layout_width="match_parent"
-        android:layout_height="76dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="15dp">
+        android:layout_height="wrap_content"
+        android:paddingEnd="16dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="16dp"
+        android:paddingStart="15dp">
 
         <ImageView
             android:id="@+id/img_message_detail_picture"
@@ -80,7 +82,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="76dp"
             android:layout_marginLeft="18dp"
             android:orientation="vertical">
 

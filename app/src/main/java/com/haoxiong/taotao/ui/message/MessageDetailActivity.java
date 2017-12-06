@@ -15,8 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haoxiong.taotao.R;
-import com.haoxiong.taotao.ui.message.adapter.MessageAdapter;
 import com.haoxiong.taotao.ui.message.adapter.MessageDetailAdapter;
+import com.haoxiong.taotao.ui.message.bean.Message;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ public class MessageDetailActivity extends AppCompatActivity {
     @BindView(R.id.swipe_refresh_layout_message_detail)
     SwipeRefreshLayout swipeRefreshLayoutMessageDetail;
     private MessageDetailAdapter adapter;
-    ArrayList<User> data = new ArrayList<>();
+    ArrayList<Message> data = new ArrayList<>();
 
     public static void launch(Context context) {
         context.startActivity(new Intent(context, MessageDetailActivity.class));
@@ -60,43 +60,45 @@ public class MessageDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_detail);
         ButterKnife.bind(this);
-        recycleViewMessageDetail.setLayoutManager(new LinearLayoutManager(MessageDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager layout = new LinearLayoutManager(MessageDetailActivity.this, LinearLayoutManager.VERTICAL, false);
+        recycleViewMessageDetail.setLayoutManager(layout);
         adapter = new MessageDetailAdapter(data);
         recycleViewMessageDetail.setAdapter(adapter);
         for (int i = 0; i < 10; i++) {
-            User user = new User();
+            Message user = new Message();
             switch (i) {
                 case 1:
                 case 3:
                 case 5:
                 case 7:
                 case 9:
-                    user.setItemType(User.TEXT);
+                    user.setItemType(Message.TEXT);
                     break;
                 default:
-                    user.setItemType(User.IMG);
+                    user.setItemType(Message.IMG);
                     break;
             }
             data.add(user);
         }
         adapter.setNewData(data);
+        layout.scrollToPositionWithOffset(data.size()-1,0);
         swipeRefreshLayoutMessageDetail.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeRefreshLayoutMessageDetail.setRefreshing(true);
-                ArrayList<User> data1 = new ArrayList<>();
+                ArrayList<Message> data1 = new ArrayList<>();
                 for (int i = 0; i < 10; i++) {
-                    User user = new User();
+                    Message user = new Message();
                     switch (i) {
                         case 1:
                         case 3:
                         case 5:
                         case 7:
                         case 9:
-                            user.setItemType(User.TEXT);
+                            user.setItemType(Message.TEXT);
                             break;
                         default:
-                            user.setItemType(User.IMG);
+                            user.setItemType(Message.IMG);
                             break;
                     }
                     data1.add(user);

@@ -32,6 +32,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.loadmore.LoadMoreView;
 import com.fan.service.OnRequestCompletedListener;
+import com.fan.service.api.MessageApi;
 import com.fan.service.api.PersonServiceApi;
 import com.fan.service.api.RedPacketListApi;
 import com.fan.service.response.ActiveResponse;
@@ -39,7 +40,9 @@ import com.fan.service.response.LoginResponse;
 import com.fan.service.response.PersonDateResponse;
 import com.fan.service.response.RedPacketDetailResponse;
 import com.fan.service.response.RedPacketListResponse;
+import com.fan.service.response.UnreadResponse;
 import com.fan.service.response.WalletResponse;
+import com.fan.service.rest.service.MessageService;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
@@ -291,6 +294,29 @@ public class MainActivity extends BaseActivity
                 }
             });
         }
+        MessageApi.unReadNum(MainActivity.this, MyApp.token, new OnRequestCompletedListener<UnreadResponse>() {
+            @Override
+            public void onCompleted(UnreadResponse response, String msg) {
+                if (response != null) {
+                    if (response.getRet() == 200) {
+                        if (response.getData() != null && response.getData().getCode() == 200) {
+                            if (response.getData().getList().getUnread() != 0) {
+                                messageNum.setVisibility(View.VISIBLE);
+                                messageNum.setText(response.getData().getList().getUnread() + "");
+                            } else {
+                                messageNum.setVisibility(View.GONE);
+                            }
+                        } else {
+                            messageNum.setVisibility(View.GONE);
+                        }
+                    } else {
+                        messageNum.setVisibility(View.GONE);
+                    }
+                } else {
+                    messageNum.setVisibility(View.GONE);
+                }
+            }
+        });
         refreshData();
     }
 

@@ -11,16 +11,23 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.fan.service.OnRequestCompletedListener;
+import com.fan.service.api.MessageApi;
+import com.fan.service.response.MessageResponse;
+import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
+import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.ui.message.adapter.MessageAdapter;
+import com.haoxiong.taotao.util.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyMessageActivity extends AppCompatActivity {
+public class MyMessageActivity extends BaseActivity {
 
     @BindView(R.id.liner_message_back)
     LinearLayout linerMessageBack;
@@ -29,6 +36,7 @@ public class MyMessageActivity extends AppCompatActivity {
     @BindView(R.id.recycle_view_message)
     RecyclerView recycleViewMessage;
     private MessageAdapter adapter;
+    List<MessageResponse.DataBean.ListBean.ListLbBean> data = new ArrayList<>();
 
     public static void launch(Context context) {
         context.startActivity(new Intent(context, MyMessageActivity.class));
@@ -40,17 +48,33 @@ public class MyMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_message);
         ButterKnife.bind(this);
         recycleViewMessage.setLayoutManager(new LinearLayoutManager(MyMessageActivity.this, LinearLayoutManager.VERTICAL, false));
-        ArrayList<Object> data = new ArrayList<>();
+
         adapter = new MessageAdapter(data);
         recycleViewMessage.setAdapter(adapter);
-        for (int i = 0; i < 10; i++) {
-            data.add(new Object());
-        }
-        adapter.setNewData(data);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 MessageDetailActivity.launch(MyMessageActivity.this);
+            }
+        });
+        refreshDate();
+    }
+
+    private void refreshDate() {
+        showProgressDialog("数据加载中...");
+        MessageApi.messageList(MyMessageActivity.this, MyApp.token, new OnRequestCompletedListener<MessageResponse>() {
+            @Override
+            public void onCompleted(MessageResponse response, String msg) {
+                dismissProgressDialog();
+                if (response != null && response.getRet() == 200) {
+                    if (response.getData() != null) {
+                        if (response.getData().getCode() == 200) {
+                            adapter.setNewData(response.getData().getList().getList_lb());
+                        } else {
+                            ToastUtils.toTosat(MyMessageActivity.this, response.getData().getMsg());
+                        }
+                    }
+                }
             }
         });
     }

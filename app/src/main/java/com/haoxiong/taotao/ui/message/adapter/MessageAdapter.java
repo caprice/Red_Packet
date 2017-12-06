@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.fan.service.response.MessageResponse;
 import com.haoxiong.taotao.R;
 
 import java.util.List;
@@ -14,17 +15,15 @@ import java.util.List;
  * 创建时间：2017/12/3.14:44
  */
 
-public class MessageAdapter extends BaseQuickAdapter<Object, BaseViewHolder> {
-
-    public MessageAdapter(@Nullable List<Object> data) {
+public class MessageAdapter extends BaseQuickAdapter<MessageResponse.DataBean.ListBean.ListLbBean, BaseViewHolder> {
+    public MessageAdapter(@Nullable List<MessageResponse.DataBean.ListBean.ListLbBean> data) {
         super(R.layout.message_item, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Object item) {
-        int indexOf = getData().indexOf(item);
-        helper.setText(R.id.message_title, "西南石油大学"+indexOf)
-                .setText(R.id.message_time, "17/10/12"+indexOf)
-                .setText(R.id.message_content, "请阿斯顿奶水多但撒娇阿斯请阿斯顿奶水多但撒娇阿斯达请阿斯顿奶水多但撒娇阿斯达达"+indexOf);
+    protected void convert(BaseViewHolder helper, MessageResponse.DataBean.ListBean.ListLbBean item) {
+        helper.setText(R.id.message_title, item.getLtbt())
+                .setText(R.id.message_time,item.getCjsj())
+                .setText(R.id.message_content, item.getLtxx());
     }
 }

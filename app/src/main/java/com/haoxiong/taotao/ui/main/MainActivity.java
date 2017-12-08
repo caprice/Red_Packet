@@ -562,7 +562,9 @@ public class MainActivity extends BaseActivity
                         }
                     }
                 } else {
-                    ToastUtils.toTosat(MainActivity.this, msg);
+                    if (isShow) {
+                        ToastUtils.toTosat(MainActivity.this, msg);
+                    }
                 }
             }
         });

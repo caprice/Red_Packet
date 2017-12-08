@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:orientation="vertical"
-    android:background="#cccccc"
+    android:background="#F2F2F2"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -22,7 +22,7 @@
             android:layout_marginTop="13dp"
             android:id="@+id/tv_left_content"
             android:layout_marginLeft="10dp"
-            android:background="#ff0077"
+            android:background="@drawable/left_shape"
             android:text="12:22:22"
             android:textColor="#000000"
             android:layout_width="wrap_content"

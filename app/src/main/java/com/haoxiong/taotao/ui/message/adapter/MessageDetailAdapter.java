@@ -30,12 +30,12 @@ public class MessageDetailAdapter extends BaseMultiItemQuickAdapter<Message,Base
         int indexOf = getData().indexOf(item);
         switch (helper.getItemViewType()) {
             case Message.TEXT:
-                helper.setText(R.id.tv_right_time, "12:12"+ indexOf);
-                helper.setText(R.id.tv_right_content, "你右边"+ indexOf);
+                helper.setText(R.id.tv_right_time, item.getTime());
+                helper.setText(R.id.tv_right_content,  item.getContent());
                 break;
             case Message.IMG:
-                helper.setText(R.id.tv_left_time, "12:12"+ indexOf);
-                helper.setText(R.id.tv_left_content, "你左边"+ indexOf);
+                helper.setText(R.id.tv_left_time,  item.getTime());
+                helper.setText(R.id.tv_left_content,  item.getContent());
                 break;
         }
 

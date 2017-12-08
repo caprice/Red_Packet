@@ -133,10 +133,10 @@ public class MessageApi {
                 });
     }
 
-    public static void readMessageList(final Context context, String token, String rid, final OnRequestCompletedListener<ReadMessageResponse> listener) {
+    public static void readMessageList(final Context context, String token, String rid,int page, final OnRequestCompletedListener<ReadMessageResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getMessageService()
-                .readMessageList("user.get_ltjllist", token, rid)
+                .readMessageList("user.get_ltjllist", token, rid,page,10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ReadMessageResponse>() {

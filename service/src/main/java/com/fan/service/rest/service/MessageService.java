@@ -10,7 +10,9 @@ import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * 类描述：
@@ -60,5 +62,5 @@ public interface MessageService {
      */
     @FormUrlEncoded
     @POST("http://hb.huidang2105.com:89/")
-    Observable<ReadMessageResponse> readMessageList(@Field("service") String service, @Field("token") String token, @Field("rid") String rid);
+    Observable<ReadMessageResponse> readMessageList(@Field("service") String service, @Field("token") String token, @Field("rid") String rid, @Field("page")int page, @Field("num") int num);
 }

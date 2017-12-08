@@ -54,9 +54,15 @@ public class MyMessageActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MessageDetailActivity.launch(MyMessageActivity.this);
+                MessageDetailActivity.launch(MyMessageActivity.this, (MessageResponse.DataBean.ListBean.ListLbBean) adapter.getData().get(position));
             }
         });
+        refreshDate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         refreshDate();
     }
 

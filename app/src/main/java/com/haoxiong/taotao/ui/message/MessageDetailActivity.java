@@ -4,27 +4,44 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fan.service.Client;
+import com.fan.service.OnRequestCompletedListener;
+import com.fan.service.api.MessageApi;
+import com.fan.service.response.MessageResponse;
+import com.fan.service.response.MessageSendResponse;
+import com.fan.service.response.ReadMessageResponse;
+import com.fan.service.response.UnReadMessageResponse;
+import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
+import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.ui.message.adapter.MessageDetailAdapter;
 import com.haoxiong.taotao.ui.message.bean.Message;
+import com.haoxiong.taotao.util.DateUtils;
+import com.haoxiong.taotao.util.GlideUtil;
+import com.haoxiong.taotao.util.ToastUtils;
+import com.haoxiong.taotao.util.Util;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MessageDetailActivity extends AppCompatActivity {
+public class MessageDetailActivity extends BaseActivity {
 
     @BindView(R.id.liner_message_detail_back)
     LinearLayout linerMessageDetailBack;
@@ -48,69 +65,153 @@ public class MessageDetailActivity extends AppCompatActivity {
     LinearLayout linerMessageDetailRedPacket;
     @BindView(R.id.swipe_refresh_layout_message_detail)
     SwipeRefreshLayout swipeRefreshLayoutMessageDetail;
+    @BindView(R.id.tv_message_detail_send)
+    TextView tvMessageDetailSend;
     private MessageDetailAdapter adapter;
     ArrayList<Message> data = new ArrayList<>();
+    private MessageResponse.DataBean.ListBean.ListLbBean bean;
+    private int page = 1;
 
-    public static void launch(Context context) {
-        context.startActivity(new Intent(context, MessageDetailActivity.class));
+    public static void launch(Context context, MessageResponse.DataBean.ListBean.ListLbBean data) {
+        Intent intent = new Intent(context, MessageDetailActivity.class);
+        intent.putExtra("data", data);
+        context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_detail);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         ButterKnife.bind(this);
-        LinearLayoutManager layout = new LinearLayoutManager(MessageDetailActivity.this, LinearLayoutManager.VERTICAL, false);
-        recycleViewMessageDetail.setLayoutManager(layout);
-        adapter = new MessageDetailAdapter(data);
-        recycleViewMessageDetail.setAdapter(adapter);
-        for (int i = 0; i < 10; i++) {
-            Message user = new Message();
-            switch (i) {
-                case 1:
-                case 3:
-                case 5:
-                case 7:
-                case 9:
-                    user.setItemType(Message.TEXT);
-                    break;
-                default:
-                    user.setItemType(Message.IMG);
-                    break;
-            }
-            data.add(user);
+        assignView();
+        refreshDate(true);
+    }
+
+    private void assignView() {
+        swipeRefreshLayoutMessageDetail.setRefreshing(false);
+        bean = getIntent().getParcelableExtra("data");
+        if (bean.getLtbt() != null) {
+            tvMessageDetailTitle.setText(bean.getLtbt());
         }
-        adapter.setNewData(data);
-        layout.scrollToPositionWithOffset(data.size()-1,0);
+        recycleViewMessageDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        adapter = new MessageDetailAdapter(this.data);
+        recycleViewMessageDetail.setAdapter(adapter);
         swipeRefreshLayoutMessageDetail.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayoutMessageDetail.setRefreshing(true);
-                ArrayList<Message> data1 = new ArrayList<>();
-                for (int i = 0; i < 10; i++) {
-                    Message user = new Message();
-                    switch (i) {
-                        case 1:
-                        case 3:
-                        case 5:
-                        case 7:
-                        case 9:
-                            user.setItemType(Message.TEXT);
-                            break;
-                        default:
-                            user.setItemType(Message.IMG);
-                            break;
-                    }
-                    data1.add(user);
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                adapter.addData(0, data1);
-                recycleViewMessageDetail.scrollToPosition(data1.size()-1);
+                loadRecordMessages(false);
+            }
+        });
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                refreshDate(false);
+            }
+        }, 60000, 60000);
+    }
+
+    private void loadRecordMessages(final boolean b) {
+        if (!b) {
+            swipeRefreshLayoutMessageDetail.setRefreshing(true);
+        }
+        MessageApi.readMessageList(MessageDetailActivity.this, MyApp.token, bean.getRid(), page, new OnRequestCompletedListener<ReadMessageResponse>() {
+            @Override
+            public void onCompleted(ReadMessageResponse response, String msg) {
                 swipeRefreshLayoutMessageDetail.setRefreshing(false);
+                if (response != null && response.getRet() == 200) {
+                    if (response.getData() != null && response.getData().getCode() == 200 & response.getData().getList() != null) {
+                        if (response.getData().getList().getLt_list() != null && response.getData().getList().getLt_list().size() > 0) {
+                            List<ReadMessageResponse.DataBean.ListBean.LtListBean> lt_list = response.getData().getList().getLt_list();
+                            List<Message> datas = new ArrayList<>();
+                            for (int i = 0; i < lt_list.size(); i++) {
+                                Message message = new Message();
+                                message.setContent(lt_list.get(i).getJlxx());
+                                message.setItemType(lt_list.get(i).getXxlx());
+                                message.setTime(lt_list.get(i).getSj());
+                                datas.add(message);
+                                if (b) {
+                                    data.add(message);
+                                }
+                            }
+                            if (b) {
+                                adapter.setNewData(datas);
+                            } else {
+                                adapter.addData(0, datas);
+                            }
+                            recycleViewMessageDetail.scrollToPosition(datas.size() - 1);
+                            if (lt_list.size() < 10) {
+                                swipeRefreshLayoutMessageDetail.setEnabled(false);
+                            } else {
+
+                            }
+                            page++;
+                        }
+
+                    } else if (response.getData() != null && response.getData().getCode() == 206) {
+                        swipeRefreshLayoutMessageDetail.setEnabled(false);
+                    }
+
+                }
+
+            }
+        });
+    }
+
+    private void refreshDate(final boolean b) {
+        if (b) {
+            showProgressDialog("数据加载中...");
+        }
+        MessageApi.unReadMessageList(MessageDetailActivity.this, MyApp.token, bean.getRid(), new OnRequestCompletedListener<UnReadMessageResponse>() {
+            @Override
+            public void onCompleted(UnReadMessageResponse response, String msg) {
+                if (b) {
+                    dismissProgressDialog();
+                }
+                if (response != null) {
+                    if (response.getRet() == 200) {
+                        if (response.getData() != null && response.getData().getCode() == 200 && response.getData().getList() != null) {
+                            page = 1;
+                            if (b) {
+                                linerMessageDetailRedPacket.setVisibility(View.VISIBLE);
+                                GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL + response.getData().getList().getMer_pics(), imgMessageDetailPicture);
+                                tvMessageDetailContent.setText(response.getData().getList().getMerchant_des() != null ? response.getData().getList().getMerchant_des() : "");
+                            }
+                            if (response.getData().getList().getLt_list() != null && response.getData().getList().getLt_list().size() > 0) {
+                                data.clear();
+                                List<UnReadMessageResponse.DataBean.ListBean.LtListBean> lt_list = response.getData().getList().getLt_list();
+                                List<Message> datas = new ArrayList<>();
+                                for (int i = 0; i < lt_list.size(); i++) {
+                                    Message message = new Message();
+                                    message.setContent(lt_list.get(i).getJlxx());
+                                    message.setItemType(lt_list.get(i).getXxlx());
+                                    message.setTime(lt_list.get(i).getSj());
+                                    datas.add(message);
+                                    data.add(message);
+                                }
+                                swipeRefreshLayoutMessageDetail.setEnabled(true);
+                                adapter.setNewData(datas);
+                                recycleViewMessageDetail.scrollToPosition(datas.size() - 1);
+                            }
+                        } else if (response.getData() != null && response.getData().getCode() == 206) {
+                            page = 1;
+                            if (b) {
+                                loadRecordMessages(true);
+                            }
+                            if (b) {
+                                linerMessageDetailRedPacket.setVisibility(View.GONE);
+                            }
+                        } else {
+                            if (b) {
+                                linerMessageDetailRedPacket.setVisibility(View.GONE);
+                            }
+                        }
+                    } else {
+                        if (b) {
+                            linerMessageDetailRedPacket.setVisibility(View.GONE);
+                        }
+                    }
+                }
             }
         });
     }
@@ -127,6 +228,26 @@ public class MessageDetailActivity extends AppCompatActivity {
             case R.id.tv_message_detail_close:
                 linerMessageDetailRedPacket.setVisibility(View.GONE);
                 break;
+        }
+    }
+
+    @OnClick(R.id.tv_message_detail_send)
+    public void onClick() {
+        if (!TextUtils.isEmpty(etMessageDetailMessage.getText().toString())) {
+            MessageApi.sendMessage(MessageDetailActivity.this, MyApp.token, bean.getRid(), etMessageDetailMessage.getText().toString().trim(), new OnRequestCompletedListener<MessageSendResponse>() {
+                @Override
+                public void onCompleted(MessageSendResponse response, String msg) {
+                }
+            });
+            Message message = new Message();
+            message.setTime("今天:"+DateUtils.getCurrentTime_Today());
+            message.setItemType(1);
+            message.setContent(etMessageDetailMessage.getText().toString());
+            adapter.addData(message);
+            recycleViewMessageDetail.scrollToPosition(adapter.getData().size() - 1);
+            etMessageDetailMessage.setText("");
+        } else {
+            ToastUtils.toTosat(MessageDetailActivity.this, "请输入内容...");
         }
     }
 }

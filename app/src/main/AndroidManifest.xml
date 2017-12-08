@@ -379,7 +379,7 @@
         <activity android:name=".ui.message.MessageDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>

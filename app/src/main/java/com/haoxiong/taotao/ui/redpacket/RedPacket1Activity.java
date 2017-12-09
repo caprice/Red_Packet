@@ -16,12 +16,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fan.service.Client;
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.RedPacketListApi;
@@ -38,6 +36,7 @@ import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.pay.PayResult;
 import com.haoxiong.taotao.ui.login.LoginActivity;
 import com.haoxiong.taotao.ui.redpacket.adapter.RecycleRedPacketWinerAdapter;
+import com.haoxiong.taotao.util.DensityUtil;
 import com.haoxiong.taotao.util.GlideUtil;
 import com.haoxiong.taotao.util.SignUtils;
 import com.haoxiong.taotao.util.ToastUtils;
@@ -119,6 +118,8 @@ public class RedPacket1Activity extends BaseActivity {
     LinearLayout linerAll;
     @BindView(R.id.liner_red_packet_share)
     LinearLayout linerRedPacketShare;
+    @BindView(R.id.red_title_icon)
+    ImageView redTitleIcon;
     private SendRedPacketRequest sendRedPacketRequest;
     private RedPacketListResponse.DataBean dataBean;
     private RedManagerResponse.DataBean.RedsOnBean redsOnBean;
@@ -129,6 +130,7 @@ public class RedPacket1Activity extends BaseActivity {
     private boolean love;
     private int page = 1;
     private int rid;
+    private View view;
 
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacket1Activity.class);
@@ -163,6 +165,37 @@ public class RedPacket1Activity extends BaseActivity {
     }
 
     private void assignView() {
+
+        srlRedPacket.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // 将透明度声明成局部变量用于判断
+                int alpha = 0;
+                int count = 0;
+                float scale = 0;
+                Log.e("...", scrollY + "");
+                int y = imgRedPacketPic.getHeight()-DensityUtil.dip2px(RedPacket1Activity.this,44);
+                if (scrollY <= y) {
+                    redTitleIcon.setVisibility(View.GONE);
+                    imgRedPacketLove.setVisibility(View.GONE);
+                    scale = (float) scrollY / y;
+                    alpha = (int) (255 * scale);
+                    // 随着滑动距离改变透明度
+                    // Log.e("al=","="+alpha);
+                    relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
+                } else {
+                    if (alpha < 255) {
+                        redTitleIcon.setVisibility(View.VISIBLE);
+                        imgRedPacketLove.setVisibility(View.VISIBLE);
+                        Log.e("执行次数", "=" + (++count));
+                        // 防止频繁重复设置相同的值影响性能
+                        alpha = 255;
+                        relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
+                    }
+                }
+            }
+
+        });
         switch (MyApp.TYPE) {
             case 3:
             case 4:
@@ -173,8 +206,13 @@ public class RedPacket1Activity extends BaseActivity {
         recycleRedPacketWiner.setLayoutManager(new FullyLinearLayoutManager(RedPacket1Activity.this, LinearLayoutManager.VERTICAL, false));
         adapter = new RecycleRedPacketWinerAdapter(R.layout.item_red_packet_winer_adapter, RedPacket1Activity.this, data);
         recycleRedPacketWiner.setAdapter(adapter);
-        View view = getLayoutInflater().inflate(R.layout.footer, null);
+        view = getLayoutInflater().inflate(R.layout.footer, null);
         adapter.addFooterView(view);
+        if (data.size() == 0) {
+            view.setVisibility(View.GONE);
+        } else {
+            view.setVisibility(View.VISIBLE);
+        }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,7 +269,7 @@ public class RedPacket1Activity extends BaseActivity {
                 rid = dataBean.getRid();
                 break;
         }
-
+        srlRedPacket.scrollTo(0, 0);
     }
 
     private void getDetailData(int rid) {
@@ -281,10 +319,12 @@ public class RedPacket1Activity extends BaseActivity {
                 if (response.getErr() == 0) {
                     if (response.getData() != null && response.getData().size() > 0) {
                         adapter.setNewData(response.getData());
+                        view.setVisibility(View.VISIBLE);
                     }
                 } else {
                     ToastUtils.toTosat(RedPacket1Activity.this, response.getMsg());
                 }
+                srlRedPacket.scrollTo(0, 0);
             }
         });
     }
@@ -310,12 +350,13 @@ public class RedPacket1Activity extends BaseActivity {
         tvReaPacketAnswer1.setText(detailResponse.getAnswer0());
         tvReaPacketAnswer2.setText(detailResponse.getAnswer1());
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
-        GlideUtil.loadImg(RedPacket1Activity.this, Client.BASE_URL+"public/" +detailResponse.getUserPic(), imgRedPacketPic);
+        GlideUtil.loadImg(RedPacket1Activity.this, Client.BASE_URL + "public/" + detailResponse.getUserPic(), imgRedPacketPic);
 
         if (detailResponse.isIscollect()) {
             imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
         }
         love = detailResponse.isIscollect();
+        srlRedPacket.scrollTo(0, 0);
     }
 
     @OnClick({R.id.liner_red_packet_back, R.id.liner_red_packet_love

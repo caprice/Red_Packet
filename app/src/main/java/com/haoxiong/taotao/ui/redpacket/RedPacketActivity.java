@@ -39,6 +39,7 @@ import com.fan.service.api.PayServiceApi;
 import com.fan.service.api.RedPacketListApi;
 import com.fan.service.request.SendRedPacketRequest;
 import com.fan.service.response.AlipayResponse;
+import com.fan.service.response.CollectRedPacketResponse;
 import com.fan.service.response.GetRedPacketResponse;
 import com.fan.service.response.PayResponse;
 import com.fan.service.response.RedManagerResponse;
@@ -53,10 +54,12 @@ import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.pay.PayResult;
 import com.haoxiong.taotao.ui.login.LoginActivity;
+import com.haoxiong.taotao.ui.message.MessageDetailActivity;
 import com.haoxiong.taotao.ui.redmaneger.RedMangerActivity;
 import com.haoxiong.taotao.ui.redpacket.adapter.RecycleRedPacketWinerAdapter;
 import com.haoxiong.taotao.ui.sendredpacket.GetRedPacketSuccessActivity;
 import com.haoxiong.taotao.util.Constants;
+import com.haoxiong.taotao.util.DensityUtil;
 import com.haoxiong.taotao.util.GlideUtil;
 import com.haoxiong.taotao.util.MD5;
 import com.haoxiong.taotao.util.SharePreferenceUtil;
@@ -108,6 +111,10 @@ public class RedPacketActivity extends BaseActivity {
     LinearLayout linerRedPacketShare;
     @BindView(R.id.red_all)
     TextView redAll;
+    @BindView(R.id.consulting)
+    LinearLayout consulting;
+    @BindView(R.id.red_title_icon)
+    ImageView redTitleIcon;
     //    public static final String PARTNER = "2088621558884290";
 //    // 商户收款账号
 //    public static final String SELLER = "haoxiong2017@163.com";
@@ -179,6 +186,7 @@ public class RedPacketActivity extends BaseActivity {
     NestedScrollView srlRedPacket;
     private SendRedPacketRequest sendRedPacketRequest;
     private RedPacketListResponse.DataBean dataBean;
+    private CollectRedPacketResponse.DataBean dataBean1;
     private RedManagerResponse.DataBean.RedsOnBean redsOnBean;
     private RedPacketDetailResponse.DataBean detailResponse;
     private List<RedOwerResponse.DataBean> data = new ArrayList<>();
@@ -188,6 +196,8 @@ public class RedPacketActivity extends BaseActivity {
     private PopupWindow popupwindowShow;
     private int page = 1;
     private int rid;
+    private String redTitle;
+    private String redPic;
     private boolean isGetRedPacket = false;
     private View footerView;
 
@@ -209,6 +219,12 @@ public class RedPacketActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    public static void luncher(Context context, @NonNull CollectRedPacketResponse.DataBean dataBean) {
+        Intent intent = new Intent(context, RedPacketActivity.class);
+        intent.putExtra("content", dataBean);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -225,11 +241,45 @@ public class RedPacketActivity extends BaseActivity {
     }
 
     private void assignView() {
+
+        srlRedPacket.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // 将透明度声明成局部变量用于判断
+                int alpha = 0;
+                int count = 0;
+                float scale = 0;
+                Log.e("...", scrollY + "");
+                int y = imgRedPacketPic.getHeight() - DensityUtil.dip2px(RedPacketActivity.this, 44);
+                if (scrollY <= y) {
+redTitleIcon.setVisibility(View.GONE);
+                    imgRedPacketLove.setVisibility(View.GONE);
+                    scale = (float) scrollY / y;
+                    alpha = (int) (255 * scale);
+                    // 随着滑动距离改变透明度
+                    // Log.e("al=","="+alpha);
+                    relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
+                } else {
+                    if (alpha < 255) {
+                        redTitleIcon.setVisibility(View.VISIBLE);
+                        imgRedPacketLove.setVisibility(View.VISIBLE);
+                        Log.e("执行次数", "=" + (++count));
+                        // 防止频繁重复设置相同的值影响性能
+                        alpha = 255;
+                        relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
+                    }
+                }
+            }
+
+        });
         switch (MyApp.TYPE) {
             case 4:
                 linerRedPacketBottom.setVisibility(View.GONE);
                 break;
+            case 1:
+                consulting.setVisibility(View.GONE);
 
+                break;
         }
         recycleRedPacketWiner.setNestedScrollingEnabled(false);
         recycleRedPacketWiner.setLayoutManager(new FullyLinearLayoutManager(RedPacketActivity.this, LinearLayoutManager.VERTICAL, false));
@@ -243,6 +293,11 @@ public class RedPacketActivity extends BaseActivity {
                 AllOwnerActivity.launch(RedPacketActivity.this, rid);
             }
         });
+        if (data.size() == 0) {
+            footerView.setVisibility(View.GONE);
+        } else {
+            footerView.setVisibility(View.VISIBLE);
+        }
         switch (MyApp.TYPE) {
             case 1:
                 sendRedPacketRequest = getIntent().getParcelableExtra("content");
@@ -276,10 +331,16 @@ public class RedPacketActivity extends BaseActivity {
                 tvReaPacketAnswer1.setBackgroundResource(R.drawable.answer_ringht);
                 tvReaPacketAnswer2.setBackgroundResource(R.drawable.answer_wrong);
                 tvReaPacketAnswer3.setBackgroundResource(R.drawable.answer_wrong);
-                GlideUtil.loadImg(RedPacketActivity.this, sendRedPacketRequest.getPic1_filecode(), imgRedPacketPic);
+                if (sendRedPacketRequest.getPic1_filecode().split("&")[0].contains("http")) {
+                    GlideUtil.loadImg(RedPacketActivity.this, sendRedPacketRequest.getPic1_filecode().split("&")[0], imgRedPacketPic);
+                } else {
+                    GlideUtil.loadImg(RedPacketActivity.this,Client.BASE_URL+"public/"+ sendRedPacketRequest.getPic1_filecode().split("&")[0], imgRedPacketPic);
+
+                }
                 imgRedPacketBottom.setVisibility(View.GONE);
                 tvRedPacketBottom.setText("塞钱进红包");
                 rid = sendRedPacketRequest.getRid();
+                redTitle = sendRedPacketRequest.getMerchant();
                 adapter.removeAllFooterView();
                 break;
             case 2:
@@ -288,8 +349,16 @@ public class RedPacketActivity extends BaseActivity {
                 dataBean = getIntent().getParcelableExtra("content");
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
+                redTitle = dataBean.getMerchant();
+
                 break;
             case 3:
+                imgRedPacketBottom.setVisibility(View.VISIBLE);
+                tvRedPacketBottom.setText("抢红包");
+                dataBean1 = getIntent().getParcelableExtra("content");
+                getDetailData(dataBean1.getRId());
+                rid = dataBean1.getRId();
+                redTitle = dataBean1.getMerchant();
 
                 break;
             case 4:
@@ -299,6 +368,7 @@ public class RedPacketActivity extends BaseActivity {
                 redsOnBean = getIntent().getParcelableExtra("content");
                 getDetailData(redsOnBean.getRid());
                 rid = redsOnBean.getRid();
+                redTitle = redsOnBean.getMerchant();
                 break;
 
             case 5:
@@ -308,6 +378,7 @@ public class RedPacketActivity extends BaseActivity {
                 linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
+                redTitle = dataBean.getMerchant();
                 break;
             case 6:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
@@ -316,9 +387,10 @@ public class RedPacketActivity extends BaseActivity {
                 linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
+                redTitle = dataBean.getMerchant();
                 break;
         }
-
+        srlRedPacket.scrollTo(0, 0);
     }
 
     private void getDetailData(int rid) {
@@ -332,6 +404,7 @@ public class RedPacketActivity extends BaseActivity {
                         dismissProgressDialog();
                         if (response != null) {
                             detailResponse = response.getData();
+                            redPic = detailResponse.getUserPic().split("&")[0];
                             refreshView();
                         } else {
                             ToastUtils.toTosat(RedPacketActivity.this, msg);
@@ -346,7 +419,8 @@ public class RedPacketActivity extends BaseActivity {
                         dismissProgressDialog();
                         if (response != null && response.getErr() == 0) {
                             detailResponse = response.getData();
-                            if (MyApp.TYPE == 2) {
+                            redPic = detailResponse.getUserPic().split("&")[0];
+                            if (MyApp.TYPE == 2 || MyApp.TYPE == 3) {
                                 if (detailResponse.getIsgot() == 1) {
                                     MyApp.TYPE = 5;
                                 } else {
@@ -375,21 +449,26 @@ public class RedPacketActivity extends BaseActivity {
         RedPacketListApi.redpostterList(RedPacketActivity.this, page1, rid, new OnRequestCompletedListener<RedOwerResponse>() {
             @Override
             public void onCompleted(RedOwerResponse response, String msg) {
+
                 if (response == null) {
                     ToastUtils.toTosat(RedPacketActivity.this, "网络跑丢了");
                 }
                 if (response.getErr() == 0) {
                     if (response.getData() != null && response.getData().size() > 0) {
                         adapter.setNewData(response.getData());
+                        footerView.setVisibility(View.VISIBLE);
                     }
                 } else {
                     ToastUtils.toTosat(RedPacketActivity.this, response.getMsg());
                 }
+                srlRedPacket.scrollTo(0, 0);
             }
         });
+
     }
 
     private void refreshView() {
+        srlRedPacket.scrollTo(0, 0);
         linerRedPacketLove.setVisibility(View.VISIBLE);
         tvRedPacketMoney.setText(detailResponse.getMoney() + "元/" + detailResponse.getPCount() + "个");
         tvRedPacketNum.setText(detailResponse.getRemainCount() + "个");
@@ -411,7 +490,12 @@ public class RedPacketActivity extends BaseActivity {
         tvReaPacketAnswer1.setText(detailResponse.getAnswer0());
         tvReaPacketAnswer2.setText(detailResponse.getAnswer1());
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
-        GlideUtil.loadImg(RedPacketActivity.this, Client.BASE_URL+"public/" +detailResponse.getUserPic(), imgRedPacketPic);
+        if (detailResponse.getUserPic().contains("http")) {
+            GlideUtil.loadImg(RedPacketActivity.this, detailResponse.getUserPic(), imgRedPacketPic);
+        } else {
+            GlideUtil.loadImg(RedPacketActivity.this, Client.BASE_URL + "public/" + detailResponse.getUserPic(), imgRedPacketPic);
+        }
+
         if (detailResponse.isIscollect()) {
             imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
         }
@@ -429,7 +513,7 @@ public class RedPacketActivity extends BaseActivity {
     @OnClick({R.id.liner_red_packet_back, R.id.liner_red_packet_love
             , R.id.tv_rea_packet_answer1, R.id.tv_rea_packet_answer2
             , R.id.tv_rea_packet_answer3, R.id.liner_red_packet_share
-            , R.id.red_all})
+            , R.id.red_all, R.id.consulting})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.liner_red_packet_back:
@@ -474,6 +558,15 @@ public class RedPacketActivity extends BaseActivity {
                 break;
             case R.id.red_all:
                 AllOwnerActivity.launch(RedPacketActivity.this, rid);
+                break;
+            case R.id.consulting:
+                if (MyApp.TYPE != 1) {
+                    if (MyApp.login_state == 1) {
+                        MessageDetailActivity.launch(RedPacketActivity.this, redTitle, String.valueOf(rid), tvReaPacketContent.getText().toString(), redPic);
+                    } else {
+                        LoginActivity.luncher(RedPacketActivity.this);
+                    }
+                }
                 break;
         }
     }

@@ -69,13 +69,28 @@ public class MessageDetailActivity extends BaseActivity {
     TextView tvMessageDetailSend;
     private MessageDetailAdapter adapter;
     ArrayList<Message> data = new ArrayList<>();
-    private MessageResponse.DataBean.ListBean.ListLbBean bean;
     private int page = 1;
+    public static int Type = 0;
+    private String ltbt;
+    private String rid;
+    private String message;
+    private String pic;
 
     public static void launch(Context context, MessageResponse.DataBean.ListBean.ListLbBean data) {
         Intent intent = new Intent(context, MessageDetailActivity.class);
         intent.putExtra("data", data);
         context.startActivity(intent);
+        Type = 0;
+    }
+
+    public static void launch(Context context,String  title,String rid,String message,String pic) {
+        Intent intent = new Intent(context, MessageDetailActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("rid", rid);
+        intent.putExtra("message", message);
+        intent.putExtra("pic", pic);
+        context.startActivity(intent);
+        Type = 1;
     }
 
     @Override
@@ -90,10 +105,29 @@ public class MessageDetailActivity extends BaseActivity {
 
     private void assignView() {
         swipeRefreshLayoutMessageDetail.setRefreshing(false);
-        bean = getIntent().getParcelableExtra("data");
-        if (bean.getLtbt() != null) {
-            tvMessageDetailTitle.setText(bean.getLtbt());
+        switch (Type) {
+            case 0:
+                MessageResponse.DataBean.ListBean.ListLbBean  bean = getIntent().getParcelableExtra("data");
+                ltbt = bean.getLtbt();
+                rid = bean.getRid();
+                break;
+            case 1:
+                ltbt = getIntent().getStringExtra("title");
+                rid = getIntent().getStringExtra("rid");
+                pic = getIntent().getStringExtra("pic");
+                message = getIntent().getStringExtra("message");
+                linerMessageDetailRedPacket.setVisibility(View.VISIBLE);
+                if (pic.contains("http")) {
+                    GlideUtil.loadImg(MessageDetailActivity.this, pic, imgMessageDetailPicture);
+                } else {
+                    GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL+ "public/" +pic, imgMessageDetailPicture);
+                }
+
+                tvMessageDetailContent.setText(message != null ?message : "");
+                break;
         }
+
+        tvMessageDetailTitle.setText(ltbt);
         recycleViewMessageDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new MessageDetailAdapter(this.data);
         recycleViewMessageDetail.setAdapter(adapter);
@@ -115,7 +149,7 @@ public class MessageDetailActivity extends BaseActivity {
         if (!b) {
             swipeRefreshLayoutMessageDetail.setRefreshing(true);
         }
-        MessageApi.readMessageList(MessageDetailActivity.this, MyApp.token, bean.getRid(), page, new OnRequestCompletedListener<ReadMessageResponse>() {
+        MessageApi.readMessageList(MessageDetailActivity.this, MyApp.token, rid, page, new OnRequestCompletedListener<ReadMessageResponse>() {
             @Override
             public void onCompleted(ReadMessageResponse response, String msg) {
                 swipeRefreshLayoutMessageDetail.setRefreshing(false);
@@ -162,7 +196,7 @@ public class MessageDetailActivity extends BaseActivity {
         if (b) {
             showProgressDialog("数据加载中...");
         }
-        MessageApi.unReadMessageList(MessageDetailActivity.this, MyApp.token, bean.getRid(), new OnRequestCompletedListener<UnReadMessageResponse>() {
+        MessageApi.unReadMessageList(MessageDetailActivity.this, MyApp.token,rid, new OnRequestCompletedListener<UnReadMessageResponse>() {
             @Override
             public void onCompleted(UnReadMessageResponse response, String msg) {
                 if (b) {
@@ -172,9 +206,9 @@ public class MessageDetailActivity extends BaseActivity {
                     if (response.getRet() == 200) {
                         if (response.getData() != null && response.getData().getCode() == 200 && response.getData().getList() != null) {
                             page = 1;
-                            if (b) {
+                            if (b&&Type==0) {
                                 linerMessageDetailRedPacket.setVisibility(View.VISIBLE);
-                                GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL + response.getData().getList().getMer_pics(), imgMessageDetailPicture);
+                                GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL+ "public/" + response.getData().getList().getMer_pics(), imgMessageDetailPicture);
                                 tvMessageDetailContent.setText(response.getData().getList().getMerchant_des() != null ? response.getData().getList().getMerchant_des() : "");
                             }
                             if (response.getData().getList().getLt_list() != null && response.getData().getList().getLt_list().size() > 0) {
@@ -198,16 +232,16 @@ public class MessageDetailActivity extends BaseActivity {
                             if (b) {
                                 loadRecordMessages(true);
                             }
-                            if (b) {
+                            if (b&&Type==0) {
                                 linerMessageDetailRedPacket.setVisibility(View.GONE);
                             }
                         } else {
-                            if (b) {
+                            if (b&&Type==0) {
                                 linerMessageDetailRedPacket.setVisibility(View.GONE);
                             }
                         }
                     } else {
-                        if (b) {
+                        if (b&&Type==0) {
                             linerMessageDetailRedPacket.setVisibility(View.GONE);
                         }
                     }
@@ -234,13 +268,13 @@ public class MessageDetailActivity extends BaseActivity {
     @OnClick(R.id.tv_message_detail_send)
     public void onClick() {
         if (!TextUtils.isEmpty(etMessageDetailMessage.getText().toString())) {
-            MessageApi.sendMessage(MessageDetailActivity.this, MyApp.token, bean.getRid(), etMessageDetailMessage.getText().toString().trim(), new OnRequestCompletedListener<MessageSendResponse>() {
+            MessageApi.sendMessage(MessageDetailActivity.this, MyApp.token,rid, etMessageDetailMessage.getText().toString().trim(), new OnRequestCompletedListener<MessageSendResponse>() {
                 @Override
                 public void onCompleted(MessageSendResponse response, String msg) {
                 }
             });
             Message message = new Message();
-            message.setTime("今天:"+DateUtils.getCurrentTime_Today());
+            message.setTime("今天:" + DateUtils.getCurrentTime_Today());
             message.setItemType(1);
             message.setContent(etMessageDetailMessage.getText().toString());
             adapter.addData(message);

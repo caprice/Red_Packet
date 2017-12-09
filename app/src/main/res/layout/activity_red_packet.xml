@@ -9,120 +9,66 @@
     tools:context="com.haoxiong.taotao.ui.redpacket.RedPacketActivity">
 
     <LinearLayout
-        android:id="@+id/liner_red_packet_bottom"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
         android:textSize="17sp">
 
-        <ImageView
-            android:id="@+id/img_red_packet_bottom"
-            android:layout_width="16sp"
-            android:layout_height="16sp"
-            android:layout_marginRight="4dp"
-            android:src="@drawable/ic_money" />
-
-        <TextView
-            android:id="@+id/tv_red_packet_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="抢红包"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary">
-
         <LinearLayout
-            android:id="@+id/liner_red_packet_back"
-            android:layout_width="46dp"
-            android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dp">
+            android:id="@+id/consulting"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_back" />
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_zx" />
+
+            <TextView
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="咨询"
+                android:textColor="#666666"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="46dp"
+            android:id="@+id/liner_red_packet_bottom"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:background="@color/colorPrimary"
             android:gravity="center">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_logo" />
+                android:id="@+id/img_red_packet_bottom"
+                android:layout_width="16sp"
+                android:layout_height="16sp"
+                android:layout_marginRight="4dp"
+                android:src="@drawable/ic_money" />
+
+            <TextView
+                android:id="@+id/tv_red_packet_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="抢红包"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center_vertical|end">
+    </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/liner_red_packet_love"
-                android:layout_width="46dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center_vertical|end"
-                android:paddingRight="16dp">
-
-                <ImageView
-                    android:id="@+id/img_red_packet_love"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_love_unselect" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/liner_red_packet_share"
-                android:layout_width="46dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center_vertical|end"
-                android:paddingRight="16dp">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/share1" />
-            </LinearLayout>
-        </LinearLayout>
-
-
-    </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/srl_red_packet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/relativeLayout"
         android:layout_marginBottom="44dp"
         android:scrollbars="none">
 
@@ -388,23 +334,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="#B9B9B9" />
+
             <RelativeLayout
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
                 <LinearLayout
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:paddingBottom="10dp"
 
                     android:paddingTop="10dp">
+
                     <ImageView
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:src="@drawable/ic_red_winer" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -413,20 +363,22 @@
                         android:textColor="#333333"
                         android:textSize="14sp" />
                 </LinearLayout>
+
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/red_all"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
                     android:text="全部得主"
                     android:textColor="#333333"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone" />
             </RelativeLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -438,7 +390,95 @@
                 android:id="@+id/recycle_red_packet_winer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="true"></android.support.v7.widget.RecyclerView>
+                android:nestedScrollingEnabled="false"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#00d53e35">
+
+        <LinearLayout
+            android:id="@+id/liner_red_packet_back"
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/red_title_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_logo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical|end">
+
+            <LinearLayout
+                android:id="@+id/liner_red_packet_love"
+                android:layout_width="46dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical|end"
+                android:paddingRight="16dp">
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/img_red_packet_love"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_love_unselect" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/liner_red_packet_share"
+                android:layout_width="46dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical|end"
+                android:paddingRight="16dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/share1" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
 </RelativeLayout>

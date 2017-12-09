@@ -120,7 +120,6 @@ public class SendRedPacketActivity extends BaseActivity {
     private PopupWindow popupwindowShow;
     private String adviceImgPath;
     private String adviceImgPath1;
-    private String netAdviceImgPath;
     private String address;
     private MessageEvent message;
     private String money;
@@ -129,7 +128,6 @@ public class SendRedPacketActivity extends BaseActivity {
     private String lat;
     private String mapaddress;
     private SendRedPacketRequest redPacketRequest;
-    private String fileCode;
     private String netFfileCode;
     private String netPicture;
 
@@ -152,8 +150,8 @@ public class SendRedPacketActivity extends BaseActivity {
     private void assignView() {
         money = getIntent().getStringExtra("money");
         num = getIntent().getStringExtra("num");
-        netAdviceImgPath = SharePreferenceUtil.get(SendRedPacketActivity.this, "pic");
-        fileCode = SharePreferenceUtil.get(SendRedPacketActivity.this, "filecode");
+        netPicture = SharePreferenceUtil.get(SendRedPacketActivity.this, "pic");
+        netFfileCode = SharePreferenceUtil.get(SendRedPacketActivity.this, "filecode");
         title = SharePreferenceUtil.get(SendRedPacketActivity.this, "merchant");
         content = SharePreferenceUtil.get(SendRedPacketActivity.this, "merchant_des");
         contact = SharePreferenceUtil.get(SendRedPacketActivity.this, "tel") + "--" + SharePreferenceUtil.get(SendRedPacketActivity.this, "address");
@@ -183,7 +181,7 @@ public class SendRedPacketActivity extends BaseActivity {
         tvSendRedPacketRight.setText(right);
         tvSendRedPacketWrong.setText(wrong);
         tvSendRedPacketLocal.setText(mapaddress);
-        if (TextUtils.isEmpty(netAdviceImgPath)) {
+        if (TextUtils.isEmpty(netPicture)) {
             tvSendRedPacketAdvice.setText("未设置");
         } else {
             tvSendRedPacketAdvice.setText("已设置");
@@ -234,8 +232,8 @@ public class SendRedPacketActivity extends BaseActivity {
                                     })
                                     .show();
                         } else {
-//                            PictureSelectedActivity.launch(SendRedPacketActivity.this, 99);
-                            showAdviceImg();
+                            PictureSelectedActivity.launch(SendRedPacketActivity.this, 99);
+//                            showAdviceImg();
                         }
                     }
 
@@ -314,8 +312,8 @@ public class SendRedPacketActivity extends BaseActivity {
                     redPacketRequest.setTel("");
                 }
 
-                redPacketRequest.setPic1_filecode(netAdviceImgPath);
-                redPacketRequest.setFilecode(fileCode);
+                redPacketRequest.setPic1_filecode(netPicture);
+                redPacketRequest.setFilecode(netFfileCode);
                 sendPacket();
             } else {//本地红包
                 if (!TextUtils.isEmpty(lat)) {
@@ -338,8 +336,8 @@ public class SendRedPacketActivity extends BaseActivity {
                         redPacketRequest.setTel("");
                     }
 
-                    redPacketRequest.setPic1_filecode(netAdviceImgPath);
-                    redPacketRequest.setFilecode(fileCode);
+                    redPacketRequest.setPic1_filecode(netPicture);
+                    redPacketRequest.setFilecode(netFfileCode);
                     sendLocal();
                 } else {
                     ToastUtils.toTosat(SendRedPacketActivity.this, "请选择定位");
@@ -457,7 +455,16 @@ public class SendRedPacketActivity extends BaseActivity {
             case 99:
                 try {
                     netFfileCode = result.split("%")[0];
+                    if (!TextUtils.isEmpty(netFfileCode)) {
+                        SharePreferenceUtil.put(SendRedPacketActivity.this, "filecode", netFfileCode);
+
+                    }
+
                     netPicture = result.split("%")[1];
+                    if (!TextUtils.isEmpty(netPicture)) {
+                        SharePreferenceUtil.put(SendRedPacketActivity.this, "pic", netPicture);
+
+                    }
                     if (netFfileCode == null) {
                         tvSendRedPacketAdvice.setText("未设置");
                     } else {
@@ -721,11 +728,11 @@ public class SendRedPacketActivity extends BaseActivity {
             public void onCompleted(ChangePersonImgResponse response, String msg) {
                 if (response.getErr() == 0) {
                     dismissProgressDialog();
-                    fileCode = response.getFilecode();
+                    netFfileCode = response.getFilecode();
                     tvSendRedPacketAdvice.setText("已设置");
                     SharePreferenceUtil.put(SendRedPacketActivity.this, "pic", response.getPreview_url());
                     SharePreferenceUtil.put(SendRedPacketActivity.this, "filecode", response.getFilecode());
-                    netAdviceImgPath = response.getPreview_url();
+                    netPicture = response.getPreview_url();
                     ToastUtils.toTosat(SendRedPacketActivity.this, "图片上传成功");
                 } else {
                     ToastUtils.toTosat(SendRedPacketActivity.this, response.getMsg());

@@ -24,6 +24,7 @@ import com.haoxiong.taotao.ui.collect.adapter.CollectAdapter;
 import com.haoxiong.taotao.ui.collect.bean.CollectBean;
 import com.haoxiong.taotao.ui.main.MainActivity;
 import com.haoxiong.taotao.ui.redpacket.RedPacket1Activity;
+import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
 import com.haoxiong.taotao.util.ToastUtils;
 
 import java.util.ArrayList;
@@ -87,8 +88,8 @@ public class CollectActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MyApp.TYPE = 3;
-                RedPacket1Activity.luncher(CollectActivity.this, data.get(position));
+                MyApp.TYPE = 2;
+                RedPacketActivity.luncher(CollectActivity.this, data.get(position));
             }
         });
     }

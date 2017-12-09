@@ -638,8 +638,6 @@ public class PictureSelectedActivity extends BaseActivity {
             public void onCompleted(ChangePersonImgResponse response, String msg) {
                 if (response.getErr() == 0) {
                     dismissProgressDialog();
-                    SharePreferenceUtil.put(PictureSelectedActivity.this, "pic", response.getPreview_url());
-                    SharePreferenceUtil.put(PictureSelectedActivity.this, "filecode", response.getFilecode());
                     switch (upDateTagPicture) {
                         case 1:
                             netPitcure1 = response.getPreview_url();

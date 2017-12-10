@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/side_nav_bar"
     android:clickable="false"
     android:gravity="center_horizontal"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,13 +23,13 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/head"
-            android:layout_marginTop="@dimen/nav_header_vertical_spacing"
-            app:civ_border_color="#ffffff"
-            app:civ_border_width="1px"
             android:layout_width="70dp"
-            android:layout_height="70dp" />
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+            android:src="@mipmap/head"
+            app:civ_border_color="#ffffff"
+            app:civ_border_width="1px" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -36,9 +38,9 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            tools:text="刘博文"
             android:textColor="#333333"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="刘博文" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,110 +66,114 @@
         </LinearLayout>
 
         <TextView
-            android:background="?attr/selectableItemBackground"
             android:id="@+id/tv_red"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
             android:layout_height="40dp"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="35dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:drawableLeft="@drawable/packet"
             android:drawablePadding="12dp"
+            android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="钱包"
-            android:clickable="true"
             android:textColor="#333333"
             android:textSize="14sp" />
+
         <LinearLayout
-            android:background="?attr/selectableItemBackground"
             android:id="@+id/tv_message"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
             <TextView
-                android:gravity="center_vertical"
-                android:layout_height="40dp"
                 android:layout_width="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginLeft="6dp"
+                android:clickable="false"
                 android:drawableLeft="@drawable/ic_message"
                 android:drawablePadding="12dp"
+                android:gravity="center_vertical"
                 android:paddingLeft="30dp"
                 android:text="我的消息"
                 android:textColor="#333333"
-                android:clickable="false"
                 android:textSize="14sp" />
+
             <TextView
-                android:visibility="gone"
                 android:id="@+id/message_num"
-                android:layout_marginLeft="10dp"
-                android:text="99+"
-                android:textSize="10dp"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:layout_centerVertical="true"
-                android:background="@drawable/message_count_bg"
-                android:layout_alignParentRight="true"
                 android:layout_width="26dp"
-                android:layout_height="26dp" />
+                android:layout_height="26dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/message_count_bg"
+                android:gravity="center"
+                android:text="99+"
+                android:textColor="#ffffff"
+                android:textSize="10dp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
-            android:background="?attr/selectableItemBackground"
             android:id="@+id/tv_prize_invited"
-            android:gravity="center_vertical"
-            android:layout_height="40dp"
             android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_marginLeft="6dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:drawableLeft="@drawable/prize_invited"
             android:drawablePadding="12dp"
+            android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="有奖邀请"
             android:textColor="#333333"
-            android:clickable="true"
 
             android:textSize="14sp" />
 
         <TextView
-            android:background="?attr/selectableItemBackground"
             android:id="@+id/tv_red_maneger"
-            android:gravity="center_vertical"
-            android:layout_height="40dp"
             android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_marginLeft="6dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:drawableLeft="@drawable/red_maneger"
             android:drawablePadding="12dp"
+            android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="红包管理"
             android:textColor="#333333"
-            android:clickable="true"
 
             android:textSize="14sp" />
 
         <TextView
-            android:clickable="true"
-            android:background="?attr/selectableItemBackground"
             android:id="@+id/tv_save"
-            android:gravity="center_vertical"
-            android:layout_height="40dp"
             android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_marginLeft="6dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:drawableLeft="@drawable/save"
             android:drawablePadding="12dp"
+            android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="我的收藏"
             android:textColor="#333333"
             android:textSize="14sp" />
+
         <TextView
-            android:clickable="true"
-            android:background="?attr/selectableItemBackground"
             android:id="@+id/tv_active"
-            android:gravity="center_vertical"
-            android:layout_height="40dp"
             android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_marginLeft="6dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:drawableLeft="@drawable/ic_activie"
             android:drawablePadding="12dp"
+            android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="活动"
             android:textColor="#333333"
@@ -175,16 +181,16 @@
     </LinearLayout>
 
     <TextView
-        android:clickable="true"
-        android:background="?attr/selectableItemBackground"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
         android:id="@+id/tv_contect_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="6dp"
-        android:drawableTop="@drawable/contect_phone"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:drawablePadding="6dp"
+        android:drawableTop="@drawable/contect_phone"
         android:paddingBottom="15dp"
         android:text="客服"
         android:textColor="#333333"

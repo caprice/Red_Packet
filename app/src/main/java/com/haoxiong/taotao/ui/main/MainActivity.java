@@ -42,7 +42,6 @@ import com.fan.service.response.RedPacketDetailResponse;
 import com.fan.service.response.RedPacketListResponse;
 import com.fan.service.response.UnreadResponse;
 import com.fan.service.response.WalletResponse;
-import com.fan.service.rest.service.MessageService;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
@@ -96,7 +95,7 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.tv_contect_phone)
     TextView tvContectPhone;
     @BindView(R.id.mainactivity_person_liner)
-    LinearLayout mainactivityPersonLiner;
+    RelativeLayout mainactivityPersonLiner;
     @BindView(R.id.imageView3)
     ImageView imageView3;
     @BindView(R.id.mainactivity_select_liner)
@@ -115,6 +114,8 @@ public class MainActivity extends BaseActivity
     TextView messageNum;
     @BindView(R.id.tv_message)
     LinearLayout tvMessage;
+    @BindView(R.id.message_num1)
+    TextView messageNum1;
 
     private List<RedPacketListResponse.DataBean> data = new ArrayList<>();
     private LinearLayoutManager manager;
@@ -302,18 +303,24 @@ public class MainActivity extends BaseActivity
                         if (response.getData() != null && response.getData().getCode() == 200) {
                             if (response.getData().getList().getUnread() != 0) {
                                 messageNum.setVisibility(View.VISIBLE);
+                                messageNum1.setVisibility(View.VISIBLE);
                                 messageNum.setText(response.getData().getList().getUnread() + "");
+                                messageNum1.setText(response.getData().getList().getUnread() + "");
                             } else {
                                 messageNum.setVisibility(View.GONE);
+                                messageNum1.setVisibility(View.GONE);
                             }
                         } else {
                             messageNum.setVisibility(View.GONE);
+                            messageNum1.setVisibility(View.GONE);
                         }
                     } else {
                         messageNum.setVisibility(View.GONE);
+                        messageNum1.setVisibility(View.GONE);
                     }
                 } else {
                     messageNum.setVisibility(View.GONE);
+                    messageNum1.setVisibility(View.GONE);
                 }
             }
         });
@@ -411,7 +418,6 @@ public class MainActivity extends BaseActivity
 
 
     private void assinview() {
-        messageNum.setText("11");
         getActive(false);
 //        startActivity(new Intent(MainActivity.this, GaodelocationService.class));
         mainSwiperefreshlayout.setEnabled(false);
@@ -861,5 +867,5 @@ public class MainActivity extends BaseActivity
         }
     }
 
-   
+
 }

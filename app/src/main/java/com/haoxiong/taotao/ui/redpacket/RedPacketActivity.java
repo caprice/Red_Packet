@@ -235,6 +235,12 @@ public class RedPacketActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        srlRedPacket.scrollTo(0, 0);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
@@ -490,10 +496,11 @@ redTitleIcon.setVisibility(View.GONE);
         tvReaPacketAnswer1.setText(detailResponse.getAnswer0());
         tvReaPacketAnswer2.setText(detailResponse.getAnswer1());
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
-        if (detailResponse.getUserPic().contains("http")) {
-            GlideUtil.loadImg(RedPacketActivity.this, detailResponse.getUserPic(), imgRedPacketPic);
+        String[] split = detailResponse.getUserPic().split("&");
+        if (split[0].contains("http")) {
+            GlideUtil.loadImg(RedPacketActivity.this, split[0], imgRedPacketPic);
         } else {
-            GlideUtil.loadImg(RedPacketActivity.this, Client.BASE_URL + "public/" + detailResponse.getUserPic(), imgRedPacketPic);
+            GlideUtil.loadImg(RedPacketActivity.this, Client.BASE_URL + "public/" + split[0], imgRedPacketPic);
         }
 
         if (detailResponse.isIscollect()) {

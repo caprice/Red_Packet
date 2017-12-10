@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.fan.service.Client;
 import com.fan.service.response.RedManagerResponse;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.ui.redmaneger.bean.MangerMessageEndBean;
@@ -30,10 +31,29 @@ public class ManagerRecycleViewEndAdapter extends BaseQuickAdapter<RedManagerRes
 
     @Override
     protected void convert(BaseViewHolder helper, final RedManagerResponse.DataBean.RedsOffBean item) {
-        ImageView imageView = helper.getView(R.id.img_end_img);
-        GlideUtil.loadImg(context,item.getPic(),imageView);
+        ImageView view = helper.getView(R.id.img_end_img);
+        ImageView view1 = helper.getView(R.id.img_end_img1);
         helper.setText(R.id.tv_end_title, item.getMerchant());
         helper.setText(R.id.tv_end_time, item.getTime());
         helper.setText(R.id.tv_end_content, item.getPCount() + "");
+        String[] split = item.getPic().split("&");
+        if (split[0].contains("http")) {
+            GlideUtil.loadImg(context,split[0], view);
+        } else {
+            GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], view);
+        }
+        try {
+            if (split[1].contains("http")) {
+                GlideUtil.loadImg(context,split[1], view1);
+            } else {
+                GlideUtil.loadImg(context, Client.BASE_URL+"public/" + split[1], view1);
+            }
+        } catch (Exception e) {
+            if (split[0].contains("http")) {
+                GlideUtil.loadImg(context,split[0], view1);
+            } else {
+                GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], view1);
+            }
+        }
     }
 }

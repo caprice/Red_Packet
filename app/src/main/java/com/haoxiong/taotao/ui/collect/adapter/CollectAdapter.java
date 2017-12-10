@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.fan.service.Client;
 import com.fan.service.response.CollectRedPacketResponse;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.ui.collect.bean.CollectBean;
@@ -37,6 +38,25 @@ public class CollectAdapter extends BaseQuickAdapter<CollectRedPacketResponse.Da
         helper.setText(R.id.tv_end_time, item.getGive_time());
         helper.setText(R.id.tv_end_content, "");
         ImageView view = helper.getView(R.id.img_end_img);
-        GlideUtil.loadImg(context, item.getUser_pic(), view);
+        ImageView view1 = helper.getView(R.id.img_end_img1);
+        String[] split = item.getUser_pic().split("&");
+        if (split[0].contains("http")) {
+            GlideUtil.loadImg(context,split[0], view);
+        } else {
+            GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], view);
+        }
+        try {
+            if (split[1].contains("http")) {
+                GlideUtil.loadImg(context,split[1], view1);
+            } else {
+                GlideUtil.loadImg(context, Client.BASE_URL+"public/" + split[1], view1);
+            }
+        } catch (Exception e) {
+            if (split[0].contains("http")) {
+                GlideUtil.loadImg(context,split[0], view1);
+            } else {
+                GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], view1);
+            }
+        }
     }
 }

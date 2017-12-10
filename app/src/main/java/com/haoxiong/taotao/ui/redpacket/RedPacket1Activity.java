@@ -163,7 +163,11 @@ public class RedPacket1Activity extends BaseActivity {
         ButterKnife.bind(this);
         assignView();
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        srlRedPacket.scrollTo(0, 0);
+    }
     private void assignView() {
 
         srlRedPacket.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -232,7 +236,13 @@ public class RedPacket1Activity extends BaseActivity {
                 tvReaPacketAnswer1.setText(sendRedPacketRequest.getFirst_answer());
                 tvReaPacketAnswer2.setText(sendRedPacketRequest.getSecond_answer());
                 tvReaPacketAnswer3.setText(sendRedPacketRequest.getThird_answer());
-                GlideUtil.loadImg(RedPacket1Activity.this, sendRedPacketRequest.getPic1_filecode(), imgRedPacketPic);
+                String[] split = sendRedPacketRequest.getPic1_filecode().split("&");
+                if (split[0].contains("http")) {
+                    GlideUtil.loadImg(RedPacket1Activity.this, split[0], imgRedPacketPic);
+                } else {
+                    GlideUtil.loadImg(RedPacket1Activity.this,Client.BASE_URL+"public/"+  split[0], imgRedPacketPic);
+                }
+
 
                 imgRedPacketBottom.setVisibility(View.GONE);
                 tvRedPacketBottom.setText("塞钱进红包");
@@ -350,7 +360,13 @@ public class RedPacket1Activity extends BaseActivity {
         tvReaPacketAnswer1.setText(detailResponse.getAnswer0());
         tvReaPacketAnswer2.setText(detailResponse.getAnswer1());
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
-        GlideUtil.loadImg(RedPacket1Activity.this, Client.BASE_URL + "public/" + detailResponse.getUserPic(), imgRedPacketPic);
+        String[] split = detailResponse.getUserPic().split("&");
+        if (split[0].contains("http")) {
+            GlideUtil.loadImg(RedPacket1Activity.this, split[0], imgRedPacketPic);
+        } else {
+            GlideUtil.loadImg(RedPacket1Activity.this, Client.BASE_URL + "public/" + split[0], imgRedPacketPic);
+        }
+
 
         if (detailResponse.isIscollect()) {
             imgRedPacketLove.setImageResource(R.drawable.ic_love_select);

@@ -52,6 +52,7 @@ public class HomeRecycleViewAdapter extends BaseQuickAdapter<RedPacketListRespon
             }
         }
         ImageView imageView = helper.getView(R.id.imageView2);
+        ImageView imageView1 = helper.getView(R.id.imageView3);
         TextView home_donging = helper.getView(R.id.home_donging);
         switch (item.getGot()) {
             case 2:
@@ -73,7 +74,27 @@ public class HomeRecycleViewAdapter extends BaseQuickAdapter<RedPacketListRespon
                 }
                 break;
         }
-        GlideUtil.loadImg(context, Client.BASE_URL+"public/" + item.getMer_pics(), imageView);
+        String[] split = item.getMer_pics().split("&");
+        if (split[0].contains("http")) {
+            GlideUtil.loadImg(context,split[0], imageView);
+        } else {
+            GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], imageView);
+        }
+        try {
+            if (split[1].contains("http")) {
+                GlideUtil.loadImg(context,split[1], imageView1);
+            } else {
+                GlideUtil.loadImg(context, Client.BASE_URL+"public/" + split[1], imageView1);
+            }
+        } catch (Exception e) {
+            if (split[0].contains("http")) {
+                GlideUtil.loadImg(context,split[0], imageView1);
+            } else {
+                GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], imageView1);
+            }
+        }
+
+
     }
 
     public void replaceItem(int position, RedPacketDetailResponse.DataBean dataBean) {

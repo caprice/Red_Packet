@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.fan.service.Client;
 import com.fan.service.response.RedManagerResponse;
 import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.callback.AdapterCallBack;
@@ -35,8 +36,8 @@ public class ManagerRecycleViewRunAdapter extends BaseQuickAdapter<RedManagerRes
     protected void convert(BaseViewHolder helper, final RedManagerResponse.DataBean.RedsOnBean item) {
         helper.setText(R.id.tv_manager_title, item.getMerchant());
         ImageView imageView = helper.getView(R.id.img_manager_picture);
+        ImageView imageView1 = helper.getView(R.id.img_manager_picture1);
         TextView item_state = helper.getView(R.id.item_state);
-        GlideUtil.loadImg(context,item.getPic(),imageView);
         helper.setText(R.id.tv_manger_charge,item.getMoney() +"元/"+item.getPCount()+"个");
         helper.setText(R.id.tv_manger_num, item.getRemainCount()+"个");
         helper.addOnClickListener(R.id.liner_state);
@@ -56,6 +57,25 @@ public class ManagerRecycleViewRunAdapter extends BaseQuickAdapter<RedManagerRes
                 item_state.setTextColor(Color.parseColor("#ffffff"));
                 item_state.setBackgroundResource(R.drawable.red_pacekt_enalbe);
                 break;
+        }
+        String[] split = item.getPic().split("&");
+        if (split[0].contains("http")) {
+            GlideUtil.loadImg(context,split[0], imageView);
+        } else {
+            GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], imageView);
+        }
+        try {
+            if (split[1].contains("http")) {
+                GlideUtil.loadImg(context,split[1], imageView1);
+            } else {
+                GlideUtil.loadImg(context, Client.BASE_URL+"public/" + split[1], imageView1);
+            }
+        } catch (Exception e) {
+            if (split[0].contains("http")) {
+                GlideUtil.loadImg(context,split[0], imageView1);
+            } else {
+                GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], imageView1);
+            }
         }
     }
 

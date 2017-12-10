@@ -11,11 +11,22 @@
         android:paddingRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="53dp">
-        <ImageView
-            android:id="@+id/img_end_img"
-            android:src="@drawable/item"
-            android:layout_width="64dp"
-            android:layout_height="36dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="72dp"
+            android:layout_height="36dp">
+            <ImageView
+                android:id="@+id/img_end_img"
+                android:src="@drawable/item"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+            <ImageView
+                android:id="@+id/img_end_img1"
+                android:src="@drawable/item"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+        </LinearLayout>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_marginLeft="10dp"

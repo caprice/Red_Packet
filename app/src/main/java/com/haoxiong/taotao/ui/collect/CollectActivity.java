@@ -88,7 +88,7 @@ public class CollectActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MyApp.TYPE = 2;
+                MyApp.TYPE = 3;
                 RedPacketActivity.luncher(CollectActivity.this, data.get(position));
             }
         });

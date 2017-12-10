@@ -12,13 +12,9 @@ import android.widget.TextView;
 
 import com.fan.service.Client;
 import com.fan.service.response.GetRedPacketResponse;
-import com.fan.service.response.RedManagerResponse;
 import com.fan.service.response.RedPacketDetailResponse;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
-import com.haoxiong.taotao.ui.main.MainActivity;
-import com.haoxiong.taotao.ui.redpacket.RedPacketActivity;
-import com.haoxiong.taotao.ui.share.ShareActivity;
 import com.haoxiong.taotao.util.GlideUtil;
 import com.haoxiong.taotao.util.ToastUtils;
 import com.umeng.socialize.ShareAction;
@@ -51,6 +47,8 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
     TextView tvGetRedPacketShare;
     @BindView(R.id.activity_get_red_packet_success)
     RelativeLayout activityGetRedPacketSuccess;
+    @BindView(R.id.img_get_red_packet_bg1)
+    ImageView imgGetRedPacketBg1;
     private GetRedPacketResponse successData;
     private RedPacketDetailResponse.DataBean detailData;
 
@@ -72,10 +70,25 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
     private void assignView() {
         detailData = getIntent().getParcelableExtra("content1");
         successData = getIntent().getParcelableExtra("content2");
+        String[] split = detailData.getUserPic().split("&");
+        if (split[0].contains("http")) {
+            GlideUtil.loadImg(GetRedPacketSuccessActivity.this,  split[0], imgGetRedPacketBg);
+        } else {
+            GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL + "public/" + split[0], imgGetRedPacketBg);
+        }
+
         try {
-            GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL+"public/" +detailData.getUserPic(), imgGetRedPacketBg);
+            if (split[1].contains("http")) {
+                GlideUtil.loadImg(GetRedPacketSuccessActivity.this,  split[1], imgGetRedPacketBg1);
+            } else {
+                GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL + "public/" + split[1], imgGetRedPacketBg1);
+            }
         } catch (Exception e) {
-            imgGetRedPacketBg.setImageResource(R.mipmap.item);
+            if (split[0].contains("http")) {
+                GlideUtil.loadImg(GetRedPacketSuccessActivity.this,  split[0], imgGetRedPacketBg1);
+            } else {
+                GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL + "public/" + split[0], imgGetRedPacketBg1);
+            }
         }
         tvGetRedPacketName.setText(detailData.getMerchant());
         tvGetRedPacketMoney.setText(successData.getData().getMoney());

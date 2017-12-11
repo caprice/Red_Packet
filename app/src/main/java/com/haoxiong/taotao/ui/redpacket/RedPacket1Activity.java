@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -131,7 +132,7 @@ public class RedPacket1Activity extends BaseActivity {
     private int page = 1;
     private int rid;
     private View view;
-
+    int imgAlpha = 0;
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacket1Activity.class);
         intent.putExtra("content", redPacketRequest);
@@ -170,6 +171,8 @@ public class RedPacket1Activity extends BaseActivity {
     }
     private void assignView() {
 
+        redTitleIcon.setImageAlpha(imgAlpha);
+        imgRedPacketLove.setImageAlpha(imgAlpha);
         srlRedPacket.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -180,18 +183,19 @@ public class RedPacket1Activity extends BaseActivity {
                 Log.e("...", scrollY + "");
                 int y = imgRedPacketPic.getHeight()-DensityUtil.dip2px(RedPacket1Activity.this,44);
                 if (scrollY <= y) {
-                    redTitleIcon.setVisibility(View.GONE);
-                    imgRedPacketLove.setVisibility(View.GONE);
                     scale = (float) scrollY / y;
                     alpha = (int) (255 * scale);
+
+                    imgAlpha = (int) (255 * scale);
+                    redTitleIcon.setImageAlpha(imgAlpha);
+                    imgRedPacketLove.setImageAlpha(imgAlpha);
                     // 随着滑动距离改变透明度
                     // Log.e("al=","="+alpha);
                     relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
                 } else {
                     if (alpha < 255) {
-                        redTitleIcon.setVisibility(View.VISIBLE);
-                        imgRedPacketLove.setVisibility(View.VISIBLE);
-                        Log.e("执行次数", "=" + (++count));
+                        redTitleIcon.setImageAlpha(255);
+                        imgRedPacketLove.setImageAlpha(255);
                         // 防止频繁重复设置相同的值影响性能
                         alpha = 255;
                         relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));

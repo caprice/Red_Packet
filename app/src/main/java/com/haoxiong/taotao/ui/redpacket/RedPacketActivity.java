@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -200,7 +201,7 @@ public class RedPacketActivity extends BaseActivity {
     private String redPic;
     private boolean isGetRedPacket = false;
     private View footerView;
-
+    int imgAlpha=0;
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacketActivity.class);
         intent.putExtra("content", redPacketRequest);
@@ -247,7 +248,8 @@ public class RedPacketActivity extends BaseActivity {
     }
 
     private void assignView() {
-
+        redTitleIcon.setImageAlpha(imgAlpha);
+        imgRedPacketLove.setImageAlpha(imgAlpha);
         srlRedPacket.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -258,17 +260,19 @@ public class RedPacketActivity extends BaseActivity {
                 Log.e("...", scrollY + "");
                 int y = imgRedPacketPic.getHeight() - DensityUtil.dip2px(RedPacketActivity.this, 44);
                 if (scrollY <= y) {
-redTitleIcon.setVisibility(View.GONE);
-                    imgRedPacketLove.setVisibility(View.GONE);
                     scale = (float) scrollY / y;
                     alpha = (int) (255 * scale);
+                    imgAlpha = (int) (255 * scale);
+                    redTitleIcon.setImageAlpha(imgAlpha);
+                    imgRedPacketLove.setImageAlpha(imgAlpha);
                     // 随着滑动距离改变透明度
                     // Log.e("al=","="+alpha);
                     relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
                 } else {
                     if (alpha < 255) {
-                        redTitleIcon.setVisibility(View.VISIBLE);
-                        imgRedPacketLove.setVisibility(View.VISIBLE);
+                        redTitleIcon.setImageAlpha(255);
+                        imgRedPacketLove.setImageAlpha(255);
+
                         Log.e("执行次数", "=" + (++count));
                         // 防止频繁重复设置相同的值影响性能
                         alpha = 255;
@@ -1258,6 +1262,16 @@ redTitleIcon.setVisibility(View.GONE);
         SharePreferenceUtil.remove(RedPacketActivity.this, "money");
         SharePreferenceUtil.remove(RedPacketActivity.this, "pcount");
         SharePreferenceUtil.remove(RedPacketActivity.this, "filecode");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "filecode1");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "filecode2");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "filecode3");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "filecode4");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "filecode5");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "netPitcure1");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "netPitcure2");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "netPitcure3");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "netPitcure4");
+        SharePreferenceUtil.remove(RedPacketActivity.this, "netPitcure5");
     }
 
     /**

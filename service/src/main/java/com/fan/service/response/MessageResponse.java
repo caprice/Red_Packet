@@ -137,6 +137,15 @@ public class MessageResponse implements Parcelable {
                 private String xxzt;
                 private String cjsj;
                 private String rid;
+                private String ltid;
+
+                public String getLtid() {
+                    return ltid;
+                }
+
+                public void setLtid(String ltid) {
+                    this.ltid = ltid;
+                }
 
                 public String getRid() {
                     return rid;
@@ -202,6 +211,9 @@ public class MessageResponse implements Parcelable {
                     this.cjsj = cjsj;
                 }
 
+                public ListLbBean() {
+                }
+
                 @Override
                 public int describeContents() {
                     return 0;
@@ -217,9 +229,7 @@ public class MessageResponse implements Parcelable {
                     dest.writeString(this.xxzt);
                     dest.writeString(this.cjsj);
                     dest.writeString(this.rid);
-                }
-
-                public ListLbBean() {
+                    dest.writeString(this.ltid);
                 }
 
                 protected ListLbBean(Parcel in) {
@@ -231,9 +241,10 @@ public class MessageResponse implements Parcelable {
                     this.xxzt = in.readString();
                     this.cjsj = in.readString();
                     this.rid = in.readString();
+                    this.ltid = in.readString();
                 }
 
-                public static final Parcelable.Creator<ListLbBean> CREATOR = new Parcelable.Creator<ListLbBean>() {
+                public static final Creator<ListLbBean> CREATOR = new Creator<ListLbBean>() {
                     @Override
                     public ListLbBean createFromParcel(Parcel source) {
                         return new ListLbBean(source);
@@ -244,6 +255,9 @@ public class MessageResponse implements Parcelable {
                         return new ListLbBean[size];
                     }
                 };
+            }
+
+            public ListBean() {
             }
 
             @Override
@@ -257,15 +271,12 @@ public class MessageResponse implements Parcelable {
                 dest.writeTypedList(this.list_lb);
             }
 
-            public ListBean() {
-            }
-
             protected ListBean(Parcel in) {
                 this.steTime = in.readInt();
                 this.list_lb = in.createTypedArrayList(ListLbBean.CREATOR);
             }
 
-            public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+            public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
                 @Override
                 public ListBean createFromParcel(Parcel source) {
                     return new ListBean(source);
@@ -276,6 +287,9 @@ public class MessageResponse implements Parcelable {
                     return new ListBean[size];
                 }
             };
+        }
+
+        public DataBean() {
         }
 
         @Override
@@ -291,9 +305,6 @@ public class MessageResponse implements Parcelable {
             dest.writeParcelable(this.list, flags);
         }
 
-        public DataBean() {
-        }
-
         protected DataBean(Parcel in) {
             this.code = in.readInt();
             this.msg = in.readString();
@@ -301,7 +312,7 @@ public class MessageResponse implements Parcelable {
             this.list = in.readParcelable(ListBean.class.getClassLoader());
         }
 
-        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);
@@ -312,6 +323,9 @@ public class MessageResponse implements Parcelable {
                 return new DataBean[size];
             }
         };
+    }
+
+    public MessageResponse() {
     }
 
     @Override
@@ -326,16 +340,13 @@ public class MessageResponse implements Parcelable {
         dest.writeString(this.msg);
     }
 
-    public MessageResponse() {
-    }
-
     protected MessageResponse(Parcel in) {
         this.ret = in.readInt();
         this.data = in.readParcelable(DataBean.class.getClassLoader());
         this.msg = in.readString();
     }
 
-    public static final Parcelable.Creator<MessageResponse> CREATOR = new Parcelable.Creator<MessageResponse>() {
+    public static final Creator<MessageResponse> CREATOR = new Creator<MessageResponse>() {
         @Override
         public MessageResponse createFromParcel(Parcel source) {
             return new MessageResponse(source);

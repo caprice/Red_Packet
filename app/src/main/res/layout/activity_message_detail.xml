@@ -101,7 +101,6 @@
                     android:layout_height="56dp"
                     android:ellipsize="start"
                     android:lines="3"
-                    android:text="请求状态，如果成功返回200如果成功返回200如果成功返回200如果成功返回200如果成功返回200如果成功返回200如果成功返回200，如果失败返回其他数字，详细见状态码附录。请求状态，如果成功返回200，如果失败返回其他数字，详细见状态码附录。请求状态，如果成功返回200，如果失败返回其他数字，详细见状态码附录。"
                     android:textColor="#666666"
                     android:textSize="13sp" />
 

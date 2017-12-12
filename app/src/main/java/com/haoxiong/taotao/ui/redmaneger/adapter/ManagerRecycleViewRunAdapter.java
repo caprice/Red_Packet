@@ -62,19 +62,19 @@ public class ManagerRecycleViewRunAdapter extends BaseQuickAdapter<RedManagerRes
         if (split[0].contains("http")) {
             GlideUtil.loadImg(context,split[0], imageView);
         } else {
-            GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], imageView);
+            GlideUtil.loadImg(context, Client.BASE_URL_IMG +split[0], imageView);
         }
         try {
             if (split[1].contains("http")) {
                 GlideUtil.loadImg(context,split[1], imageView1);
             } else {
-                GlideUtil.loadImg(context, Client.BASE_URL+"public/" + split[1], imageView1);
+                GlideUtil.loadImg(context, Client.BASE_URL_IMG+ split[1], imageView1);
             }
         } catch (Exception e) {
             if (split[0].contains("http")) {
                 GlideUtil.loadImg(context,split[0], imageView1);
             } else {
-                GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], imageView1);
+                GlideUtil.loadImg(context, Client.BASE_URL_IMG+split[0], imageView1);
             }
         }
     }

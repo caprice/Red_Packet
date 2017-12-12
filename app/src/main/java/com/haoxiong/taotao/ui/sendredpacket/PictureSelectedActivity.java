@@ -723,4 +723,36 @@ public class PictureSelectedActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if ( pitcure1!= null) {
+            outState.putString("pitcure1", pitcure1);
+        }
+        if ( pitcure2!= null) {
+            outState.putString("pitcure2", pitcure2);
+        }
+        if ( pitcure3!= null) {
+            outState.putString("pitcure3", pitcure3);
+        }
+        if ( pitcure4!= null) {
+            outState.putString("pitcure4", pitcure4);
+        }
+        if ( pitcure5!= null) {
+            outState.putString("pitcure4", pitcure5);
+        }
+
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        pitcure1 = savedInstanceState.getString("pitcure1");
+        pitcure2 = savedInstanceState.getString("pitcure2");
+        pitcure3 = savedInstanceState.getString("pitcure3");
+        pitcure4 = savedInstanceState.getString("pitcure4");
+        pitcure5 = savedInstanceState.getString("pitcure5");
+    }
 }

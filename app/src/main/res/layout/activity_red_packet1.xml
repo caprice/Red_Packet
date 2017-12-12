@@ -45,13 +45,13 @@
             android:layout_height="match_parent"
             android:background="@color/write"
             android:orientation="vertical">
-
-            <ImageView
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/img_red_packet_pic"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:scaleType="fitXY"
-                android:src="@mipmap/item" />
+                app:canLoop="true" />
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

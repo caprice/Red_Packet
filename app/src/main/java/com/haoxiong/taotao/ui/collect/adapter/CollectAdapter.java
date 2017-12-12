@@ -43,19 +43,19 @@ public class CollectAdapter extends BaseQuickAdapter<CollectRedPacketResponse.Da
         if (split[0].contains("http")) {
             GlideUtil.loadImg(context,split[0], view);
         } else {
-            GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], view);
+            GlideUtil.loadImg(context, Client.BASE_URL_IMG +split[0], view);
         }
         try {
             if (split[1].contains("http")) {
                 GlideUtil.loadImg(context,split[1], view1);
             } else {
-                GlideUtil.loadImg(context, Client.BASE_URL+"public/" + split[1], view1);
+                GlideUtil.loadImg(context, Client.BASE_URL_IMG+ split[1], view1);
             }
         } catch (Exception e) {
             if (split[0].contains("http")) {
                 GlideUtil.loadImg(context,split[0], view1);
             } else {
-                GlideUtil.loadImg(context, Client.BASE_URL+"public/" +split[0], view1);
+                GlideUtil.loadImg(context, Client.BASE_URL_IMG +split[0], view1);
             }
         }
     }

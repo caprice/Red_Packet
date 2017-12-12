@@ -75,6 +75,7 @@ public class MessageDetailActivity extends BaseActivity {
     private String rid;
     private String message;
     private String pic;
+    private String ltid;
 
     public static void launch(Context context, MessageResponse.DataBean.ListBean.ListLbBean data) {
         Intent intent = new Intent(context, MessageDetailActivity.class);
@@ -83,12 +84,13 @@ public class MessageDetailActivity extends BaseActivity {
         Type = 0;
     }
 
-    public static void launch(Context context,String  title,String rid,String message,String pic) {
+    public static void launch(Context context,String  title,String rid,String message,String pic,String ltid) {
         Intent intent = new Intent(context, MessageDetailActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("rid", rid);
         intent.putExtra("message", message);
         intent.putExtra("pic", pic);
+        intent.putExtra("ltid", ltid);
         context.startActivity(intent);
         Type = 1;
     }
@@ -110,6 +112,8 @@ public class MessageDetailActivity extends BaseActivity {
                 MessageResponse.DataBean.ListBean.ListLbBean  bean = getIntent().getParcelableExtra("data");
                 ltbt = bean.getLtbt();
                 rid = bean.getRid();
+                ltid = bean.getLtid();
+
                 break;
             case 1:
                 ltbt = getIntent().getStringExtra("title");
@@ -120,7 +124,7 @@ public class MessageDetailActivity extends BaseActivity {
                 if (pic.contains("http")) {
                     GlideUtil.loadImg(MessageDetailActivity.this, pic, imgMessageDetailPicture);
                 } else {
-                    GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL+ "public/" +pic, imgMessageDetailPicture);
+                    GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL_IMG +pic, imgMessageDetailPicture);
                 }
 
                 tvMessageDetailContent.setText(message != null ?message : "");
@@ -149,7 +153,7 @@ public class MessageDetailActivity extends BaseActivity {
         if (!b) {
             swipeRefreshLayoutMessageDetail.setRefreshing(true);
         }
-        MessageApi.readMessageList(MessageDetailActivity.this, MyApp.token, rid, page, new OnRequestCompletedListener<ReadMessageResponse>() {
+        MessageApi.readMessageList(MessageDetailActivity.this, MyApp.token, rid,ltid, page, new OnRequestCompletedListener<ReadMessageResponse>() {
             @Override
             public void onCompleted(ReadMessageResponse response, String msg) {
                 swipeRefreshLayoutMessageDetail.setRefreshing(false);
@@ -196,7 +200,7 @@ public class MessageDetailActivity extends BaseActivity {
         if (b) {
             showProgressDialog("数据加载中...");
         }
-        MessageApi.unReadMessageList(MessageDetailActivity.this, MyApp.token,rid, new OnRequestCompletedListener<UnReadMessageResponse>() {
+        MessageApi.unReadMessageList(MessageDetailActivity.this, MyApp.token,rid,ltid, new OnRequestCompletedListener<UnReadMessageResponse>() {
             @Override
             public void onCompleted(UnReadMessageResponse response, String msg) {
                 if (b) {
@@ -206,9 +210,9 @@ public class MessageDetailActivity extends BaseActivity {
                     if (response.getRet() == 200) {
                         if (response.getData() != null && response.getData().getCode() == 200 && response.getData().getList() != null) {
                             page = 1;
-                            if (b&&Type==0) {
+                            if (b && Type == 0) {
                                 linerMessageDetailRedPacket.setVisibility(View.VISIBLE);
-                                GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL+ "public/" + response.getData().getList().getMer_pics(), imgMessageDetailPicture);
+                                GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL_IMG + response.getData().getList().getMer_pics(), imgMessageDetailPicture);
                                 tvMessageDetailContent.setText(response.getData().getList().getMerchant_des() != null ? response.getData().getList().getMerchant_des() : "");
                             }
                             if (response.getData().getList().getLt_list() != null && response.getData().getList().getLt_list().size() > 0) {
@@ -228,22 +232,27 @@ public class MessageDetailActivity extends BaseActivity {
                                 recycleViewMessageDetail.scrollToPosition(datas.size() - 1);
                             }
                         } else if (response.getData() != null && response.getData().getCode() == 206) {
+
                             page = 1;
                             if (b) {
                                 loadRecordMessages(true);
                             }
-                            if (b&&Type==0) {
+                            if ( b && Type == 0) {
                                 linerMessageDetailRedPacket.setVisibility(View.GONE);
                             }
                         } else {
-                            if (b&&Type==0) {
+                            if ( b && Type == 0) {
                                 linerMessageDetailRedPacket.setVisibility(View.GONE);
                             }
                         }
                     } else {
-                        if (b&&Type==0) {
+                        if ( b && Type == 0) {
                             linerMessageDetailRedPacket.setVisibility(View.GONE);
                         }
+                    }
+                } else {
+                    if ( b && Type == 0) {
+                        linerMessageDetailRedPacket.setVisibility(View.GONE);
                     }
                 }
             }

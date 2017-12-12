@@ -106,10 +106,10 @@ public class MessageApi {
                 });
     }
 
-    public static void unReadMessageList(final Context context, String token, String rid, final OnRequestCompletedListener<UnReadMessageResponse> listener) {
+    public static void unReadMessageList(final Context context, String token, String rid,String ltid, final OnRequestCompletedListener<UnReadMessageResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getMessageService()
-                .unReadMessageList("user.get_ltlist", token, rid)
+                .unReadMessageList("user.get_ltlist", token, rid,ltid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UnReadMessageResponse>() {
@@ -133,10 +133,10 @@ public class MessageApi {
                 });
     }
 
-    public static void readMessageList(final Context context, String token, String rid,int page, final OnRequestCompletedListener<ReadMessageResponse> listener) {
+    public static void readMessageList(final Context context, String token, String rid,String ltid,int page, final OnRequestCompletedListener<ReadMessageResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getMessageService()
-                .readMessageList("user.get_ltjllist", token, rid,page,10)
+                .readMessageList("user.get_ltjllist", token, rid,ltid,page,10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ReadMessageResponse>() {

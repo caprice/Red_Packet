@@ -74,20 +74,20 @@ public class GetRedPacketSuccessActivity extends AppCompatActivity {
         if (split[0].contains("http")) {
             GlideUtil.loadImg(GetRedPacketSuccessActivity.this,  split[0], imgGetRedPacketBg);
         } else {
-            GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL + "public/" + split[0], imgGetRedPacketBg);
+            GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL_IMG + split[0], imgGetRedPacketBg);
         }
 
         try {
             if (split[1].contains("http")) {
                 GlideUtil.loadImg(GetRedPacketSuccessActivity.this,  split[1], imgGetRedPacketBg1);
             } else {
-                GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL + "public/" + split[1], imgGetRedPacketBg1);
+                GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL_IMG + split[1], imgGetRedPacketBg1);
             }
         } catch (Exception e) {
             if (split[0].contains("http")) {
                 GlideUtil.loadImg(GetRedPacketSuccessActivity.this,  split[0], imgGetRedPacketBg1);
             } else {
-                GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL + "public/" + split[0], imgGetRedPacketBg1);
+                GlideUtil.loadImg(GetRedPacketSuccessActivity.this, Client.BASE_URL_IMG+ split[0], imgGetRedPacketBg1);
             }
         }
         tvGetRedPacketName.setText(detailData.getMerchant());

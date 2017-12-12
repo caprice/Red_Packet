@@ -34,6 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Client {
 //    public static final String BASE_URL = "http://hbapi.huidang2105.com:8900/";
     public static final String BASE_URL = "http://hb.huidang2105.com:8900/";
+    public static final String BASE_URL_IMG = "http://taotaohb.oss-cn-beijing.aliyuncs.com/";
     public static final String TAG = Client.class.getSimpleName();
     /**
      * http请求的超时时间

@@ -21,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
 import com.fan.service.Client;
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.RedPacketListApi;
@@ -78,7 +81,7 @@ public class RedPacket1Activity extends BaseActivity {
     @BindView(R.id.relativeLayout)
     RelativeLayout relativeLayout;
     @BindView(R.id.img_red_packet_pic)
-    ImageView imgRedPacketPic;
+    com.bigkoo.convenientbanner.ConvenientBanner imgRedPacketPic;
     @BindView(R.id.tv_red_packet_money)
     TextView tvRedPacketMoney;
     @BindView(R.id.tv_red_packet_num)
@@ -241,11 +244,24 @@ public class RedPacket1Activity extends BaseActivity {
                 tvReaPacketAnswer2.setText(sendRedPacketRequest.getSecond_answer());
                 tvReaPacketAnswer3.setText(sendRedPacketRequest.getThird_answer());
                 String[] split = sendRedPacketRequest.getPic1_filecode().split("&");
-                if (split[0].contains("http")) {
-                    GlideUtil.loadImg(RedPacket1Activity.this, split[0], imgRedPacketPic);
-                } else {
-                    GlideUtil.loadImg(RedPacket1Activity.this,Client.BASE_URL+"public/"+  split[0], imgRedPacketPic);
+                List<String> imgs = new ArrayList<>();
+                for (int i = 0; i < split.length; i++) {
+                    imgs.add(split[i]);
                 }
+                imgRedPacketPic.setPages(
+                        new CBViewHolderCreator<LocalImageHolderView>() {
+                            @Override
+                            public LocalImageHolderView createHolder() {
+                                return new LocalImageHolderView();
+                            }
+                        }, imgs)
+                        //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                        .setPageIndicator(new int[]{R.drawable.one, R.drawable.two})
+                        //设置指示器的方向
+                        .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
+                        .startTurning(2000)     //设置自动切换（同时设置了切换时间间隔）
+                        .setManualPageable(true);  //设置手动影响（设置了该项无法手动切换）
+
 
 
                 imgRedPacketBottom.setVisibility(View.GONE);
@@ -365,12 +381,23 @@ public class RedPacket1Activity extends BaseActivity {
         tvReaPacketAnswer2.setText(detailResponse.getAnswer1());
         tvReaPacketAnswer3.setText(detailResponse.getAnswer2());
         String[] split = detailResponse.getUserPic().split("&");
-        if (split[0].contains("http")) {
-            GlideUtil.loadImg(RedPacket1Activity.this, split[0], imgRedPacketPic);
-        } else {
-            GlideUtil.loadImg(RedPacket1Activity.this, Client.BASE_URL + "public/" + split[0], imgRedPacketPic);
+        List<String> imgs = new ArrayList<>();
+        for (int i = 0; i < split.length; i++) {
+            imgs.add(split[i]);
         }
-
+        imgRedPacketPic.setPages(
+                new CBViewHolderCreator<LocalImageHolderView>() {
+                    @Override
+                    public LocalImageHolderView createHolder() {
+                        return new LocalImageHolderView();
+                    }
+                }, imgs)
+                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                .setPageIndicator(new int[]{R.drawable.one, R.drawable.two})
+                //设置指示器的方向
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
+                .startTurning(2000)     //设置自动切换（同时设置了切换时间间隔）
+                .setManualPageable(true);  //设置手动影响（设置了该项无法手动切换）
 
         if (detailResponse.isIscollect()) {
             imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
@@ -764,5 +791,25 @@ public class RedPacket1Activity extends BaseActivity {
         return key;
     }
 
+    class LocalImageHolderView implements Holder<String> {
+        private ImageView imageView;
 
+        @Override
+        public View createView(Context context) {
+            imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            return imageView;
+        }
+
+        @Override
+        public void UpdateUI(Context context, final int position, String data) {
+            imageView.setImageResource(R.mipmap.item);
+            if (data.contains("http")) {
+                GlideUtil.loadImg(context, data, imageView);
+            } else {
+                GlideUtil.loadImg(context, Client.BASE_URL_IMG+data, imageView);
+            }
+
+        }
+    }
 }

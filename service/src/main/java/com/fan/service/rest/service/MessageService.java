@@ -55,12 +55,12 @@ public interface MessageService {
      */
     @FormUrlEncoded
     @POST("http://hb.huidang2105.com:89/")
-    Observable<UnReadMessageResponse> unReadMessageList(@Field("service") String service, @Field("token") String token, @Field("rid") String rid);  /**
+    Observable<UnReadMessageResponse> unReadMessageList(@Field("service") String service, @Field("token") String token, @Field("rid") String rid, @Field("ltid") String ltid);  /**
      * 获取聊天记录信息
      * mobile
      * xh checked 20170424
      */
     @FormUrlEncoded
     @POST("http://hb.huidang2105.com:89/")
-    Observable<ReadMessageResponse> readMessageList(@Field("service") String service, @Field("token") String token, @Field("rid") String rid, @Field("page")int page, @Field("num") int num);
+    Observable<ReadMessageResponse> readMessageList(@Field("service") String service, @Field("token") String token, @Field("rid") String rid, @Field("ltid") String ltid, @Field("page")int page, @Field("num") int num);
 }

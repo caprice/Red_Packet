@@ -79,10 +79,10 @@ public class MessageApi {
                 });
     }
 
-    public static void sendMessage(final Context context, String token, String rid, String content, final OnRequestCompletedListener<MessageSendResponse> listener) {
+    public static void sendMessage(final Context context, String token, String rid,String ltid ,String content, final OnRequestCompletedListener<MessageSendResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getMessageService()
-                .sendMessage("user.get_fsxx", token, rid, content)
+                .sendMessage("user.get_fsxx", token, rid,ltid, content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MessageSendResponse>() {

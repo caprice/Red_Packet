@@ -202,12 +202,14 @@ public class RedPacketActivity extends BaseActivity {
     private PopupWindow popupwindowShow;
     private int page = 1;
     private int rid;
-    private int ltid;
+    private int ltid = -1;
+    private boolean isSeller = false;
     private String redTitle;
     private String redPic;
     private boolean isGetRedPacket = false;
     private View footerView;
-    int imgAlpha=0;
+    int imgAlpha = 0;
+
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacketActivity.class);
         intent.putExtra("content", redPacketRequest);
@@ -449,6 +451,8 @@ public class RedPacketActivity extends BaseActivity {
                         dismissProgressDialog();
                         if (response != null && response.getErr() == 0) {
                             detailResponse = response.getData();
+                            isSeller = response.getData().isSeller();
+                            ltid = response.getData().getLtid();
                             redPic = detailResponse.getUserPic().split("&")[0];
                             if (MyApp.TYPE == 2 || MyApp.TYPE == 3) {
                                 if (detailResponse.getIsgot() == 1) {
@@ -605,7 +609,11 @@ public class RedPacketActivity extends BaseActivity {
             case R.id.consulting:
                 if (MyApp.TYPE != 1) {
                     if (MyApp.login_state == 1) {
-                        MessageDetailActivity.launch(RedPacketActivity.this, redTitle, String.valueOf(rid), tvReaPacketContent.getText().toString(), redPic,String.valueOf(ltid));
+                        if (ltid == -1 || isSeller) {
+                            ToastUtils.toTosat(RedPacketActivity.this, "自己不能和自己咨询");
+                        } else {
+                            MessageDetailActivity.launch(RedPacketActivity.this, redTitle, String.valueOf(rid), tvReaPacketContent.getText().toString(), redPic, String.valueOf(ltid));
+                        }
                     } else {
                         LoginActivity.luncher(RedPacketActivity.this);
                     }
@@ -1322,6 +1330,7 @@ public class RedPacketActivity extends BaseActivity {
         }
         startActivity(intent);
     }
+
     class LocalImageHolderView implements Holder<String> {
         private ImageView imageView;
 
@@ -1338,7 +1347,7 @@ public class RedPacketActivity extends BaseActivity {
             if (data.contains("http")) {
                 GlideUtil.loadImg(context, data, imageView);
             } else {
-                GlideUtil.loadImg(context, Client.BASE_URL_IMG+data, imageView);
+                GlideUtil.loadImg(context, Client.BASE_URL_IMG + data, imageView);
             }
 
         }

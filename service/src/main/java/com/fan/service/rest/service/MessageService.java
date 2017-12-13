@@ -46,7 +46,7 @@ public interface MessageService {
      */
     @FormUrlEncoded
     @POST("http://hb.huidang2105.com:89/")
-    Observable<MessageSendResponse> sendMessage(@Field("service") String service, @Field("token") String token, @Field("rid") String rid, @Field("fsxx") String fsxx);
+    Observable<MessageSendResponse> sendMessage(@Field("service") String service, @Field("token") String token, @Field("rid") String rid, @Field("ltid") String ltid, @Field("fsxx") String fsxx);
 
     /**
      * 获取未读聊天详情信息

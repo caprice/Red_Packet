@@ -68,6 +68,7 @@ public class RedPacketDetailResponse implements Parcelable {
          * status_user : true
          * isgot : 2
          * iscollect : false
+         * isSeller : false
          * getter : [{"userPic":"http://hb.huidang2105.com:8900/public/uploads/user_pic/6/20170907202159YEPl9.jpeg","userName":"在一家店在哪里","address":"四川省成都市","money":"0.07","getTime":"17/09/09 08:33:21"},{"userPic":"http://hb.huidang2105.com:8900/public/uploads/user_pic/3/20170825180250yn3nl.jpeg","userName":"刘博闻","address":"四川省成都市","money":"0.04","getTime":"17/09/08 19:12:49"},{"userPic":"http://hb.huidang2105.com:8900/public/uploads/default/mer.png","userName":"刘博闻","address":"四川省成都市","money":"0.19","getTime":"17/09/08 19:07:16"}]
          * gotter_count : 3
          */
@@ -89,9 +90,27 @@ public class RedPacketDetailResponse implements Parcelable {
         private int status;
         private boolean status_user;
         private int isgot;
+        private int ltid;
         private boolean iscollect;
+        private boolean isSeller;
         private int gotter_count;
         private List<GetterBean> getter;
+
+        public int getLtid() {
+            return ltid;
+        }
+
+        public void setLtid(int ltid) {
+            this.ltid = ltid;
+        }
+
+        public boolean isSeller() {
+            return isSeller;
+        }
+
+        public void setSeller(boolean seller) {
+            isSeller = seller;
+        }
 
         public int getRid() {
             return rid;
@@ -346,6 +365,9 @@ public class RedPacketDetailResponse implements Parcelable {
             };
         }
 
+        public DataBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -370,12 +392,11 @@ public class RedPacketDetailResponse implements Parcelable {
             dest.writeInt(this.status);
             dest.writeByte(this.status_user ? (byte) 1 : (byte) 0);
             dest.writeInt(this.isgot);
+            dest.writeInt(this.ltid);
             dest.writeByte(this.iscollect ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.isSeller ? (byte) 1 : (byte) 0);
             dest.writeInt(this.gotter_count);
             dest.writeTypedList(this.getter);
-        }
-
-        public DataBean() {
         }
 
         protected DataBean(Parcel in) {
@@ -396,12 +417,14 @@ public class RedPacketDetailResponse implements Parcelable {
             this.status = in.readInt();
             this.status_user = in.readByte() != 0;
             this.isgot = in.readInt();
+            this.ltid = in.readInt();
             this.iscollect = in.readByte() != 0;
+            this.isSeller = in.readByte() != 0;
             this.gotter_count = in.readInt();
             this.getter = in.createTypedArrayList(GetterBean.CREATOR);
         }
 
-        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);
@@ -412,6 +435,9 @@ public class RedPacketDetailResponse implements Parcelable {
                 return new DataBean[size];
             }
         };
+    }
+
+    public RedPacketDetailResponse() {
     }
 
     @Override
@@ -426,16 +452,13 @@ public class RedPacketDetailResponse implements Parcelable {
         dest.writeParcelable(this.data, flags);
     }
 
-    public RedPacketDetailResponse() {
-    }
-
     protected RedPacketDetailResponse(Parcel in) {
         this.err = in.readInt();
         this.msg = in.readString();
         this.data = in.readParcelable(DataBean.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<RedPacketDetailResponse> CREATOR = new Parcelable.Creator<RedPacketDetailResponse>() {
+    public static final Creator<RedPacketDetailResponse> CREATOR = new Creator<RedPacketDetailResponse>() {
         @Override
         public RedPacketDetailResponse createFromParcel(Parcel source) {
             return new RedPacketDetailResponse(source);

@@ -116,6 +116,7 @@ public class MessageDetailActivity extends BaseActivity {
 
                 break;
             case 1:
+                ltid = getIntent().getStringExtra("ltid");
                 ltbt = getIntent().getStringExtra("title");
                 rid = getIntent().getStringExtra("rid");
                 pic = getIntent().getStringExtra("pic");
@@ -277,7 +278,7 @@ public class MessageDetailActivity extends BaseActivity {
     @OnClick(R.id.tv_message_detail_send)
     public void onClick() {
         if (!TextUtils.isEmpty(etMessageDetailMessage.getText().toString())) {
-            MessageApi.sendMessage(MessageDetailActivity.this, MyApp.token,rid, etMessageDetailMessage.getText().toString().trim(), new OnRequestCompletedListener<MessageSendResponse>() {
+            MessageApi.sendMessage(MessageDetailActivity.this, MyApp.token,rid,ltid,etMessageDetailMessage.getText().toString().trim(), new OnRequestCompletedListener<MessageSendResponse>() {
                 @Override
                 public void onCompleted(MessageSendResponse response, String msg) {
                 }

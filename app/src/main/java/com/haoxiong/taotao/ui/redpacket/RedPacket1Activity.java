@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -81,7 +80,7 @@ public class RedPacket1Activity extends BaseActivity {
     @BindView(R.id.relativeLayout)
     RelativeLayout relativeLayout;
     @BindView(R.id.img_red_packet_pic)
-    com.bigkoo.convenientbanner.ConvenientBanner imgRedPacketPic;
+    ConvenientBanner imgRedPacketPic;
     @BindView(R.id.tv_red_packet_money)
     TextView tvRedPacketMoney;
     @BindView(R.id.tv_red_packet_num)
@@ -124,6 +123,10 @@ public class RedPacket1Activity extends BaseActivity {
     LinearLayout linerRedPacketShare;
     @BindView(R.id.red_title_icon)
     ImageView redTitleIcon;
+    @BindView(R.id.img_red_packet_back)
+    ImageView imgRedPacketBack;
+    @BindView(R.id.img_red_packet_share)
+    ImageView imgRedPacketShare;
     private SendRedPacketRequest sendRedPacketRequest;
     private RedPacketListResponse.DataBean dataBean;
     private RedManagerResponse.DataBean.RedsOnBean redsOnBean;
@@ -136,6 +139,7 @@ public class RedPacket1Activity extends BaseActivity {
     private int rid;
     private View view;
     int imgAlpha = 0;
+
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacket1Activity.class);
         intent.putExtra("content", redPacketRequest);
@@ -167,15 +171,19 @@ public class RedPacket1Activity extends BaseActivity {
         ButterKnife.bind(this);
         assignView();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         srlRedPacket.scrollTo(0, 0);
     }
+
     private void assignView() {
 
         redTitleIcon.setImageAlpha(imgAlpha);
         imgRedPacketLove.setImageAlpha(imgAlpha);
+        imgRedPacketShare.setImageAlpha(imgAlpha);
+        imgRedPacketBack.setImageAlpha(imgAlpha);
         srlRedPacket.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -184,21 +192,40 @@ public class RedPacket1Activity extends BaseActivity {
                 int count = 0;
                 float scale = 0;
                 Log.e("...", scrollY + "");
-                int y = imgRedPacketPic.getHeight()-DensityUtil.dip2px(RedPacket1Activity.this,44);
+                int y = imgRedPacketPic.getHeight() - DensityUtil.dip2px(RedPacket1Activity.this, 44);
                 if (scrollY <= y) {
+                    if (love) {
+                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+                    } else {
+                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_one);
+                    }
+                    imgRedPacketShare.setImageResource(R.drawable.ic_share_one);
+                    imgRedPacketBack.setImageResource(R.drawable.ic_right_one);
                     scale = (float) scrollY / y;
                     alpha = (int) (255 * scale);
-
                     imgAlpha = (int) (255 * scale);
                     redTitleIcon.setImageAlpha(imgAlpha);
                     imgRedPacketLove.setImageAlpha(imgAlpha);
+                    imgRedPacketShare.setImageAlpha(imgAlpha);
+                    imgRedPacketBack.setImageAlpha(imgAlpha);
                     // 随着滑动距离改变透明度
                     // Log.e("al=","="+alpha);
                     relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
                 } else {
+
                     if (alpha < 255) {
+                        if (love) {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_two);
+                        } else {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_two);
+                        }
+                        imgRedPacketShare.setImageResource(R.drawable.ic_share_two);
+                        imgRedPacketBack.setImageResource(R.drawable.ic_right_two);
                         redTitleIcon.setImageAlpha(255);
                         imgRedPacketLove.setImageAlpha(255);
+                        imgRedPacketShare.setImageAlpha(255);
+                        imgRedPacketBack.setImageAlpha(255);
+                        Log.e("执行次数", "=" + (++count));
                         // 防止频繁重复设置相同的值影响性能
                         alpha = 255;
                         relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
@@ -263,7 +290,6 @@ public class RedPacket1Activity extends BaseActivity {
                         .setManualPageable(true);  //设置手动影响（设置了该项无法手动切换）
 
 
-
                 imgRedPacketBottom.setVisibility(View.GONE);
                 tvRedPacketBottom.setText("塞钱进红包");
                 rid = sendRedPacketRequest.getRid();
@@ -277,7 +303,7 @@ public class RedPacket1Activity extends BaseActivity {
                 rid = dataBean.getRid();
                 break;
             case 3:
-                imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
+                imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
                 linerRedPacketBottom.setVisibility(View.GONE);
                 collcetbean = getIntent().getParcelableExtra("content");
                 getDetailData(collcetbean.getRId());
@@ -401,7 +427,7 @@ public class RedPacket1Activity extends BaseActivity {
                 .setManualPageable(true);  //设置手动影响（设置了该项无法手动切换）
 
         if (detailResponse.isIscollect()) {
-            imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
+            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
         }
         love = detailResponse.isIscollect();
         srlRedPacket.scrollTo(0, 0);
@@ -550,9 +576,9 @@ public class RedPacket1Activity extends BaseActivity {
                 }
                 if (response.getErr() == 0) {
                     if (!love) {
-                        imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
+                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
                     } else {
-                        imgRedPacketLove.setImageResource(R.drawable.ic_love_unselect);
+                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_one);
                     }
                     love = !love;
                 } else {
@@ -808,7 +834,7 @@ public class RedPacket1Activity extends BaseActivity {
             if (data.contains("http")) {
                 GlideUtil.loadImg(context, data, imageView);
             } else {
-                GlideUtil.loadImg(context, Client.BASE_URL_IMG+data, imageView);
+                GlideUtil.loadImg(context, Client.BASE_URL_IMG + data, imageView);
             }
 
         }

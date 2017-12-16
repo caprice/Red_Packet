@@ -7,6 +7,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fan.service.Client;
 import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.MessageApi;
@@ -29,8 +32,10 @@ import com.haoxiong.taotao.ui.message.adapter.MessageDetailAdapter;
 import com.haoxiong.taotao.ui.message.bean.Message;
 import com.haoxiong.taotao.util.DateUtils;
 import com.haoxiong.taotao.util.GlideUtil;
+import com.haoxiong.taotao.util.KeyboardUtil;
 import com.haoxiong.taotao.util.ToastUtils;
 import com.haoxiong.taotao.util.Util;
+import com.haoxiong.taotao.util.WindowUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +153,14 @@ public class MessageDetailActivity extends BaseActivity {
                 refreshDate(false);
             }
         }, 60000, 60000);
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                KeyboardUtil.hideKeybord(MessageDetailActivity.this);
+            }
+        });
+
     }
 
     private void loadRecordMessages(final boolean b) {
@@ -284,7 +297,7 @@ public class MessageDetailActivity extends BaseActivity {
                 }
             });
             Message message = new Message();
-            message.setTime("今天:" + DateUtils.getCurrentTime_Today());
+            message.setTime("");
             message.setItemType(1);
             message.setContent(etMessageDetailMessage.getText().toString());
             adapter.addData(message);

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -58,7 +57,6 @@ import com.haoxiong.taotao.R;
 import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.pay.PayResult;
 import com.haoxiong.taotao.ui.login.LoginActivity;
-import com.haoxiong.taotao.ui.main.fragment.ActiveFragment;
 import com.haoxiong.taotao.ui.message.MessageDetailActivity;
 import com.haoxiong.taotao.ui.redmaneger.RedMangerActivity;
 import com.haoxiong.taotao.ui.redpacket.adapter.RecycleRedPacketWinerAdapter;
@@ -91,7 +89,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -121,6 +118,10 @@ public class RedPacketActivity extends BaseActivity {
     LinearLayout consulting;
     @BindView(R.id.red_title_icon)
     ImageView redTitleIcon;
+    @BindView(R.id.img_red_packet_share)
+    ImageView imgRedPacketShare;
+    @BindView(R.id.img_red_packet_back)
+    ImageView imgRedPacketBack;
     //    public static final String PARTNER = "2088621558884290";
 //    // 商户收款账号
 //    public static final String SELLER = "haoxiong2017@163.com";
@@ -159,7 +160,7 @@ public class RedPacketActivity extends BaseActivity {
     @BindView(R.id.relativeLayout)
     RelativeLayout relativeLayout;
     @BindView(R.id.img_red_packet_pic)
-    com.bigkoo.convenientbanner.ConvenientBanner imgRedPacketPic;
+    ConvenientBanner imgRedPacketPic;
     @BindView(R.id.tv_red_packet_money)
     TextView tvRedPacketMoney;
     @BindView(R.id.tv_red_packet_num)
@@ -258,6 +259,8 @@ public class RedPacketActivity extends BaseActivity {
     private void assignView() {
         redTitleIcon.setImageAlpha(imgAlpha);
         imgRedPacketLove.setImageAlpha(imgAlpha);
+        imgRedPacketShare.setImageAlpha(imgAlpha);
+        imgRedPacketBack.setImageAlpha(imgAlpha);
         srlRedPacket.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -268,19 +271,37 @@ public class RedPacketActivity extends BaseActivity {
                 Log.e("...", scrollY + "");
                 int y = imgRedPacketPic.getHeight() - DensityUtil.dip2px(RedPacketActivity.this, 44);
                 if (scrollY <= y) {
+                    if (love) {
+                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+                    } else {
+                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_one);
+                    }
+                    imgRedPacketShare.setImageResource(R.drawable.ic_share_one);
+                    imgRedPacketBack.setImageResource(R.drawable.ic_right_one);
                     scale = (float) scrollY / y;
                     alpha = (int) (255 * scale);
                     imgAlpha = (int) (255 * scale);
                     redTitleIcon.setImageAlpha(imgAlpha);
                     imgRedPacketLove.setImageAlpha(imgAlpha);
+                    imgRedPacketShare.setImageAlpha(imgAlpha);
+                    imgRedPacketBack.setImageAlpha(imgAlpha);
                     // 随着滑动距离改变透明度
                     // Log.e("al=","="+alpha);
                     relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
                 } else {
+
                     if (alpha < 255) {
+                        if (love) {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_two);
+                        } else {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_two);
+                        }
+                        imgRedPacketShare.setImageResource(R.drawable.ic_share_two);
+                        imgRedPacketBack.setImageResource(R.drawable.ic_right_two);
                         redTitleIcon.setImageAlpha(255);
                         imgRedPacketLove.setImageAlpha(255);
-
+                        imgRedPacketShare.setImageAlpha(255);
+                        imgRedPacketBack.setImageAlpha(255);
                         Log.e("执行次数", "=" + (++count));
                         // 防止频繁重复设置相同的值影响性能
                         alpha = 255;
@@ -545,7 +566,7 @@ public class RedPacketActivity extends BaseActivity {
                 .setManualPageable(true);  //设置手动影响（设置了该项无法手动切换）
 
         if (detailResponse.isIscollect()) {
-            imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
+            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
         }
         love = detailResponse.isIscollect();
     }
@@ -719,9 +740,9 @@ public class RedPacketActivity extends BaseActivity {
             public void onCompleted(SaveResponse response, String msg) {
                 if (response.getErr() == 0) {
                     if (!love) {
-                        imgRedPacketLove.setImageResource(R.drawable.ic_love_select);
+                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
                     } else {
-                        imgRedPacketLove.setImageResource(R.drawable.ic_love_unselect);
+                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_one);
                     }
                     love = !love;
                 } else {

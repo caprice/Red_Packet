@@ -56,4 +56,6 @@ public interface SendCodeService {
     @FormUrlEncoded
     @POST("public/index.php/setInviteCode")
     Observable<ResponseBody> setInviteCode(@Field("token ") String token, @Field("inviteCode") String inviteCode);
+
+
 }

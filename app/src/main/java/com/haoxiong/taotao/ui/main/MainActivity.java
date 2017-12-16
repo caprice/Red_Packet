@@ -223,7 +223,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void initData(final boolean more) {
-
+        showProgressDialog("数据加载中");
         if (MyApp.login_state == 0) {
             notLoginGetData(more);
         } else {
@@ -233,6 +233,7 @@ public class MainActivity extends BaseActivity
                         @Override
                         public void onCompleted(RedPacketListResponse response, String msg) {
                             adapter.loadMoreComplete();
+                            dismissProgressDialog();
                             if (response == null) {
                                 mainSwiperefreshlayout.setRefreshing(false);
                                 adapter.setEnableLoadMore(true);
@@ -267,6 +268,7 @@ public class MainActivity extends BaseActivity
 
                         }
                     });
+
          /*   RedPacketListApi.get_my_wallet(MainActivity.this, MyApp.token, new OnRequestCompletedListener<WalletResponse>() {
                 @Override
                 public void onCompleted(WalletResponse response, String msg) {
@@ -337,6 +339,7 @@ public class MainActivity extends BaseActivity
                     @Override
                     public void onCompleted(RedPacketListResponse response, String msg) {
                         adapter.loadMoreComplete();
+                        dismissProgressDialog();
                         if (response == null) {
                             mainSwiperefreshlayout.setRefreshing(false);
                             adapter.setEnableLoadMore(true);

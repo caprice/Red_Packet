@@ -89,7 +89,7 @@ public class MessageDetailActivity extends BaseActivity {
         Type = 0;
     }
 
-    public static void launch(Context context,String  title,String rid,String message,String pic,String ltid) {
+    public static void launch(Context context, String title, String rid, String message, String pic, String ltid) {
         Intent intent = new Intent(context, MessageDetailActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("rid", rid);
@@ -114,7 +114,7 @@ public class MessageDetailActivity extends BaseActivity {
         swipeRefreshLayoutMessageDetail.setRefreshing(false);
         switch (Type) {
             case 0:
-                MessageResponse.DataBean.ListBean.ListLbBean  bean = getIntent().getParcelableExtra("data");
+                MessageResponse.DataBean.ListBean.ListLbBean bean = getIntent().getParcelableExtra("data");
                 ltbt = bean.getLtbt();
                 rid = bean.getRid();
                 ltid = bean.getLtid();
@@ -130,10 +130,10 @@ public class MessageDetailActivity extends BaseActivity {
                 if (pic.contains("http")) {
                     GlideUtil.loadImg(MessageDetailActivity.this, pic, imgMessageDetailPicture);
                 } else {
-                    GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL_IMG +pic, imgMessageDetailPicture);
+                    GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL_IMG + pic, imgMessageDetailPicture);
                 }
 
-                tvMessageDetailContent.setText(message != null ?message : "");
+                tvMessageDetailContent.setText(message != null ? message : "");
                 break;
         }
 
@@ -152,7 +152,7 @@ public class MessageDetailActivity extends BaseActivity {
             public void run() {
                 refreshDate(false);
             }
-        }, 60000, 60000);
+        }, 10000, 10000);
 
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -167,7 +167,7 @@ public class MessageDetailActivity extends BaseActivity {
         if (!b) {
             swipeRefreshLayoutMessageDetail.setRefreshing(true);
         }
-        MessageApi.readMessageList(MessageDetailActivity.this, MyApp.token, rid,ltid, page, new OnRequestCompletedListener<ReadMessageResponse>() {
+        MessageApi.readMessageList(MessageDetailActivity.this, MyApp.token, rid, ltid, page, new OnRequestCompletedListener<ReadMessageResponse>() {
             @Override
             public void onCompleted(ReadMessageResponse response, String msg) {
                 swipeRefreshLayoutMessageDetail.setRefreshing(false);
@@ -214,7 +214,7 @@ public class MessageDetailActivity extends BaseActivity {
         if (b) {
             showProgressDialog("数据加载中...");
         }
-        MessageApi.unReadMessageList(MessageDetailActivity.this, MyApp.token,rid,ltid, new OnRequestCompletedListener<UnReadMessageResponse>() {
+        MessageApi.unReadMessageList(MessageDetailActivity.this, MyApp.token, rid, ltid, new OnRequestCompletedListener<UnReadMessageResponse>() {
             @Override
             public void onCompleted(UnReadMessageResponse response, String msg) {
                 if (b) {
@@ -242,7 +242,7 @@ public class MessageDetailActivity extends BaseActivity {
                                     data.add(message);
                                 }
                                 swipeRefreshLayoutMessageDetail.setEnabled(true);
-                                adapter.setNewData(datas);
+                                adapter.addData(datas);
                                 recycleViewMessageDetail.scrollToPosition(datas.size() - 1);
                             }
                         } else if (response.getData() != null && response.getData().getCode() == 206) {
@@ -251,21 +251,24 @@ public class MessageDetailActivity extends BaseActivity {
                             if (b) {
                                 loadRecordMessages(true);
                             }
-                            if ( b && Type == 0) {
+                            if (b && Type == 0) {
                                 linerMessageDetailRedPacket.setVisibility(View.GONE);
+                                linerMessageDetailDetail.setVisibility(View.VISIBLE);
                             }
                         } else {
-                            if ( b && Type == 0) {
+                            if (b && Type == 0) {
                                 linerMessageDetailRedPacket.setVisibility(View.GONE);
+                                linerMessageDetailDetail.setVisibility(View.VISIBLE);
                             }
                         }
                     } else {
-                        if ( b && Type == 0) {
+                        if (b && Type == 0) {
                             linerMessageDetailRedPacket.setVisibility(View.GONE);
+                            linerMessageDetailDetail.setVisibility(View.VISIBLE);
                         }
                     }
                 } else {
-                    if ( b && Type == 0) {
+                    if (b && Type == 0) {
                         linerMessageDetailRedPacket.setVisibility(View.GONE);
                     }
                 }
@@ -281,9 +284,11 @@ public class MessageDetailActivity extends BaseActivity {
                 break;
             case R.id.liner_message_detail_detail:
                 linerMessageDetailRedPacket.setVisibility(View.VISIBLE);
+                linerMessageDetailDetail.setVisibility(View.GONE);
                 break;
             case R.id.tv_message_detail_close:
                 linerMessageDetailRedPacket.setVisibility(View.GONE);
+                linerMessageDetailDetail.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -291,7 +296,7 @@ public class MessageDetailActivity extends BaseActivity {
     @OnClick(R.id.tv_message_detail_send)
     public void onClick() {
         if (!TextUtils.isEmpty(etMessageDetailMessage.getText().toString())) {
-            MessageApi.sendMessage(MessageDetailActivity.this, MyApp.token,rid,ltid,etMessageDetailMessage.getText().toString().trim(), new OnRequestCompletedListener<MessageSendResponse>() {
+            MessageApi.sendMessage(MessageDetailActivity.this, MyApp.token, rid, ltid, etMessageDetailMessage.getText().toString().trim(), new OnRequestCompletedListener<MessageSendResponse>() {
                 @Override
                 public void onCompleted(MessageSendResponse response, String msg) {
                 }

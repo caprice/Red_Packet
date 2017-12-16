@@ -15,6 +15,8 @@
  */
 package com.fan.service.rest.converter;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonWriter;
@@ -46,6 +48,7 @@ final class CustomGsonRequestBodyConverter<T> implements Converter<T, RequestBod
         Buffer buffer = new Buffer();
         Writer writer = new OutputStreamWriter(buffer.outputStream(), UTF_8);
         JsonWriter jsonWriter = gson.newJsonWriter(writer);
+        Log.e("jsonWriter", value.toString() + "");
         adapter.write(jsonWriter, value);
         jsonWriter.close();
         return RequestBody.create(MEDIA_TYPE, buffer.readByteString());

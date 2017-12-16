@@ -132,7 +132,7 @@ public class RedPacket1Activity extends BaseActivity {
     private List<RedOwerResponse.DataBean> data = new ArrayList<>();
     private RecycleRedPacketWinerAdapter adapter;
     private boolean love;
-    private int page = 1;
+    private int page = 0;
     private int rid;
     private View view;
     int imgAlpha = 0;
@@ -345,6 +345,7 @@ public class RedPacket1Activity extends BaseActivity {
             public void onCompleted(RedOwerResponse response, String msg) {
                 if (response == null) {
                     ToastUtils.toTosat(RedPacket1Activity.this, "网络跑丢了");
+                    return;
                 }
                 if (response.getErr() == 0) {
                     if (response.getData() != null && response.getData().size() > 0) {

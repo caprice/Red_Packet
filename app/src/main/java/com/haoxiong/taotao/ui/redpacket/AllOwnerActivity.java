@@ -32,7 +32,7 @@ public class AllOwnerActivity extends AppCompatActivity {
     private int rid;
     private RecycleRedPacketWinerAdapter adapter;
     private List<RedOwerResponse.DataBean> data = new ArrayList<>();
-    private int page = 1;
+    private int page = 0;
 
     public static void launch(Context context, int rid) {
         Intent intent = new Intent(context, AllOwnerActivity.class);

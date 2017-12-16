@@ -69,7 +69,7 @@ public class MessageDetailActivity extends BaseActivity {
     TextView tvMessageDetailSend;
     private MessageDetailAdapter adapter;
     ArrayList<Message> data = new ArrayList<>();
-    private int page = 1;
+    private int page = 0;
     public static int Type = 0;
     private String ltbt;
     private String rid;

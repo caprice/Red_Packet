@@ -200,7 +200,7 @@ public class RedPacketActivity extends BaseActivity {
     private boolean love;
     private int answer = -1;
     private PopupWindow popupwindowShow;
-    private int page = 1;
+    private int page = 0;
     private int rid;
     private int ltid = -1;
     private boolean isSeller = false;
@@ -486,6 +486,7 @@ public class RedPacketActivity extends BaseActivity {
 
                 if (response == null) {
                     ToastUtils.toTosat(RedPacketActivity.this, "网络跑丢了");
+                    return;
                 }
                 if (response.getErr() == 0) {
                     if (response.getData() != null && response.getData().size() > 0) {

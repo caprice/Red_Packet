@@ -1,7 +1,6 @@
 package com.haoxiong.taotao.ui.sendredpacket;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -93,6 +92,16 @@ public class PictureSelectedActivity extends BaseActivity {
     TextView tvUpdatePictureFive;
     @BindView(R.id.tv_delete_picture_five)
     TextView tvDeletePictureFive;
+    @BindView(R.id.tv_picture_one)
+    TextView tvPictureOne;
+    @BindView(R.id.tv_picture_two)
+    TextView tvPictureTwo;
+    @BindView(R.id.tv_picture_three)
+    TextView tvPictureThree;
+    @BindView(R.id.tv_picture_four)
+    TextView tvPictureFour;
+    @BindView(R.id.tv_picture_five)
+    TextView tvPictureFive;
     private int upDateTagPicture = 0;
     private int deleteTagPicture = 0;
     /**
@@ -132,7 +141,7 @@ public class PictureSelectedActivity extends BaseActivity {
     private String fileCode4;
     private String fileCode5;
 
-    public static void launch(BaseActivity context,int requestCode) {
+    public static void launch(BaseActivity context, int requestCode) {
         Intent intent = new Intent(context, PictureSelectedActivity.class);
         context.startActivityForResult(intent, requestCode);
     }
@@ -146,25 +155,30 @@ public class PictureSelectedActivity extends BaseActivity {
     }
 
     private void assignView() {
-         netPitcure1 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure1");
+        netPitcure1 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure1");
         if (!TextUtils.isEmpty(netPitcure1)) {
             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure1, imgPictureOne);
+            tvPictureOne.setVisibility(View.GONE);
         }
-         netPitcure2 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure2");
+        netPitcure2 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure2");
         if (!TextUtils.isEmpty(netPitcure2)) {
             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure2, imgPictureTwo);
+            tvPictureTwo.setVisibility(View.GONE);
         }
-         netPitcure3 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure3");
+        netPitcure3 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure3");
         if (!TextUtils.isEmpty(netPitcure3)) {
             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure3, imgPictureThree);
+            tvPictureThree.setVisibility(View.GONE);
         }
-         netPitcure4 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure4");
+        netPitcure4 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure4");
         if (!TextUtils.isEmpty(netPitcure4)) {
             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure4, imgPictureFour);
+            tvPictureFour.setVisibility(View.GONE);
         }
-         netPitcure5 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure5");
+        netPitcure5 = SharePreferenceUtil.get(PictureSelectedActivity.this, "netPitcure5");
         if (!TextUtils.isEmpty(netPitcure5)) {
             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure5, imgPictureFive);
+            tvPictureFive.setVisibility(View.GONE);
         }
         fileCode1 = SharePreferenceUtil.get(PictureSelectedActivity.this, "fileCode1");
         fileCode2 = SharePreferenceUtil.get(PictureSelectedActivity.this, "fileCode2");
@@ -249,10 +263,11 @@ public class PictureSelectedActivity extends BaseActivity {
                 break;
         }
     }
+
     public void back() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示")
-                .setIcon(R.drawable.ic_logo)
+                .setIcon(R.drawable.ic_logo1)
                 .setMessage("是否保存修改后的内容？")
                 .setPositiveButton("保存", new DialogInterface.OnClickListener() {
                     @Override
@@ -268,13 +283,14 @@ public class PictureSelectedActivity extends BaseActivity {
                 })
                 .show();
     }
+
     private void save() {
-        if (TextUtils.isEmpty(netPitcure1)  || TextUtils.isEmpty(netPitcure2) ) {
-            ToastUtils.toTosat(PictureSelectedActivity.this, "请上传封面图片...");
+        if (TextUtils.isEmpty(netPitcure1) || TextUtils.isEmpty(netPitcure2)) {
+            ToastUtils.toLongTosat(PictureSelectedActivity.this, "至少上传前2张图片");
         } else {
             Intent data = new Intent();
-            StringBuilder netPicture = new StringBuilder(netPitcure1+"&"+netPitcure2);
-            StringBuilder code = new StringBuilder(fileCode1+"&"+fileCode2);
+            StringBuilder netPicture = new StringBuilder(netPitcure1 + "&" + netPitcure2);
+            StringBuilder code = new StringBuilder(fileCode1 + "&" + fileCode2);
             if (netPitcure3 != null) {
                 netPicture.append("&" + netPitcure3);
                 code.append("&" + fileCode3);
@@ -299,36 +315,41 @@ public class PictureSelectedActivity extends BaseActivity {
                 netPitcure1 = null;
                 fileCode1 = null;
                 imgPictureOne.setImageResource(R.drawable.picture_bg);
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"netPitcure1");
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"fileCode1");
+                tvPictureOne.setVisibility(View.VISIBLE);
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "netPitcure1");
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "fileCode1");
                 break;
             case 2:
                 netPitcure2 = null;
                 fileCode2 = null;
                 imgPictureTwo.setImageResource(R.drawable.picture_bg);
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"netPitcure2");
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"fileCode2");
+                tvPictureTwo.setVisibility(View.VISIBLE);
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "netPitcure2");
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "fileCode2");
                 break;
             case 3:
                 netPitcure3 = null;
                 fileCode3 = null;
                 imgPictureThree.setImageResource(R.drawable.picture_bg);
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"netPitcure3");
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"fileCode3");
+                tvPictureThree.setVisibility(View.VISIBLE);
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "netPitcure3");
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "fileCode3");
                 break;
             case 4:
                 netPitcure4 = null;
                 fileCode4 = null;
                 imgPictureFour.setImageResource(R.drawable.picture_bg);
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"netPitcure4");
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"fileCode4");
+                tvPictureFour.setVisibility(View.VISIBLE);
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "netPitcure4");
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "fileCode4");
                 break;
             case 5:
                 netPitcure5 = null;
                 fileCode5 = null;
                 imgPictureFive.setImageResource(R.drawable.picture_bg);
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"netPitcure5");
-                SharePreferenceUtil.remove(PictureSelectedActivity.this,"fileCode5");
+                tvPictureFive.setVisibility(View.VISIBLE);
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "netPitcure5");
+                SharePreferenceUtil.remove(PictureSelectedActivity.this, "fileCode5");
                 break;
         }
     }
@@ -681,38 +702,43 @@ public class PictureSelectedActivity extends BaseActivity {
                         case 1:
                             netPitcure1 = response.getPreview_url();
                             fileCode1 = response.getFilecode();
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"netPitcure1",netPitcure1);
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"fileCode1",fileCode1);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "netPitcure1", netPitcure1);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "fileCode1", fileCode1);
                             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure1, imgPictureOne);
+                            tvPictureOne.setVisibility(View.GONE);
                             break;
                         case 2:
 
                             netPitcure2 = response.getPreview_url();
                             fileCode2 = response.getFilecode();
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"netPitcure2",netPitcure2);
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"fileCode2",fileCode2);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "netPitcure2", netPitcure2);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "fileCode2", fileCode2);
                             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure2, imgPictureTwo);
+                            tvPictureTwo.setVisibility(View.GONE);
                             break;
                         case 3:
                             netPitcure3 = response.getPreview_url();
                             fileCode3 = response.getFilecode();
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"netPitcure3",netPitcure3);
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"fileCode3",fileCode3);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "netPitcure3", netPitcure3);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "fileCode3", fileCode3);
                             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure3, imgPictureThree);
+                            tvPictureThree.setVisibility(View.GONE);
                             break;
                         case 4:
                             netPitcure4 = response.getPreview_url();
                             fileCode4 = response.getFilecode();
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"netPitcure4",netPitcure4);
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"fileCode4",fileCode4);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "netPitcure4", netPitcure4);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "fileCode4", fileCode4);
                             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure4, imgPictureFour);
+                            tvPictureFour.setVisibility(View.GONE);
                             break;
                         case 5:
                             netPitcure5 = response.getPreview_url();
                             fileCode5 = response.getFilecode();
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"netPitcure5",netPitcure5);
-                            SharePreferenceUtil.put(PictureSelectedActivity.this,"fileCode5",fileCode5);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "netPitcure5", netPitcure5);
+                            SharePreferenceUtil.put(PictureSelectedActivity.this, "fileCode5", fileCode5);
                             GlideUtil.loadImg(PictureSelectedActivity.this, netPitcure5, imgPictureFive);
+                            tvPictureFive.setVisibility(View.GONE);
                             break;
                     }
                     ToastUtils.toTosat(PictureSelectedActivity.this, "图片上传成功");
@@ -727,19 +753,19 @@ public class PictureSelectedActivity extends BaseActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if ( pitcure1!= null) {
+        if (pitcure1 != null) {
             outState.putString("pitcure1", pitcure1);
         }
-        if ( pitcure2!= null) {
+        if (pitcure2 != null) {
             outState.putString("pitcure2", pitcure2);
         }
-        if ( pitcure3!= null) {
+        if (pitcure3 != null) {
             outState.putString("pitcure3", pitcure3);
         }
-        if ( pitcure4!= null) {
+        if (pitcure4 != null) {
             outState.putString("pitcure4", pitcure4);
         }
-        if ( pitcure5!= null) {
+        if (pitcure5 != null) {
             outState.putString("pitcure4", pitcure5);
         }
 

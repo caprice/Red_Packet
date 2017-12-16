@@ -57,16 +57,16 @@ public class RedMangerActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.liner_manager_run:
-                tvManagerRun.setTextColor(Color.parseColor("#d43c33"));
+                tvManagerRun.setTextColor(Color.parseColor("#ff7b42"));
                 tvManagerEnd.setTextColor(Color.parseColor("#333333"));
-                tvManagerRunUnderline.setBackgroundColor(Color.parseColor("#d43c33"));
+                tvManagerRunUnderline.setBackgroundColor(Color.parseColor("#ff7b42"));
                 tvManagerEndUnderline.setBackgroundColor(Color.parseColor("#F8F8FA"));
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_recycle, runFragment, "").commit();
                 break;
             case R.id.liner_manager_end:
-                tvManagerEnd.setTextColor(Color.parseColor("#d43c33"));
+                tvManagerEnd.setTextColor(Color.parseColor("#ff7b42"));
                 tvManagerRun.setTextColor(Color.parseColor("#333333"));
-                tvManagerEndUnderline.setBackgroundColor(Color.parseColor("#d43c33"));
+                tvManagerEndUnderline.setBackgroundColor(Color.parseColor("#ff7b42"));
                 tvManagerRunUnderline.setBackgroundColor(Color.parseColor("#F8F8FA"));
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_recycle, endFragment, "").commit();
                 break;

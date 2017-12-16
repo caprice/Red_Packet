@@ -67,6 +67,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -150,6 +152,44 @@ public class MainActivity extends BaseActivity
             }
         });
         refreshAlways();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                getUnRead();
+            }
+        }, 10000, 10000);
+    }
+
+    private void getUnRead() {
+        MessageApi.unReadNum(MainActivity.this, MyApp.token, new OnRequestCompletedListener<UnreadResponse>() {
+            @Override
+            public void onCompleted(UnreadResponse response, String msg) {
+                if (response != null) {
+                    if (response.getRet() == 200) {
+                        if (response.getData() != null && response.getData().getCode() == 200) {
+                            if (response.getData().getList().getUnread() != 0) {
+                                messageNum.setVisibility(View.VISIBLE);
+                                messageNum1.setVisibility(View.VISIBLE);
+                                messageNum.setText(response.getData().getList().getUnread() + "");
+                                messageNum1.setText(response.getData().getList().getUnread() + "");
+                            } else {
+                                messageNum.setVisibility(View.GONE);
+                                messageNum1.setVisibility(View.GONE);
+                            }
+                        } else {
+                            messageNum.setVisibility(View.GONE);
+                            messageNum1.setVisibility(View.GONE);
+                        }
+                    } else {
+                        messageNum.setVisibility(View.GONE);
+                        messageNum1.setVisibility(View.GONE);
+                    }
+                } else {
+                    messageNum.setVisibility(View.GONE);
+                    messageNum1.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void refreshData() {
@@ -206,7 +246,6 @@ public class MainActivity extends BaseActivity
                             dismissProgressDialog();
                             if (response != null) {
                                 RedPacketDetailResponse.DataBean data = response.getData();
-
                                 adapter.replaceItem(clickPosition, data);
                             } else {
                                 ToastUtils.toTosat(MainActivity.this, msg);
@@ -297,35 +336,7 @@ public class MainActivity extends BaseActivity
                 }
             });
         }
-        MessageApi.unReadNum(MainActivity.this, MyApp.token, new OnRequestCompletedListener<UnreadResponse>() {
-            @Override
-            public void onCompleted(UnreadResponse response, String msg) {
-                if (response != null) {
-                    if (response.getRet() == 200) {
-                        if (response.getData() != null && response.getData().getCode() == 200) {
-                            if (response.getData().getList().getUnread() != 0) {
-                                messageNum.setVisibility(View.VISIBLE);
-                                messageNum1.setVisibility(View.VISIBLE);
-                                messageNum.setText(response.getData().getList().getUnread() + "");
-                                messageNum1.setText(response.getData().getList().getUnread() + "");
-                            } else {
-                                messageNum.setVisibility(View.GONE);
-                                messageNum1.setVisibility(View.GONE);
-                            }
-                        } else {
-                            messageNum.setVisibility(View.GONE);
-                            messageNum1.setVisibility(View.GONE);
-                        }
-                    } else {
-                        messageNum.setVisibility(View.GONE);
-                        messageNum1.setVisibility(View.GONE);
-                    }
-                } else {
-                    messageNum.setVisibility(View.GONE);
-                    messageNum1.setVisibility(View.GONE);
-                }
-            }
-        });
+
         refreshData();
     }
 
@@ -742,7 +753,15 @@ public class MainActivity extends BaseActivity
                 getActive(true);
                 break;
             case R.id.tv_message:
-                MyMessageActivity.launch(MainActivity.this);
+                switch (MyApp.login_state) {
+                    case 0:
+                        LoginActivity.luncher(MainActivity.this);
+                        break;
+                    case 1:
+                        MyMessageActivity.launch(MainActivity.this);
+                        break;
+                }
+
                 break;
         }
     }
@@ -815,7 +834,7 @@ public class MainActivity extends BaseActivity
     private void playPhone() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("询问")
-                .setIcon(R.drawable.ic_logo)
+                .setIcon(R.drawable.ic_logo1)
                 .setMessage("是否联系客服：028-64095902")
                 .setPositiveButton("拨打", new DialogInterface.OnClickListener() {
                     @Override

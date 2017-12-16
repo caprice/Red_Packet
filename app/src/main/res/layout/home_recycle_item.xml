@@ -90,14 +90,14 @@
             <ImageView
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
-                android:src="@mipmap/red_packet"
-                android:layout_width="14dp"
-                android:layout_height="14dp" />
+                android:src="@drawable/ic_red_count1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/home_money"
                 android:layout_marginLeft="6dp"
                 android:textSize="12sp"
-                android:textColor="#989898"
+                android:textColor="#353336"
                 android:text=""
                 tools:text="1000元/1000个"
                 android:layout_width="wrap_content"
@@ -111,14 +111,14 @@
             <ImageView
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
-                android:src="@mipmap/left_red_packet"
-                android:layout_width="14dp"
-                android:layout_height="14dp" />
+                android:src="@drawable/ic_red_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_marginLeft="6dp"
                 android:textSize="12sp"
-                android:textColor="#989898"
+                android:textColor="#353336"
                 android:text=""
                 tools:text="1000个"
                 android:layout_width="wrap_content"

@@ -17,7 +17,7 @@ public class RedPacketDetailResponse implements Parcelable {
     /**
      * err : 0
      * msg : 正常
-     * data : {"rid":86,"merchant":"刘博闻","address":"南充市顺庆区西南石油大学","tel":"13551344263","money":1,"pCount":10,"remainCount":7,"userPic":"http://hb.huidang2105.com:8900/public/uploads/user_pic/11/20170908190200NklRU.jpeg","merchant_des":"我叫刘博闻","question":"我是谁","answer":"1","answer0":"王勇","answer1":"刘博闻","answer2":"王滨","status":1,"status_user":true,"isgot":2,"iscollect":false,"getter":[{"userPic":"http://hb.huidang2105.com:8900/public/uploads/user_pic/6/20170907202159YEPl9.jpeg","userName":"在一家店在哪里","address":"四川省成都市","money":"0.07","getTime":"17/09/09 08:33:21"},{"userPic":"http://hb.huidang2105.com:8900/public/uploads/user_pic/3/20170825180250yn3nl.jpeg","userName":"刘博闻","address":"四川省成都市","money":"0.04","getTime":"17/09/08 19:12:49"},{"userPic":"http://hb.huidang2105.com:8900/public/uploads/default/mer.png","userName":"刘博闻","address":"四川省成都市","money":"0.19","getTime":"17/09/08 19:07:16"}],"gotter_count":3}
+     * data : {"rid":466,"merchant":"我们要","address":"","tel":"","money":1,"pCount":1,"remainCount":0,"userPic":"http://taotaohb.oss-cn-beijing.aliyuncs.com/uploads/user_pic/3/20171216213800eRtaK.jpg&http://taotaohb.oss-cn-beijing.aliyuncs.com/uploads/user_pic/3/20171216213809ifIde.jpg&http://taotaohb.oss-cn-beijing.aliyuncs.com/uploads/user_pic/3/20171216213820KcIP3.jpg&","merchant_des":"呃呃呃","question":"这是问题","answer":"2","answer0":"我们","answer1":"你的","answer2":"对1","status":1,"status_user":true,"isgot":1,"iscollect":false,"isSeller":true,"ltid":"","getter":[{"userPic":"http://taotaohb.oss-cn-beijing.aliyuncs.com/uploads/user_pic/3/20171109225850gyllP.jpg","userName":"有志青年","address":"四川省成都市","money":"1.00","maxmoney":1,"getTime":"17/12/16 22:41:51"}],"gotter_count":2}
      */
 
     private int err;
@@ -50,27 +50,28 @@ public class RedPacketDetailResponse implements Parcelable {
 
     public static class DataBean implements Parcelable {
         /**
-         * rid : 86
-         * merchant : 刘博闻
-         * address : 南充市顺庆区西南石油大学
-         * tel : 13551344263
+         * rid : 466
+         * merchant : 我们要
+         * address :
+         * tel :
          * money : 1
-         * pCount : 10
-         * remainCount : 7
-         * userPic : http://hb.huidang2105.com:8900/public/uploads/user_pic/11/20170908190200NklRU.jpeg
-         * merchant_des : 我叫刘博闻
-         * question : 我是谁
-         * answer : 1
-         * answer0 : 王勇
-         * answer1 : 刘博闻
-         * answer2 : 王滨
+         * pCount : 1
+         * remainCount : 0
+         * userPic : http://taotaohb.oss-cn-beijing.aliyuncs.com/uploads/user_pic/3/20171216213800eRtaK.jpg&http://taotaohb.oss-cn-beijing.aliyuncs.com/uploads/user_pic/3/20171216213809ifIde.jpg&http://taotaohb.oss-cn-beijing.aliyuncs.com/uploads/user_pic/3/20171216213820KcIP3.jpg&
+         * merchant_des : 呃呃呃
+         * question : 这是问题
+         * answer : 2
+         * answer0 : 我们
+         * answer1 : 你的
+         * answer2 : 对1
          * status : 1
          * status_user : true
-         * isgot : 2
+         * isgot : 1
          * iscollect : false
-         * isSeller : false
-         * getter : [{"userPic":"http://hb.huidang2105.com:8900/public/uploads/user_pic/6/20170907202159YEPl9.jpeg","userName":"在一家店在哪里","address":"四川省成都市","money":"0.07","getTime":"17/09/09 08:33:21"},{"userPic":"http://hb.huidang2105.com:8900/public/uploads/user_pic/3/20170825180250yn3nl.jpeg","userName":"刘博闻","address":"四川省成都市","money":"0.04","getTime":"17/09/08 19:12:49"},{"userPic":"http://hb.huidang2105.com:8900/public/uploads/default/mer.png","userName":"刘博闻","address":"四川省成都市","money":"0.19","getTime":"17/09/08 19:07:16"}]
-         * gotter_count : 3
+         * isSeller : true
+         * ltid :
+         * getter : [{"userPic":"http://taotaohb.oss-cn-beijing.aliyuncs.com/uploads/user_pic/3/20171109225850gyllP.jpg","userName":"有志青年","address":"四川省成都市","money":"1.00","maxmoney":1,"getTime":"17/12/16 22:41:51"}]
+         * gotter_count : 2
          */
 
         private int rid;
@@ -90,27 +91,11 @@ public class RedPacketDetailResponse implements Parcelable {
         private int status;
         private boolean status_user;
         private int isgot;
-        private int ltid;
         private boolean iscollect;
         private boolean isSeller;
+        private String ltid;
         private int gotter_count;
         private List<GetterBean> getter;
-
-        public int getLtid() {
-            return ltid;
-        }
-
-        public void setLtid(int ltid) {
-            this.ltid = ltid;
-        }
-
-        public boolean isSeller() {
-            return isSeller;
-        }
-
-        public void setSeller(boolean seller) {
-            isSeller = seller;
-        }
 
         public int getRid() {
             return rid;
@@ -256,6 +241,22 @@ public class RedPacketDetailResponse implements Parcelable {
             this.iscollect = iscollect;
         }
 
+        public boolean isIsSeller() {
+            return isSeller;
+        }
+
+        public void setIsSeller(boolean isSeller) {
+            this.isSeller = isSeller;
+        }
+
+        public String getLtid() {
+            return ltid;
+        }
+
+        public void setLtid(String ltid) {
+            this.ltid = ltid;
+        }
+
         public int getGotter_count() {
             return gotter_count;
         }
@@ -274,17 +275,19 @@ public class RedPacketDetailResponse implements Parcelable {
 
         public static class GetterBean implements Parcelable {
             /**
-             * userPic : http://hb.huidang2105.com:8900/public/uploads/user_pic/6/20170907202159YEPl9.jpeg
-             * userName : 在一家店在哪里
+             * userPic : http://taotaohb.oss-cn-beijing.aliyuncs.com/uploads/user_pic/3/20171109225850gyllP.jpg
+             * userName : 有志青年
              * address : 四川省成都市
-             * money : 0.07
-             * getTime : 17/09/09 08:33:21
+             * money : 1.00
+             * maxmoney : 1
+             * getTime : 17/12/16 22:41:51
              */
 
             private String userPic;
             private String userName;
             private String address;
             private String money;
+            private int maxmoney;
             private String getTime;
 
             public String getUserPic() {
@@ -319,6 +322,14 @@ public class RedPacketDetailResponse implements Parcelable {
                 this.money = money;
             }
 
+            public int getMaxmoney() {
+                return maxmoney;
+            }
+
+            public void setMaxmoney(int maxmoney) {
+                this.maxmoney = maxmoney;
+            }
+
             public String getGetTime() {
                 return getTime;
             }
@@ -338,6 +349,7 @@ public class RedPacketDetailResponse implements Parcelable {
                 dest.writeString(this.userName);
                 dest.writeString(this.address);
                 dest.writeString(this.money);
+                dest.writeInt(this.maxmoney);
                 dest.writeString(this.getTime);
             }
 
@@ -349,6 +361,7 @@ public class RedPacketDetailResponse implements Parcelable {
                 this.userName = in.readString();
                 this.address = in.readString();
                 this.money = in.readString();
+                this.maxmoney = in.readInt();
                 this.getTime = in.readString();
             }
 
@@ -363,9 +376,6 @@ public class RedPacketDetailResponse implements Parcelable {
                     return new GetterBean[size];
                 }
             };
-        }
-
-        public DataBean() {
         }
 
         @Override
@@ -392,11 +402,14 @@ public class RedPacketDetailResponse implements Parcelable {
             dest.writeInt(this.status);
             dest.writeByte(this.status_user ? (byte) 1 : (byte) 0);
             dest.writeInt(this.isgot);
-            dest.writeInt(this.ltid);
             dest.writeByte(this.iscollect ? (byte) 1 : (byte) 0);
             dest.writeByte(this.isSeller ? (byte) 1 : (byte) 0);
+            dest.writeString(this.ltid);
             dest.writeInt(this.gotter_count);
             dest.writeTypedList(this.getter);
+        }
+
+        public DataBean() {
         }
 
         protected DataBean(Parcel in) {
@@ -417,14 +430,14 @@ public class RedPacketDetailResponse implements Parcelable {
             this.status = in.readInt();
             this.status_user = in.readByte() != 0;
             this.isgot = in.readInt();
-            this.ltid = in.readInt();
             this.iscollect = in.readByte() != 0;
             this.isSeller = in.readByte() != 0;
+            this.ltid = in.readString();
             this.gotter_count = in.readInt();
             this.getter = in.createTypedArrayList(GetterBean.CREATOR);
         }
 
-        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);
@@ -435,9 +448,6 @@ public class RedPacketDetailResponse implements Parcelable {
                 return new DataBean[size];
             }
         };
-    }
-
-    public RedPacketDetailResponse() {
     }
 
     @Override
@@ -452,13 +462,16 @@ public class RedPacketDetailResponse implements Parcelable {
         dest.writeParcelable(this.data, flags);
     }
 
+    public RedPacketDetailResponse() {
+    }
+
     protected RedPacketDetailResponse(Parcel in) {
         this.err = in.readInt();
         this.msg = in.readString();
         this.data = in.readParcelable(DataBean.class.getClassLoader());
     }
 
-    public static final Creator<RedPacketDetailResponse> CREATOR = new Creator<RedPacketDetailResponse>() {
+    public static final Parcelable.Creator<RedPacketDetailResponse> CREATOR = new Parcelable.Creator<RedPacketDetailResponse>() {
         @Override
         public RedPacketDetailResponse createFromParcel(Parcel source) {
             return new RedPacketDetailResponse(source);

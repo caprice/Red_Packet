@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="定位"
-                android:textColor="#ffffff"
+                android:textColor="#353336"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="保存"
-                android:textColor="#ffffff"
+                android:textColor="#353336"
                 android:textSize="16sp" />
         </LinearLayout>
     </RelativeLayout>

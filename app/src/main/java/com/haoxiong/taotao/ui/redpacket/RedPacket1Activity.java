@@ -139,6 +139,7 @@ public class RedPacket1Activity extends BaseActivity {
     private int rid;
     private View view;
     int imgAlpha = 0;
+    private boolean tag=true;
 
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacket1Activity.class);
@@ -180,10 +181,10 @@ public class RedPacket1Activity extends BaseActivity {
 
     private void assignView() {
 
-        redTitleIcon.setImageAlpha(imgAlpha);
-        imgRedPacketLove.setImageAlpha(imgAlpha);
-        imgRedPacketShare.setImageAlpha(imgAlpha);
-        imgRedPacketBack.setImageAlpha(imgAlpha);
+        redTitleIcon.setVisibility(View.GONE);
+        imgRedPacketLove.setImageAlpha(255);
+        imgRedPacketShare.setImageAlpha(255);
+        imgRedPacketBack.setImageAlpha(255);
         srlRedPacket.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -194,6 +195,7 @@ public class RedPacket1Activity extends BaseActivity {
                 Log.e("...", scrollY + "");
                 int y = imgRedPacketPic.getHeight() - DensityUtil.dip2px(RedPacket1Activity.this, 44);
                 if (scrollY <= y) {
+                    tag = true;
                     if (love) {
                         imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
                     } else {
@@ -203,17 +205,17 @@ public class RedPacket1Activity extends BaseActivity {
                     imgRedPacketBack.setImageResource(R.drawable.ic_right_one);
                     scale = (float) scrollY / y;
                     alpha = (int) (255 * scale);
-                    imgAlpha = (int) (255 * scale);
-                    redTitleIcon.setImageAlpha(imgAlpha);
+                    imgAlpha = (int) (255-255 * scale);
+                    redTitleIcon.setVisibility(View.GONE);
                     imgRedPacketLove.setImageAlpha(imgAlpha);
                     imgRedPacketShare.setImageAlpha(imgAlpha);
                     imgRedPacketBack.setImageAlpha(imgAlpha);
                     // 随着滑动距离改变透明度
                     // Log.e("al=","="+alpha);
-                    relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
+                    relativeLayout.setBackgroundColor(Color.argb(alpha, 255, 218, 68));
                 } else {
-
-                    if (alpha < 255) {
+                    tag = false;
+                    if (alpha < 1) {
                         if (love) {
                             imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_two);
                         } else {
@@ -221,14 +223,14 @@ public class RedPacket1Activity extends BaseActivity {
                         }
                         imgRedPacketShare.setImageResource(R.drawable.ic_share_two);
                         imgRedPacketBack.setImageResource(R.drawable.ic_right_two);
-                        redTitleIcon.setImageAlpha(255);
+                        redTitleIcon.setVisibility(View.VISIBLE);
                         imgRedPacketLove.setImageAlpha(255);
                         imgRedPacketShare.setImageAlpha(255);
                         imgRedPacketBack.setImageAlpha(255);
                         Log.e("执行次数", "=" + (++count));
                         // 防止频繁重复设置相同的值影响性能
                         alpha = 255;
-                        relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
+                        relativeLayout.setBackgroundColor(Color.argb(alpha, 255, 218, 68));
                     }
                 }
             }
@@ -261,8 +263,8 @@ public class RedPacket1Activity extends BaseActivity {
             case 1:
                 sendRedPacketRequest = getIntent().getParcelableExtra("content");
                 linerRedPacketLove.setVisibility(View.GONE);
-                tvRedPacketMoney.setText(sendRedPacketRequest.getMoney() + "元/" + sendRedPacketRequest.getPcount() + "个");
-                tvRedPacketNum.setText(sendRedPacketRequest.getPcount() + "个");
+                tvRedPacketMoney.setText(sendRedPacketRequest.getMoney() + "元/" + sendRedPacketRequest.getPcount() + "份");
+                tvRedPacketNum.setText(sendRedPacketRequest.getPcount() + "份");
                 tvReaPacketContent.setText(sendRedPacketRequest.getMerchant_des());
                 tvReaPacketTel.setText(sendRedPacketRequest.getTel() != null ? sendRedPacketRequest.getTel() : "");
                 tvReaPacketAdd.setText(sendRedPacketRequest.getAddress() != null ? sendRedPacketRequest.getAddress() : "");
@@ -291,13 +293,13 @@ public class RedPacket1Activity extends BaseActivity {
 
 
                 imgRedPacketBottom.setVisibility(View.GONE);
-                tvRedPacketBottom.setText("塞钱进红包");
+                tvRedPacketBottom.setText("发布");
                 rid = sendRedPacketRequest.getRid();
                 adapter.removeAllFooterView();
                 break;
             case 2:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("抢红包");
+                tvRedPacketBottom.setText("顶一个");
                 dataBean = getIntent().getParcelableExtra("content");
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
@@ -318,7 +320,7 @@ public class RedPacket1Activity extends BaseActivity {
                 break;
             case 5:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("抢红包");
+                tvRedPacketBottom.setText("顶一个");
                 dataBean = getIntent().getParcelableExtra("content");
                 linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
                 getDetailData(dataBean.getRid());
@@ -387,8 +389,8 @@ public class RedPacket1Activity extends BaseActivity {
     }
 
     private void refreshView() {
-        tvRedPacketMoney.setText(detailResponse.getMoney() + "元/" + detailResponse.getPCount() + "个");
-        tvRedPacketNum.setText(detailResponse.getRemainCount() + "个");
+        tvRedPacketMoney.setText(detailResponse.getMoney() + "元/" + detailResponse.getPCount() + "份");
+        tvRedPacketNum.setText(detailResponse.getRemainCount() + "份");
         tvReaPacketContent.setText(detailResponse.getMerchant_des());
         if (!TextUtils.isEmpty(detailResponse.getTel())) {
             tvReaPacketTel.setText(detailResponse.getTel());
@@ -427,7 +429,12 @@ public class RedPacket1Activity extends BaseActivity {
                 .setManualPageable(true);  //设置手动影响（设置了该项无法手动切换）
 
         if (detailResponse.isIscollect()) {
-            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+            if (tag) {
+                imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+            } else {
+                imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_two);
+            }
+
         }
         love = detailResponse.isIscollect();
         srlRedPacket.scrollTo(0, 0);
@@ -576,9 +583,18 @@ public class RedPacket1Activity extends BaseActivity {
                 }
                 if (response.getErr() == 0) {
                     if (!love) {
-                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+                        if (tag) {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+                        } else {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_two);
+                        }
+
                     } else {
-                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_one);
+                        if (tag) {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_one);
+                        } else {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_two);
+                        }
                     }
                     love = !love;
                 } else {
@@ -689,7 +705,7 @@ public class RedPacket1Activity extends BaseActivity {
 
                 break;
             case 5:
-                ToastUtils.toTosat(RedPacket1Activity.this, "您已抢过此红包");
+                ToastUtils.toTosat(RedPacket1Activity.this, "您已经顶过了");
                 break;
         }
     }

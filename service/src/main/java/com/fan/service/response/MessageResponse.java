@@ -138,6 +138,15 @@ public class MessageResponse implements Parcelable {
                 private String cjsj;
                 private String rid;
                 private String ltid;
+                private String sj;
+
+                public String getSj() {
+                    return sj;
+                }
+
+                public void setSj(String sj) {
+                    this.sj = sj;
+                }
 
                 public String getLtid() {
                     return ltid;
@@ -230,6 +239,7 @@ public class MessageResponse implements Parcelable {
                     dest.writeString(this.cjsj);
                     dest.writeString(this.rid);
                     dest.writeString(this.ltid);
+                    dest.writeString(this.sj);
                 }
 
                 protected ListLbBean(Parcel in) {
@@ -242,6 +252,7 @@ public class MessageResponse implements Parcelable {
                     this.cjsj = in.readString();
                     this.rid = in.readString();
                     this.ltid = in.readString();
+                    this.sj = in.readString();
                 }
 
                 public static final Creator<ListLbBean> CREATOR = new Creator<ListLbBean>() {

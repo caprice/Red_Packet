@@ -7,6 +7,7 @@ import com.fan.service.RetrofitApplication;
 import com.fan.service.response.MessageResponse;
 import com.fan.service.response.MessageSendResponse;
 import com.fan.service.response.ReadMessageResponse;
+import com.fan.service.response.RefreshTimeResponse;
 import com.fan.service.response.UnReadMessageResponse;
 import com.fan.service.response.UnreadResponse;
 
@@ -25,10 +26,36 @@ import io.reactivex.schedulers.Schedulers;
 public class MessageApi {
     public static String TAG = PayServiceApi.class.getSimpleName();
 
-    public static void unReadNum(final Context context, String token, final OnRequestCompletedListener<UnreadResponse> listener) {
+    public static void refreshTime(final Context context, final OnRequestCompletedListener<RefreshTimeResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getMessageService()
-                .unReadNum("user.get_ltUnread", token)
+                .refreshTime()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RefreshTimeResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(@NonNull RefreshTimeResponse response) {
+                        listener.onCompleted(response, "成功");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        listener.onCompleted(null, "发布失败");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+ public static void unReadNum(final Context context, String token, final OnRequestCompletedListener<UnreadResponse> listener) {
+        ((RetrofitApplication) context.getApplicationContext()).getClient()
+                .getMessageService()
+                .unReadNum(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UnreadResponse>() {
@@ -55,7 +82,7 @@ public class MessageApi {
     public static void messageList(final Context context, String token, final OnRequestCompletedListener<MessageResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getMessageService()
-                .messageList("user.get_userlist", token)
+                .messageList(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MessageResponse>() {
@@ -82,7 +109,7 @@ public class MessageApi {
     public static void sendMessage(final Context context, String token, String rid,String ltid ,String content, final OnRequestCompletedListener<MessageSendResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getMessageService()
-                .sendMessage("user.get_fsxx", token, rid,ltid, content)
+                .sendMessage( token, rid,ltid, content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MessageSendResponse>() {
@@ -109,7 +136,7 @@ public class MessageApi {
     public static void unReadMessageList(final Context context, String token, String rid,String ltid, final OnRequestCompletedListener<UnReadMessageResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getMessageService()
-                .unReadMessageList("user.get_ltlist", token, rid,ltid)
+                .unReadMessageList(token, rid,ltid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UnReadMessageResponse>() {
@@ -136,7 +163,7 @@ public class MessageApi {
     public static void readMessageList(final Context context, String token, String rid,String ltid,int page, final OnRequestCompletedListener<ReadMessageResponse> listener) {
         ((RetrofitApplication) context.getApplicationContext()).getClient()
                 .getMessageService()
-                .readMessageList("user.get_ltjllist", token, rid,ltid,page,10)
+                .readMessageList(token, rid,ltid,page,10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ReadMessageResponse>() {

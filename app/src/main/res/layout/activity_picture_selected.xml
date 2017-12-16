@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="主题图片"
-                android:textColor="#ffffff"
+                android:textColor="#353336"
                 android:textSize="17sp" />
         </LinearLayout>
 
@@ -59,15 +59,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="保存"
-                android:textColor="#ffffff"
+                android:textColor="#353336"
                 android:textSize="16sp" />
         </LinearLayout>
     </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:paddingBottom="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="请上传2-5张图片，其中前两张为封面图片"
+                android:text="请上传2~5张图片，其中前2张为封面图片。"
                 android:textColor="#686868"
                 android:textSize="14sp" />
 
@@ -101,36 +101,48 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <ImageView
-                            android:scaleType="fitXY"
-                            android:id="@+id/img_picture_one"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            android:background="#f0eff6" />
+                            android:layout_height="160dp">
+                            <ImageView
+                                android:id="@+id/img_picture_one"
+                                android:layout_width="match_parent"
+                                android:layout_height="160dp"
+                                android:background="#f0eff6"
+                                android:scaleType="fitXY" />
+                            <TextView
+                                android:id="@+id/tv_picture_one"
+                                android:layout_centerInParent="true"
+                                android:text="第1张"
+                                android:textColor="#686868"
+                                android:textSize="14sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="32dp"
                             android:background="#cccccc">
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_update_picture_one"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#3390F8"
+                                android:textColor="#686868"
                                 android:textSize="14dp" />
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_delete_picture_one"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="删除"
                                 android:textColor="#ffffff"
@@ -150,36 +162,48 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <ImageView
-                            android:scaleType="fitXY"
-                            android:id="@+id/img_picture_two"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            android:background="#f0eff6" />
+                            android:layout_height="160dp">
+                            <ImageView
+                                android:id="@+id/img_picture_two"
+                                android:layout_width="match_parent"
+                                android:layout_height="160dp"
+                                android:background="#f0eff6"
+                                android:scaleType="fitXY" />
+                            <TextView
+                                android:id="@+id/tv_picture_two"
+                                android:layout_centerInParent="true"
+                                android:text="第2张"
+                                android:textColor="#686868"
+                                android:textSize="14sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="32dp"
                             android:background="#cccccc">
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_update_picture_two"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#3390F8"
+                                android:textColor="#686868"
                                 android:textSize="14dp" />
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_delete_picture_two"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="删除"
                                 android:textColor="#ffffff"
@@ -206,36 +230,48 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <ImageView
-                            android:scaleType="fitXY"
-                            android:id="@+id/img_picture_three"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            android:background="#f0eff6" />
+                            android:layout_height="160dp">
+                            <ImageView
+                                android:id="@+id/img_picture_three"
+                                android:layout_width="match_parent"
+                                android:layout_height="160dp"
+                                android:background="#f0eff6"
+                                android:scaleType="fitXY" />
+                            <TextView
+                                android:id="@+id/tv_picture_three"
+                                android:layout_centerInParent="true"
+                                android:text="第3张"
+                                android:textColor="#686868"
+                                android:textSize="14sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="32dp"
                             android:background="#cccccc">
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_update_picture_three"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#3390F8"
+                                android:textColor="#686868"
                                 android:textSize="14dp" />
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_delete_picture_three"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="删除"
                                 android:textColor="#ffffff"
@@ -255,36 +291,48 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <ImageView
-                            android:scaleType="fitXY"
-                            android:id="@+id/img_picture_four"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            android:background="#f0eff6" />
+                            android:layout_height="160dp">
+                            <ImageView
+                                android:id="@+id/img_picture_four"
+                                android:layout_width="match_parent"
+                                android:layout_height="160dp"
+                                android:background="#f0eff6"
+                                android:scaleType="fitXY" />
+                            <TextView
+                                android:id="@+id/tv_picture_four"
+                                android:layout_centerInParent="true"
+                                android:text="第4张"
+                                android:textColor="#686868"
+                                android:textSize="14sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="32dp"
                             android:background="#cccccc">
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_update_picture_four"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#3390F8"
+                                android:textColor="#686868"
                                 android:textSize="14dp" />
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_delete_picture_four"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="删除"
                                 android:textColor="#ffffff"
@@ -311,36 +359,48 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <ImageView
-                            android:scaleType="fitXY"
-                            android:id="@+id/img_picture_five"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            android:background="#f0eff6" />
+                            android:layout_height="160dp">
+                            <ImageView
+                                android:id="@+id/img_picture_five"
+                                android:layout_width="match_parent"
+                                android:layout_height="160dp"
+                                android:background="#f0eff6"
+                                android:scaleType="fitXY" />
+                            <TextView
+                                android:id="@+id/tv_picture_five"
+                                android:layout_centerInParent="true"
+                                android:text="第5张"
+                                android:textColor="#686868"
+                                android:textSize="14sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="32dp"
                             android:background="#cccccc">
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_update_picture_five"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#3390F8"
+                                android:textColor="#686868"
                                 android:textSize="14dp" />
 
                             <TextView
-                                android:background="?android:selectableItemBackground"
                                 android:id="@+id/tv_delete_picture_five"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="删除"
                                 android:textColor="#ffffff"
@@ -369,7 +429,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="32dp"
                             android:background="#cccccc">
 
                             <TextView
@@ -378,7 +438,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#3390F8"
+                                android:textColor="#686868"
                                 android:textSize="14dp" />
 
                             <TextView

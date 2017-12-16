@@ -192,7 +192,9 @@ public class Client {
                         if (contentType != null) {
                             charset = contentType.charset(charset);
                         }
+                        //获取上次的上传的参数
                         String paramsStr = buffer.readString(charset);
+                        //下面是进行加密
                         long currentTimeMillis = System.currentTimeMillis();
                         paramsStr = paramsStr + "&timestamp=" + currentTimeMillis;
                         paramsStr = "S%12hd_&" + paramsStr;

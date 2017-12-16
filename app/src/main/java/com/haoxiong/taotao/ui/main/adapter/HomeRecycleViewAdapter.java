@@ -1,6 +1,7 @@
 package com.haoxiong.taotao.ui.main.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -38,8 +39,8 @@ public class HomeRecycleViewAdapter extends BaseQuickAdapter<RedPacketListRespon
     @Override
     protected void convert(BaseViewHolder helper, RedPacketListResponse.DataBean item) {
         helper.setText(R.id.item_title, item.getMerchant());
-        helper.setText(R.id.home_money, item.getMoney() + "元/" + item.getPCount() + "个");
-        helper.setText(R.id.home_mun, item.getRemainCount() + "个");
+        helper.setText(R.id.home_money, item.getMoney() + "元/" + item.getPCount() + "份");
+        helper.setText(R.id.home_mun, item.getRemainCount() + "份");
 
         if (TextUtils.isEmpty(item.getRealdistance())) {
             helper.setVisible(R.id.item_distance, false);
@@ -58,19 +59,23 @@ public class HomeRecycleViewAdapter extends BaseQuickAdapter<RedPacketListRespon
             case 2:
                 if (item.getRemainCount() != 0) {
                     home_donging.setBackgroundResource(R.drawable.red_pacekt_enalbe);
-                    home_donging.setText("抢红包");
+                    home_donging.setTextColor(Color.parseColor("#343338"));
+                    home_donging.setText("顶一个");
                 } else {
                     home_donging.setBackgroundResource(R.drawable.red_pacekt_albe);
-                    home_donging.setText("已抢完");
+                    home_donging.setTextColor(Color.parseColor("#aea174"));
+                    home_donging.setText("顶满了");
                 }
                 break;
             case 1:
                 if (item.getRemainCount() != 0) {
                     home_donging.setBackgroundResource(R.drawable.red_pacekt_albe);
-                    home_donging.setText("已抢过");
+                    home_donging.setTextColor(Color.parseColor("#aea174"));
+                    home_donging.setText("已顶过");
                 } else {
                     home_donging.setBackgroundResource(R.drawable.red_pacekt_albe);
-                    home_donging.setText("已抢完");
+                    home_donging.setTextColor(Color.parseColor("#aea174"));
+                    home_donging.setText("顶满了");
                 }
                 break;
         }

@@ -24,6 +24,7 @@ import com.fan.service.api.MessageApi;
 import com.fan.service.response.MessageResponse;
 import com.fan.service.response.MessageSendResponse;
 import com.fan.service.response.ReadMessageResponse;
+import com.fan.service.response.RefreshTimeResponse;
 import com.fan.service.response.UnReadMessageResponse;
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
@@ -81,6 +82,7 @@ public class MessageDetailActivity extends BaseActivity {
     private String message;
     private String pic;
     private String ltid;
+    private Timer timer;
 
     public static void launch(Context context, MessageResponse.DataBean.ListBean.ListLbBean data) {
         Intent intent = new Intent(context, MessageDetailActivity.class);
@@ -118,7 +120,6 @@ public class MessageDetailActivity extends BaseActivity {
                 ltbt = bean.getLtbt();
                 rid = bean.getRid();
                 ltid = bean.getLtid();
-
                 break;
             case 1:
                 ltid = getIntent().getStringExtra("ltid");
@@ -139,7 +140,7 @@ public class MessageDetailActivity extends BaseActivity {
 
         tvMessageDetailTitle.setText(ltbt);
         recycleViewMessageDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        adapter = new MessageDetailAdapter(this.data);
+        adapter = new MessageDetailAdapter(new ArrayList<Message>());
         recycleViewMessageDetail.setAdapter(adapter);
         swipeRefreshLayoutMessageDetail.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -147,20 +148,41 @@ public class MessageDetailActivity extends BaseActivity {
                 loadRecordMessages(false);
             }
         });
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                refreshDate(false);
-            }
-        }, 10000, 10000);
 
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        MessageApi.refreshTime(MessageDetailActivity.this, new OnRequestCompletedListener<RefreshTimeResponse>() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                KeyboardUtil.hideKeybord(MessageDetailActivity.this);
+            public void onCompleted(RefreshTimeResponse response, String msg) {
+                try {
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            refreshDate(false);
+                        }
+                    }, 10000, response.getData().getSteTime() * 1000);
+                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            KeyboardUtil.hideKeybord(MessageDetailActivity.this);
+                        }
+                    });
+                } catch (Exception e) {
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            refreshDate(false);
+                        }
+                    }, 10000, 10000);
+                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            KeyboardUtil.hideKeybord(MessageDetailActivity.this);
+                        }
+                    });
+                }
             }
         });
-
     }
 
     private void loadRecordMessages(final boolean b) {
@@ -222,39 +244,59 @@ public class MessageDetailActivity extends BaseActivity {
                 }
                 if (response != null) {
                     if (response.getRet() == 200) {
-                        if (response.getData() != null && response.getData().getCode() == 200 && response.getData().getList() != null) {
-                            page = 1;
+                        if (response.getData() != null && response.getData().getList() != null) {
                             if (b && Type == 0) {
                                 linerMessageDetailRedPacket.setVisibility(View.VISIBLE);
                                 GlideUtil.loadImg(MessageDetailActivity.this, Client.BASE_URL_IMG + response.getData().getList().getMer_pics(), imgMessageDetailPicture);
                                 tvMessageDetailContent.setText(response.getData().getList().getMerchant_des() != null ? response.getData().getList().getMerchant_des() : "");
                             }
+                        }
+                        if (response.getData() != null && response.getData().getCode() == 200 && response.getData().getList() != null) {
+                            page = 0;
+
                             if (response.getData().getList().getLt_list() != null && response.getData().getList().getLt_list().size() > 0) {
                                 data.clear();
                                 List<UnReadMessageResponse.DataBean.ListBean.LtListBean> lt_list = response.getData().getList().getLt_list();
                                 List<Message> datas = new ArrayList<>();
                                 for (int i = 0; i < lt_list.size(); i++) {
-                                    Message message = new Message();
-                                    message.setContent(lt_list.get(i).getJlxx());
-                                    message.setItemType(lt_list.get(i).getXxlx());
-                                    message.setTime(lt_list.get(i).getSj());
-                                    datas.add(message);
-                                    data.add(message);
+                                    if (adapter.getData() != null && adapter.getData().size() != 0) {
+                                        if (lt_list.get(i).getXxlx() != 1) {
+                                            Message message = new Message();
+                                            message.setContent(lt_list.get(i).getJlxx());
+                                            message.setItemType(lt_list.get(i).getXxlx());
+                                            message.setTime(lt_list.get(i).getSj());
+                                            datas.add(message);
+                                            data.add(message);
+                                        }
+                                    } else {
+                                        Message message = new Message();
+                                        message.setContent(lt_list.get(i).getJlxx());
+                                        message.setItemType(lt_list.get(i).getXxlx());
+                                        message.setTime(lt_list.get(i).getSj());
+                                        datas.add(message);
+                                        data.add(message);
+                                    }
                                 }
                                 swipeRefreshLayoutMessageDetail.setEnabled(true);
-                                adapter.addData(datas);
-                                recycleViewMessageDetail.scrollToPosition(datas.size() - 1);
+                                if (datas.size()!= 0) {
+                                    if (adapter.getData() != null && adapter.getData().size() != 0) {
+                                        adapter.addData(datas);
+                                        recycleViewMessageDetail.scrollToPosition(adapter.getData().size() - 1);
+                                    } else {
+                                        Log.e("setNewData", datas.size() + "");
+                                        adapter.setNewData(datas);
+                                        recycleViewMessageDetail.scrollToPosition(datas.size() - 1);
+                                    }
+                                }
+
                             }
                         } else if (response.getData() != null && response.getData().getCode() == 206) {
 
-                            page = 1;
+                            page = 0;
                             if (b) {
                                 loadRecordMessages(true);
                             }
-                            if (b && Type == 0) {
-                                linerMessageDetailRedPacket.setVisibility(View.GONE);
-                                linerMessageDetailDetail.setVisibility(View.VISIBLE);
-                            }
+
                         } else {
                             if (b && Type == 0) {
                                 linerMessageDetailRedPacket.setVisibility(View.GONE);
@@ -311,5 +353,18 @@ public class MessageDetailActivity extends BaseActivity {
         } else {
             ToastUtils.toTosat(MessageDetailActivity.this, "请输入内容...");
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            if (timer != null) {
+                timer.cancel();
+            }
+        } catch (Exception e) {
+
+        }
+
     }
 }

@@ -40,7 +40,7 @@
         android:layout_marginRight="@dimen/sp_16"
         android:gravity="center"
         android:textSize="@dimen/sp_16"
-        android:textColor="#ffffff"
+        android:textColor="#353336"
         android:text="登 陆"
         android:background="@drawable/shape_login_bg"
         android:layout_width="match_parent"

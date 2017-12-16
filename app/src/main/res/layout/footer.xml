@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="15dp"
-        android:text="全部红包得主"
-        android:textColor="@color/colorPrimary"
+        android:text="全部奖金得主"
+        android:textColor="#ff7b42"
         android:textSize="12sp" />
 </LinearLayout>

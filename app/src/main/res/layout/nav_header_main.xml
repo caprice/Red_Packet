@@ -23,10 +23,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+            android:layout_marginTop="28dp"
             android:src="@mipmap/head"
             app:civ_border_color="#ffffff"
             app:civ_border_width="1px" />
@@ -39,7 +39,7 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:textColor="#333333"
-            android:textSize="14sp"
+            android:textSize="18sp"
             tools:text="刘博文" />
 
         <LinearLayout
@@ -49,11 +49,11 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/red_packet" />
+                android:src="@drawable/ic_red_count1" />
 
             <TextView
                 android:id="@+id/tv_charge"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
                 android:text="1000元"
-                android:textColor="#D53E35"
+                android:textColor="#ff7b42"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -73,13 +73,13 @@
             android:layout_marginTop="35dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
-            android:drawableLeft="@drawable/packet"
+            android:drawableLeft="@drawable/packet1"
             android:drawablePadding="12dp"
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="钱包"
-            android:textColor="#333333"
-            android:textSize="14sp" />
+            android:textColor="#343436"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:id="@+id/tv_message"
@@ -92,20 +92,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="8dp"
                 android:clickable="false"
-                android:drawableLeft="@drawable/ic_message"
+                android:drawableLeft="@drawable/message1"
                 android:drawablePadding="12dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
                 android:text="我的消息"
-                android:textColor="#333333"
-                android:textSize="14sp" />
+                android:textColor="#343436"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/message_num"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -113,7 +113,7 @@
                 android:gravity="center"
                 android:text="99+"
                 android:textColor="#ffffff"
-                android:textSize="10dp"
+                android:textSize="12dp"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -124,14 +124,14 @@
             android:layout_marginLeft="6dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
-            android:drawableLeft="@drawable/prize_invited"
+            android:drawableLeft="@drawable/share11"
             android:drawablePadding="12dp"
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
-            android:text="有奖邀请"
-            android:textColor="#333333"
+            android:text="邀请好友"
+            android:textColor="#343436"
 
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_red_maneger"
@@ -140,14 +140,14 @@
             android:layout_marginLeft="6dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
-            android:drawableLeft="@drawable/red_maneger"
+            android:drawableLeft="@drawable/manager1"
             android:drawablePadding="12dp"
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
-            android:text="红包管理"
-            android:textColor="#333333"
+            android:text="发布管理"
+            android:textColor="#343436"
 
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_save"
@@ -156,13 +156,13 @@
             android:layout_marginLeft="6dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
-            android:drawableLeft="@drawable/save"
+            android:drawableLeft="@drawable/save1"
             android:drawablePadding="12dp"
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="我的收藏"
-            android:textColor="#333333"
-            android:textSize="14sp" />
+            android:textColor="#343436"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_active"
@@ -171,28 +171,74 @@
             android:layout_marginLeft="6dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
-            android:drawableLeft="@drawable/ic_activie"
+            android:drawableLeft="@drawable/active1"
             android:drawablePadding="12dp"
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="活动"
-            android:textColor="#333333"
-            android:textSize="14sp" />
+            android:textColor="#343436"
+            android:textSize="18sp" />
     </LinearLayout>
-
     <TextView
+        android:layout_marginBottom="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_weight="1"
         android:id="@+id/tv_contect_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="6dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
-        android:drawablePadding="6dp"
-        android:drawableTop="@drawable/contect_phone"
-        android:paddingBottom="15dp"
-        android:text="客服"
-        android:textColor="#333333"
+        android:drawablePadding="3dp"
+        android:drawableTop="@drawable/phone1"
+        android:text="客服中心"
+        android:textColor="#343436"
         android:textSize="12sp" />
+    <LinearLayout
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:paddingBottom="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_weight="10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerVertical="true"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/message_count2_bg"
+                android:layout_width="6dp"
+                android:layout_height="6dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_weight="10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerVertical="true"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:background="@drawable/message_count2_bg"
+                android:layout_width="6dp"
+                android:layout_height="6dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

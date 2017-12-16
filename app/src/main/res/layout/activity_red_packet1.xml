@@ -67,11 +67,11 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/red_packet" />
+                        android:src="@drawable/ic_red_count1" />
 
                     <TextView
                         android:id="@+id/tv_red_packet_money"
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
                         android:text=""
-                        android:textColor="#989898"
+                        android:textColor="#353336"
                         android:textSize="12sp"
                         tools:text="1000元/1000个" />
                 </LinearLayout>
@@ -91,11 +91,11 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/left_red_packet" />
+                        android:src="@drawable/ic_red_left" />
 
                     <TextView
                         android:id="@+id/tv_red_packet_num"
@@ -103,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
                         android:text=""
-                        android:textColor="#989898"
+                        android:textColor="#353336"
                         android:textSize="12sp"
                         tools:text="1000个" />
                 </LinearLayout>
@@ -150,6 +150,7 @@
                     android:layout_marginBottom="10dp"
                     >
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="电话："
@@ -158,6 +159,7 @@
                         android:id="@+id/textView3" />
 
                     <TextView
+
                         android:id="@+id/tv_rea_packet_tel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -175,6 +177,7 @@
                     >
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="地址："
@@ -315,7 +318,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:text="红包得主"
+                    android:text="奖金得主"
                     android:textColor="#333333"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -371,7 +374,7 @@
                 android:layout_height="24dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_logo" />
+                android:src="@drawable/ic_logo1" />
         </LinearLayout>
 
         <LinearLayout

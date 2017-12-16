@@ -156,10 +156,10 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
 
                 text_num = 15;
                 linerSendRedPacketChildOne.setVisibility(View.VISIBLE);
-                tvSendRedPacketChildRule.setText("红包提问不得超过15个字");
+                tvSendRedPacketChildRule.setText("问题不得超过15个字");
                 etSendRedPacketChildOne.setHint("输入问题");
                 tvSendRedPacketChildOne.setText(text_num - question.length() + "");
-                tvSendRedPacketChildTitle.setText("红包提问");
+                tvSendRedPacketChildTitle.setText("设置问题");
                 etSendRedPacketChildOne.setFilters(new InputFilter[]{new InputFilter.LengthFilter(text_num)});
                 etSendRedPacketChildOne.setSelection(etSendRedPacketChildOne.getText().toString().length());
 
@@ -231,7 +231,7 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
                 tvSendRedPacketChildRule.setVisibility(View.GONE);
                 etSendRedPacketChildOne.setHint("输入范围    （km）");
                 tvSendRedPacketChildOne.setText("km");
-                tvSendRedPacketChildTitle.setText("发放范围");
+                tvSendRedPacketChildTitle.setText("发布范围");
                 etSendRedPacketChildOne.setInputType(InputType.TYPE_CLASS_NUMBER);
                 etSendRedPacketChildOne.setSelection(etSendRedPacketChildOne.getText().toString().length());
                 break;
@@ -242,8 +242,8 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
                 if (isChecked) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChildSendRedPacketActivity.this);
                     builder.setTitle("提示")
-                            .setIcon(R.drawable.ic_logo)
-                            .setMessage("确认清空范围改为全国发放？")
+                            .setIcon(R.drawable.ic_logo1)
+                            .setMessage("确认清空范围改为全国发布？")
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -529,7 +529,7 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
     public void back() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示")
-                .setIcon(R.drawable.ic_logo)
+                .setIcon(R.drawable.ic_logo1)
                 .setMessage("是否保存修改后的内容？")
                 .setPositiveButton("保存", new DialogInterface.OnClickListener() {
                     @Override

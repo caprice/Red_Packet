@@ -35,7 +35,7 @@ public class ManagerRecycleViewEndAdapter extends BaseQuickAdapter<RedManagerRes
         ImageView view1 = helper.getView(R.id.img_end_img1);
         helper.setText(R.id.tv_end_title, item.getMerchant());
         helper.setText(R.id.tv_end_time, item.getTime());
-        helper.setText(R.id.tv_end_content, item.getPCount() + "");
+        helper.setVisible(R.id.tv_end_content, false);
         String[] split = item.getPic().split("&");
         if (split[0].contains("http")) {
             GlideUtil.loadImg(context,split[0], view);

@@ -22,8 +22,16 @@ public class MessageAdapter extends BaseQuickAdapter<MessageResponse.DataBean.Li
 
     @Override
     protected void convert(BaseViewHolder helper, MessageResponse.DataBean.ListBean.ListLbBean item) {
+        if (item.getWdxxNum() == 0) {
+            helper.setVisible(R.id.message_num1, false);
+        } else {
+            helper.setVisible(R.id.message_num1, true);
+
+        }
         helper.setText(R.id.message_title, item.getLtbt())
-                .setText(R.id.message_time,item.getCjsj())
+                .setText(R.id.message_time, item.getSj())
+                .setText(R.id.message_num1, item.getWdxxNum()+"")
                 .setText(R.id.message_content, item.getLtxx());
+
     }
 }

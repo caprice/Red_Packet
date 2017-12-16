@@ -34,8 +34,8 @@
             android:layout_height="match_parent">
             <TextView
                 android:textSize="17sp"
-                android:textColor="#ffffff"
-                android:text="抢到的红包"
+                android:textColor="#353336"
+                android:text="恭喜您答对了"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -81,7 +81,7 @@
             android:textColor="#cccccc"
             android:textSize="14sp"
             android:layout_marginTop="10dp"
-            android:text="发来的红包"
+            android:text="发来的奖金"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -108,7 +108,7 @@
             android:textColor="#cccccc"
             android:textSize="12sp"
             android:layout_marginTop="10dp"
-            android:text="可提现或用于发红包"
+            android:text="可提现或用于发布有奖问答"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -118,7 +118,7 @@
             <TextView
                 android:textColor="#357dd2"
                 android:textSize="14sp"
-                android:text="该红包还剩"
+                android:text="还可以顶"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -131,7 +131,7 @@
             <TextView
                 android:textColor="#357dd2"
                 android:textSize="14sp"
-                android:text="个"
+                android:text="次"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -140,11 +140,11 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/tv_get_red_packet_share"
         android:layout_marginTop="12dp"
-        android:background="#d43c33"
-        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"
+        android:textColor="#353336"
         android:textSize="17sp"
         android:gravity="center"
-        android:text="邀请朋友一起抢"
+        android:text="邀请朋友一起顶"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         />

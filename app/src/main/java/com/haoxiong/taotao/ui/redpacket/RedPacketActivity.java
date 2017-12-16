@@ -203,14 +203,14 @@ public class RedPacketActivity extends BaseActivity {
     private PopupWindow popupwindowShow;
     private int page = 0;
     private int rid;
-    private int ltid = -1;
+    private String ltid ="";
     private boolean isSeller = false;
     private String redTitle;
     private String redPic;
     private boolean isGetRedPacket = false;
     private View footerView;
-    int imgAlpha = 0;
-
+    int imgAlpha =255;
+    private boolean tag = true;
     public static void luncher(Context context, @NonNull SendRedPacketRequest redPacketRequest) {
         Intent intent = new Intent(context, RedPacketActivity.class);
         intent.putExtra("content", redPacketRequest);
@@ -257,10 +257,10 @@ public class RedPacketActivity extends BaseActivity {
     }
 
     private void assignView() {
-        redTitleIcon.setImageAlpha(imgAlpha);
-        imgRedPacketLove.setImageAlpha(imgAlpha);
-        imgRedPacketShare.setImageAlpha(imgAlpha);
-        imgRedPacketBack.setImageAlpha(imgAlpha);
+        redTitleIcon.setVisibility(View.GONE);
+        imgRedPacketLove.setImageAlpha(255);
+        imgRedPacketShare.setImageAlpha(255);
+        imgRedPacketBack.setImageAlpha(255);
         srlRedPacket.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -271,6 +271,7 @@ public class RedPacketActivity extends BaseActivity {
                 Log.e("...", scrollY + "");
                 int y = imgRedPacketPic.getHeight() - DensityUtil.dip2px(RedPacketActivity.this, 44);
                 if (scrollY <= y) {
+                    tag = true;
                     if (love) {
                         imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
                     } else {
@@ -280,17 +281,18 @@ public class RedPacketActivity extends BaseActivity {
                     imgRedPacketBack.setImageResource(R.drawable.ic_right_one);
                     scale = (float) scrollY / y;
                     alpha = (int) (255 * scale);
-                    imgAlpha = (int) (255 * scale);
-                    redTitleIcon.setImageAlpha(imgAlpha);
+                    imgAlpha = (int) (255-255 * scale);
+                    redTitleIcon.setVisibility(View.GONE);
                     imgRedPacketLove.setImageAlpha(imgAlpha);
                     imgRedPacketShare.setImageAlpha(imgAlpha);
                     imgRedPacketBack.setImageAlpha(imgAlpha);
                     // 随着滑动距离改变透明度
                     // Log.e("al=","="+alpha);
-                    relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
-                } else {
+                    relativeLayout.setBackgroundColor(Color.argb(alpha, 255, 218, 68));
 
-                    if (alpha < 255) {
+                } else {
+                    tag = false;
+                    if (alpha < 1) {
                         if (love) {
                             imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_two);
                         } else {
@@ -298,14 +300,14 @@ public class RedPacketActivity extends BaseActivity {
                         }
                         imgRedPacketShare.setImageResource(R.drawable.ic_share_two);
                         imgRedPacketBack.setImageResource(R.drawable.ic_right_two);
-                        redTitleIcon.setImageAlpha(255);
+                        redTitleIcon.setVisibility(View.VISIBLE);
                         imgRedPacketLove.setImageAlpha(255);
                         imgRedPacketShare.setImageAlpha(255);
                         imgRedPacketBack.setImageAlpha(255);
                         Log.e("执行次数", "=" + (++count));
                         // 防止频繁重复设置相同的值影响性能
                         alpha = 255;
-                        relativeLayout.setBackgroundColor(Color.argb(alpha, 213, 62, 53));
+                        relativeLayout.setBackgroundColor(Color.argb(alpha, 255, 218, 68));
                     }
                 }
             }
@@ -341,8 +343,8 @@ public class RedPacketActivity extends BaseActivity {
             case 1:
                 sendRedPacketRequest = getIntent().getParcelableExtra("content");
                 linerRedPacketLove.setVisibility(View.GONE);
-                tvRedPacketMoney.setText(sendRedPacketRequest.getMoney() + "元/" + sendRedPacketRequest.getPcount() + "个");
-                tvRedPacketNum.setText(sendRedPacketRequest.getPcount() + "个");
+                tvRedPacketMoney.setText(sendRedPacketRequest.getMoney() + "元/" + sendRedPacketRequest.getPcount() + "份");
+                tvRedPacketNum.setText(sendRedPacketRequest.getPcount() + "份");
                 tvReaPacketContent.setText(sendRedPacketRequest.getMerchant_des());
                 if (!TextUtils.isEmpty(sendRedPacketRequest.getTel())) {
                     tvReaPacketTel.setText(sendRedPacketRequest.getTel());
@@ -391,14 +393,14 @@ public class RedPacketActivity extends BaseActivity {
 
 
                 imgRedPacketBottom.setVisibility(View.GONE);
-                tvRedPacketBottom.setText("塞钱进红包");
+                tvRedPacketBottom.setText("发布");
                 rid = sendRedPacketRequest.getRid();
                 redTitle = sendRedPacketRequest.getMerchant();
                 adapter.removeAllFooterView();
                 break;
             case 2:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("抢红包");
+                tvRedPacketBottom.setText("顶一个");
                 dataBean = getIntent().getParcelableExtra("content");
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
@@ -407,7 +409,7 @@ public class RedPacketActivity extends BaseActivity {
                 break;
             case 3:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("抢红包");
+                tvRedPacketBottom.setText("顶一个");
                 dataBean1 = getIntent().getParcelableExtra("content");
                 getDetailData(dataBean1.getRId());
                 rid = dataBean1.getRId();
@@ -426,18 +428,18 @@ public class RedPacketActivity extends BaseActivity {
 
             case 5:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("抢红包");
+                tvRedPacketBottom.setText("顶一个");
                 dataBean = getIntent().getParcelableExtra("content");
-                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor( "#ffda44"));
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
                 redTitle = dataBean.getMerchant();
                 break;
             case 6:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("抢红包");
+                tvRedPacketBottom.setText("顶一个");
                 dataBean = getIntent().getParcelableExtra("content");
-                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
                 redTitle = dataBean.getMerchant();
@@ -472,7 +474,7 @@ public class RedPacketActivity extends BaseActivity {
                         dismissProgressDialog();
                         if (response != null && response.getErr() == 0) {
                             detailResponse = response.getData();
-                            isSeller = response.getData().isSeller();
+                            isSeller = response.getData().isIsSeller();
                             ltid = response.getData().getLtid();
                             redPic = detailResponse.getUserPic().split("&")[0];
                             if (MyApp.TYPE == 2 || MyApp.TYPE == 3) {
@@ -526,8 +528,8 @@ public class RedPacketActivity extends BaseActivity {
     private void refreshView() {
         srlRedPacket.scrollTo(0, 0);
         linerRedPacketLove.setVisibility(View.VISIBLE);
-        tvRedPacketMoney.setText(detailResponse.getMoney() + "元/" + detailResponse.getPCount() + "个");
-        tvRedPacketNum.setText(detailResponse.getRemainCount() + "个");
+        tvRedPacketMoney.setText(detailResponse.getMoney() + "元/" + detailResponse.getPCount() + "份");
+        tvRedPacketNum.setText(detailResponse.getRemainCount() + "份");
         tvReaPacketContent.setText(detailResponse.getMerchant_des());
         if (!TextUtils.isEmpty(detailResponse.getTel())) {
             tvReaPacketTel.setText(detailResponse.getTel());
@@ -566,7 +568,11 @@ public class RedPacketActivity extends BaseActivity {
                 .setManualPageable(true);  //设置手动影响（设置了该项无法手动切换）
 
         if (detailResponse.isIscollect()) {
-            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+            if (tag) {
+                imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+            } else {
+                imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_two);
+            }
         }
         love = detailResponse.isIscollect();
     }
@@ -631,7 +637,7 @@ public class RedPacketActivity extends BaseActivity {
             case R.id.consulting:
                 if (MyApp.TYPE != 1) {
                     if (MyApp.login_state == 1) {
-                        if (ltid == -1 || isSeller) {
+                        if (ltid .equals("") || isSeller) {
                             ToastUtils.toTosat(RedPacketActivity.this, "自己不能和自己咨询");
                         } else {
                             MessageDetailActivity.launch(RedPacketActivity.this, redTitle, String.valueOf(rid), tvReaPacketContent.getText().toString(), redPic, String.valueOf(ltid));
@@ -740,9 +746,18 @@ public class RedPacketActivity extends BaseActivity {
             public void onCompleted(SaveResponse response, String msg) {
                 if (response.getErr() == 0) {
                     if (!love) {
-                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+                        if (tag) {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_one);
+                        } else {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_selected_two);
+                        }
                     } else {
-                        imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_one);
+                        if (tag) {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_one);
+                        } else {
+                            imgRedPacketLove.setImageResource(R.drawable.ic_collect_unselected_two);
+                        }
+
                     }
                     love = !love;
                 } else {
@@ -769,7 +784,7 @@ public class RedPacketActivity extends BaseActivity {
                             builder = new AlertDialog.Builder(RedPacketActivity.this);
                         }
                         builder.setTitle("提示")
-                                .setIcon(R.drawable.ic_logo)
+                                .setIcon(R.drawable.ic_logo1)
                                 .setMessage("需要开启定位才能抢红包？")
                                 .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
                                     @Override
@@ -797,16 +812,16 @@ public class RedPacketActivity extends BaseActivity {
                                         } else {
                                             MyApp.TYPE = 5;
                                             imgRedPacketBottom.setVisibility(View.VISIBLE);
-                                            tvRedPacketBottom.setText("抢红包");
-                                            linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
+                                            tvRedPacketBottom.setText("顶一个");
+                                            linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
                                             ToastUtils.toTosat(RedPacketActivity.this, response.getMsg());
                                         }
                                     } else {
                                         ToastUtils.toTosat(RedPacketActivity.this, msg);
                                         MyApp.TYPE = 5;
                                         imgRedPacketBottom.setVisibility(View.VISIBLE);
-                                        tvRedPacketBottom.setText("抢红包");
-                                        linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
+                                        tvRedPacketBottom.setText("顶一个");
+                                        linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
                                     }
                                 }
                             });
@@ -827,18 +842,18 @@ public class RedPacketActivity extends BaseActivity {
             case 5:
                 isGetRedPacket = true;
                 EventBus.getDefault().post(new Intent("REFRESH"));
-                ToastUtils.toTosat(RedPacketActivity.this, "您已抢过此红包");
+                ToastUtils.toTosat(RedPacketActivity.this, "您已经顶过了");
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("抢红包");
-                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
+                tvRedPacketBottom.setText("顶一个");
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
                 break;
             case 6:
                 isGetRedPacket = true;
                 EventBus.getDefault().post(new Intent("REFRESH"));
-                ToastUtils.toTosat(RedPacketActivity.this, "此红包已抢完");
+                ToastUtils.toTosat(RedPacketActivity.this, "对不起，被顶满了");
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("抢红包");
-                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
+                tvRedPacketBottom.setText("顶一个");
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
                 break;
         }
     }
@@ -888,7 +903,7 @@ public class RedPacketActivity extends BaseActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RedPacketActivity.this);
                 builder.setTitle("提示")
-                        .setIcon(R.drawable.ic_logo)
+                        .setIcon(R.drawable.ic_logo1)
                         .setMessage("确定支付" + sendRedPacketRequest.getMoney() + "元？")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
@@ -1203,8 +1218,8 @@ public class RedPacketActivity extends BaseActivity {
             case "refresh":
                 MyApp.TYPE = 5;
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("抢红包");
-                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#7ed43c33"));
+                tvRedPacketBottom.setText("顶一个");
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
                 break;
         }
     }

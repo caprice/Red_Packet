@@ -3,6 +3,7 @@ package com.fan.service.rest.service;
 import com.fan.service.response.MessageResponse;
 import com.fan.service.response.MessageSendResponse;
 import com.fan.service.response.ReadMessageResponse;
+import com.fan.service.response.RefreshTimeResponse;
 import com.fan.service.response.UnReadMessageResponse;
 import com.fan.service.response.UnreadResponse;
 
@@ -27,8 +28,8 @@ public interface MessageService {
      * xh checked 20170424
      */
     @FormUrlEncoded
-    @POST("http://hb.huidang2105.com:89/")
-    Observable<UnreadResponse> unReadNum(@Field("service") String service, @Field("token") String token);
+    @POST("http://hb.huidang2105.com:89/?service=user.get_ltUnread")
+    Observable<UnreadResponse> unReadNum( @Field("token") String token);
 
     /**
      * 获取用户聊天未读的消息
@@ -36,8 +37,8 @@ public interface MessageService {
      * xh checked 20170424
      */
     @FormUrlEncoded
-    @POST("http://hb.huidang2105.com:89/")
-    Observable<MessageResponse> messageList(@Field("service") String service, @Field("token") String token);
+    @POST("http://hb.huidang2105.com:89/?service=user.get_userlist")
+    Observable<MessageResponse> messageList(@Field("token") String token);
 
     /**
      * 消息发送
@@ -45,8 +46,8 @@ public interface MessageService {
      * xh checked 20170424
      */
     @FormUrlEncoded
-    @POST("http://hb.huidang2105.com:89/")
-    Observable<MessageSendResponse> sendMessage(@Field("service") String service, @Field("token") String token, @Field("rid") String rid, @Field("ltid") String ltid, @Field("fsxx") String fsxx);
+    @POST("http://hb.huidang2105.com:89/?service=user.get_fsxx")
+    Observable<MessageSendResponse> sendMessage( @Field("token") String token, @Field("rid") String rid, @Field("ltid") String ltid, @Field("fsxx") String fsxx);
 
     /**
      * 获取未读聊天详情信息
@@ -54,13 +55,22 @@ public interface MessageService {
      * xh checked 20170424
      */
     @FormUrlEncoded
-    @POST("http://hb.huidang2105.com:89/")
-    Observable<UnReadMessageResponse> unReadMessageList(@Field("service") String service, @Field("token") String token, @Field("rid") String rid, @Field("ltid") String ltid);  /**
+    @POST("http://hb.huidang2105.com:89/?service=user.get_ltlist")
+    Observable<UnReadMessageResponse> unReadMessageList(@Field("token") String token, @Field("rid") String rid, @Field("ltid") String ltid);  /**
      * 获取聊天记录信息
      * mobile
      * xh checked 20170424
      */
     @FormUrlEncoded
-    @POST("http://hb.huidang2105.com:89/")
-    Observable<ReadMessageResponse> readMessageList(@Field("service") String service, @Field("token") String token, @Field("rid") String rid, @Field("ltid") String ltid, @Field("page")int page, @Field("num") int num);
+    @POST("http://hb.huidang2105.com:89/?service=user.get_ltjllist")
+    Observable<ReadMessageResponse> readMessageList( @Field("token") String token, @Field("rid") String rid, @Field("ltid") String ltid, @Field("page")int page, @Field("num") int num);
+
+
+    /**
+     * 获取用户聊天未读的消息
+     * mobile
+     * xh checked 20170424
+     */
+    @POST("http://hb.huidang2105.com:89/?service=user.get_setTime")
+    Observable<RefreshTimeResponse> refreshTime();
 }

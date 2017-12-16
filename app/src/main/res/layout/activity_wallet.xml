@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我的钱包"
-                android:textColor="#ffffff"
+                android:textColor="#353336"
                 android:textSize="17sp" />
         </LinearLayout>
 
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="余额明细"
-                android:textColor="#ffffff"
+                android:textColor="#353336"
                 android:textSize="14sp" />
         </LinearLayout>
     </RelativeLayout>
@@ -158,7 +158,7 @@
         android:textSize="17dp"
         android:text="去提现"
         android:gravity="center"
-        android:textColor="#ffffff"
+        android:textColor="#353336"
         android:layout_marginTop="20dp"
         android:background="@drawable/set_money_next_press_shape"
         android:layout_marginLeft="40dp"
@@ -174,7 +174,7 @@
         android:lineSpacingMultiplier="1.2"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="#ff7b42"
         android:textSize="13dp" />
     <TextView
         android:id="@+id/rule"

@@ -255,9 +255,9 @@ public class MainActivity extends BaseActivity
                 }
                 break;
             default:
-
+                break;
         }
-
+        isFresh = 0;
         super.onResume();
     }
 

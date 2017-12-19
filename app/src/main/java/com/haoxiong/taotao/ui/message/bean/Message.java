@@ -12,8 +12,10 @@ public class Message implements MultiItemEntity {
     public static final int TEXT = 1;
     public static final int IMG = 2;
     private int itemType;
+    private int id;
     private String time;
     private String content;
+
     public void setItemType(int itemType) {
         this.itemType = itemType;
     }
@@ -25,6 +27,14 @@ public class Message implements MultiItemEntity {
     }
 
     public Message() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTime() {

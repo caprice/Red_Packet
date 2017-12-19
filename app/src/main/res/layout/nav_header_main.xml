@@ -68,7 +68,7 @@
         <TextView
             android:id="@+id/tv_red"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="35dp"
             android:background="?attr/selectableItemBackground"
@@ -84,7 +84,7 @@
         <LinearLayout
             android:id="@+id/tv_message"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -120,7 +120,7 @@
         <TextView
             android:id="@+id/tv_prize_invited"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="6dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
@@ -136,7 +136,7 @@
         <TextView
             android:id="@+id/tv_red_maneger"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="6dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
@@ -152,7 +152,7 @@
         <TextView
             android:id="@+id/tv_save"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="6dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
@@ -167,7 +167,7 @@
         <TextView
             android:id="@+id/tv_active"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="6dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"

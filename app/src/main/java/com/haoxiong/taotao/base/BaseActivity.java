@@ -4,9 +4,11 @@ import android.app.ProgressDialog;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
+import android.view.View;
 
 
 import com.haoxiong.taotao.base.broadcastreceiver.NetConnectChangeReceiver;

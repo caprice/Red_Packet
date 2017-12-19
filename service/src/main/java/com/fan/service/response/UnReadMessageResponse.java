@@ -156,7 +156,16 @@ public class UnReadMessageResponse implements Parcelable {
 
                 private String jlxx;
                 private int xxlx;
+                private int id;
                 private String sj;
+
+                public int getId() {
+                    return id;
+                }
+
+                public void setId(int id) {
+                    this.id = id;
+                }
 
                 public String getJlxx() {
                     return jlxx;
@@ -182,6 +191,9 @@ public class UnReadMessageResponse implements Parcelable {
                     this.sj = sj;
                 }
 
+                public LtListBean() {
+                }
+
                 @Override
                 public int describeContents() {
                     return 0;
@@ -191,19 +203,18 @@ public class UnReadMessageResponse implements Parcelable {
                 public void writeToParcel(Parcel dest, int flags) {
                     dest.writeString(this.jlxx);
                     dest.writeInt(this.xxlx);
+                    dest.writeInt(this.id);
                     dest.writeString(this.sj);
-                }
-
-                public LtListBean() {
                 }
 
                 protected LtListBean(Parcel in) {
                     this.jlxx = in.readString();
                     this.xxlx = in.readInt();
+                    this.id = in.readInt();
                     this.sj = in.readString();
                 }
 
-                public static final Parcelable.Creator<LtListBean> CREATOR = new Parcelable.Creator<LtListBean>() {
+                public static final Creator<LtListBean> CREATOR = new Creator<LtListBean>() {
                     @Override
                     public LtListBean createFromParcel(Parcel source) {
                         return new LtListBean(source);
@@ -214,6 +225,9 @@ public class UnReadMessageResponse implements Parcelable {
                         return new LtListBean[size];
                     }
                 };
+            }
+
+            public ListBean() {
             }
 
             @Override
@@ -230,9 +244,6 @@ public class UnReadMessageResponse implements Parcelable {
                 dest.writeTypedList(this.lt_list);
             }
 
-            public ListBean() {
-            }
-
             protected ListBean(Parcel in) {
                 this.steTime = in.readInt();
                 this.merchant = in.readString();
@@ -241,7 +252,7 @@ public class UnReadMessageResponse implements Parcelable {
                 this.lt_list = in.createTypedArrayList(LtListBean.CREATOR);
             }
 
-            public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+            public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
                 @Override
                 public ListBean createFromParcel(Parcel source) {
                     return new ListBean(source);
@@ -252,6 +263,9 @@ public class UnReadMessageResponse implements Parcelable {
                     return new ListBean[size];
                 }
             };
+        }
+
+        public DataBean() {
         }
 
         @Override
@@ -267,9 +281,6 @@ public class UnReadMessageResponse implements Parcelable {
             dest.writeParcelable(this.list, flags);
         }
 
-        public DataBean() {
-        }
-
         protected DataBean(Parcel in) {
             this.code = in.readInt();
             this.msg = in.readString();
@@ -277,7 +288,7 @@ public class UnReadMessageResponse implements Parcelable {
             this.list = in.readParcelable(ListBean.class.getClassLoader());
         }
 
-        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
             @Override
             public DataBean createFromParcel(Parcel source) {
                 return new DataBean(source);
@@ -288,6 +299,9 @@ public class UnReadMessageResponse implements Parcelable {
                 return new DataBean[size];
             }
         };
+    }
+
+    public UnReadMessageResponse() {
     }
 
     @Override
@@ -302,16 +316,13 @@ public class UnReadMessageResponse implements Parcelable {
         dest.writeString(this.msg);
     }
 
-    public UnReadMessageResponse() {
-    }
-
     protected UnReadMessageResponse(Parcel in) {
         this.ret = in.readInt();
         this.data = in.readParcelable(DataBean.class.getClassLoader());
         this.msg = in.readString();
     }
 
-    public static final Parcelable.Creator<UnReadMessageResponse> CREATOR = new Parcelable.Creator<UnReadMessageResponse>() {
+    public static final Creator<UnReadMessageResponse> CREATOR = new Creator<UnReadMessageResponse>() {
         @Override
         public UnReadMessageResponse createFromParcel(Parcel source) {
             return new UnReadMessageResponse(source);

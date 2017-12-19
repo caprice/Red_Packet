@@ -71,14 +71,14 @@
 
         <TextView
             android:id="@+id/tv_get_red_packet_name"
-            android:textColor="#d43c33"
+            android:textColor="#ff7b42"
             android:textSize="16sp"
             android:layout_marginTop="20dp"
             tools:text="yinjin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:textColor="#cccccc"
+            android:textColor="#787878"
             android:textSize="14sp"
             android:layout_marginTop="10dp"
             android:text="发来的奖金"
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <TextView
-            android:textColor="#cccccc"
+            android:textColor="#787878"
             android:textSize="12sp"
             android:layout_marginTop="10dp"
             android:text="可提现或用于发布有奖问答"
@@ -116,20 +116,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:textColor="#357dd2"
+                android:textColor="#787878"
                 android:textSize="14sp"
                 android:text="还可以顶"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/tv_get_red_packet_left"
-                android:textColor="#d43c33"
+                android:textColor="#ff7b42"
                 android:textSize="14sp"
                 tools:text="24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:textColor="#357dd2"
+                android:textColor="#787878"
                 android:textSize="14sp"
                 android:text="次"
                 android:layout_width="wrap_content"

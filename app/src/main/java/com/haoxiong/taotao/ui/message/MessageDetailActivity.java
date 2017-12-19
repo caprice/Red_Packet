@@ -75,6 +75,7 @@ public class MessageDetailActivity extends BaseActivity {
     TextView tvMessageDetailSend;
     private MessageDetailAdapter adapter;
     ArrayList<Message> data = new ArrayList<>();
+    ArrayList<Message> dataRecord = new ArrayList<>();
     private int page = 0;
     public static int Type = 0;
     private String ltbt;
@@ -142,6 +143,12 @@ public class MessageDetailActivity extends BaseActivity {
         recycleViewMessageDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new MessageDetailAdapter(new ArrayList<Message>());
         recycleViewMessageDetail.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                KeyboardUtil.hideKeybord(MessageDetailActivity.this);
+            }
+        });
         swipeRefreshLayoutMessageDetail.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -160,12 +167,7 @@ public class MessageDetailActivity extends BaseActivity {
                             refreshDate(false);
                         }
                     }, 10000, response.getData().getSteTime() * 1000);
-                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            KeyboardUtil.hideKeybord(MessageDetailActivity.this);
-                        }
-                    });
+
                 } catch (Exception e) {
                     timer = new Timer();
                     timer.schedule(new TimerTask() {
@@ -174,12 +176,6 @@ public class MessageDetailActivity extends BaseActivity {
                             refreshDate(false);
                         }
                     }, 10000, 10000);
-                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            KeyboardUtil.hideKeybord(MessageDetailActivity.this);
-                        }
-                    });
                 }
             }
         });
@@ -199,20 +195,27 @@ public class MessageDetailActivity extends BaseActivity {
                             List<ReadMessageResponse.DataBean.ListBean.LtListBean> lt_list = response.getData().getList().getLt_list();
                             List<Message> datas = new ArrayList<>();
                             for (int i = 0; i < lt_list.size(); i++) {
+                                boolean tag = true;
+                                for (int j = 0; j < dataRecord.size(); j++) {
+                                    if (dataRecord.get(j).getId() == lt_list.get(i).getId()) {
+                                        tag = false;
+                                        break;
+                                    }
+                                }
+                                if (!tag) {
+                                    break;
+                                }
                                 Message message = new Message();
                                 message.setContent(lt_list.get(i).getJlxx());
                                 message.setItemType(lt_list.get(i).getXxlx());
                                 message.setTime(lt_list.get(i).getSj());
+                                message.setId(lt_list.get(i).getId());
                                 datas.add(message);
                                 if (b) {
                                     data.add(message);
                                 }
                             }
-                            if (b) {
-                                adapter.setNewData(datas);
-                            } else {
-                                adapter.addData(0, datas);
-                            }
+                            adapter.addData(0, datas);
                             recycleViewMessageDetail.scrollToPosition(datas.size() - 1);
                             if (lt_list.size() < 10) {
                                 swipeRefreshLayoutMessageDetail.setEnabled(false);
@@ -265,20 +268,24 @@ public class MessageDetailActivity extends BaseActivity {
                                             message.setContent(lt_list.get(i).getJlxx());
                                             message.setItemType(lt_list.get(i).getXxlx());
                                             message.setTime(lt_list.get(i).getSj());
+                                            message.setId(lt_list.get(i).getId());
                                             datas.add(message);
                                             data.add(message);
+                                            dataRecord.add(message);
                                         }
                                     } else {
                                         Message message = new Message();
                                         message.setContent(lt_list.get(i).getJlxx());
                                         message.setItemType(lt_list.get(i).getXxlx());
                                         message.setTime(lt_list.get(i).getSj());
+                                        message.setId(lt_list.get(i).getId());
                                         datas.add(message);
                                         data.add(message);
+                                        dataRecord.add(message);
                                     }
                                 }
                                 swipeRefreshLayoutMessageDetail.setEnabled(true);
-                                if (datas.size()!= 0) {
+                                if (datas.size() != 0) {
                                     if (adapter.getData() != null && adapter.getData().size() != 0) {
                                         adapter.addData(datas);
                                         recycleViewMessageDetail.scrollToPosition(adapter.getData().size() - 1);
@@ -286,6 +293,13 @@ public class MessageDetailActivity extends BaseActivity {
                                         Log.e("setNewData", datas.size() + "");
                                         adapter.setNewData(datas);
                                         recycleViewMessageDetail.scrollToPosition(datas.size() - 1);
+                                        if (datas.size() < 6) {
+                                            page = 0;
+                                            if (b) {
+                                                loadRecordMessages(true);
+                                            }
+                                        }
+
                                     }
                                 }
 

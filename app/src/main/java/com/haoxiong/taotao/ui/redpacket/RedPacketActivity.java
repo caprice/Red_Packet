@@ -366,7 +366,7 @@ public class RedPacketActivity extends BaseActivity {
                 tvReaPacketAnswer1.setText(sendRedPacketRequest.getFirst_answer());
                 tvReaPacketAnswer2.setText(sendRedPacketRequest.getSecond_answer());
                 tvReaPacketAnswer3.setText(sendRedPacketRequest.getThird_answer());
-                tvReaPacketAnswer1.setTextColor(Color.parseColor("#ffffff"));
+                tvReaPacketAnswer1.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer2.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer3.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer1.setBackgroundResource(R.drawable.answer_ringht);
@@ -402,6 +402,7 @@ public class RedPacketActivity extends BaseActivity {
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
                 tvRedPacketBottom.setText("顶一个");
                 dataBean = getIntent().getParcelableExtra("content");
+                imgRedPacketBottom.setImageResource(R.drawable.ic_red_count1);
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
                 redTitle = dataBean.getMerchant();
@@ -410,6 +411,7 @@ public class RedPacketActivity extends BaseActivity {
             case 3:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
                 tvRedPacketBottom.setText("顶一个");
+                imgRedPacketBottom.setImageResource(R.drawable.ic_red_count1);
                 dataBean1 = getIntent().getParcelableExtra("content");
                 getDetailData(dataBean1.getRId());
                 rid = dataBean1.getRId();
@@ -428,18 +430,20 @@ public class RedPacketActivity extends BaseActivity {
 
             case 5:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("顶一个");
+                tvRedPacketBottom.setText("已顶过");
+                imgRedPacketBottom.setImageResource(R.drawable.ic_red_count2);
                 dataBean = getIntent().getParcelableExtra("content");
-                linerRedPacketBottom.setBackgroundColor(Color.parseColor( "#ffda44"));
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor( "#ffeca0"));
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
                 redTitle = dataBean.getMerchant();
                 break;
             case 6:
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("顶一个");
+                tvRedPacketBottom.setText("顶满了");
+                imgRedPacketBottom.setImageResource(R.drawable.ic_red_count2);
                 dataBean = getIntent().getParcelableExtra("content");
-                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffeca0"));
                 getDetailData(dataBean.getRid());
                 rid = dataBean.getRid();
                 redTitle = dataBean.getMerchant();
@@ -602,7 +606,7 @@ public class RedPacketActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_rea_packet_answer1:
-                tvReaPacketAnswer1.setTextColor(Color.parseColor("#ffffff"));
+                tvReaPacketAnswer1.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer2.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer3.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer1.setBackgroundResource(R.drawable.answer_ringht);
@@ -611,7 +615,7 @@ public class RedPacketActivity extends BaseActivity {
                 answer = 0;
                 break;
             case R.id.tv_rea_packet_answer2:
-                tvReaPacketAnswer2.setTextColor(Color.parseColor("#ffffff"));
+                tvReaPacketAnswer2.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer1.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer3.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer2.setBackgroundResource(R.drawable.answer_ringht);
@@ -620,7 +624,7 @@ public class RedPacketActivity extends BaseActivity {
                 answer = 1;
                 break;
             case R.id.tv_rea_packet_answer3:
-                tvReaPacketAnswer3.setTextColor(Color.parseColor("#ffffff"));
+                tvReaPacketAnswer3.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer2.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer1.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer3.setBackgroundResource(R.drawable.answer_ringht);
@@ -812,6 +816,7 @@ public class RedPacketActivity extends BaseActivity {
                                         } else {
                                             MyApp.TYPE = 5;
                                             imgRedPacketBottom.setVisibility(View.VISIBLE);
+                                            imgRedPacketBottom.setImageResource(R.drawable.ic_red_count1);
                                             tvRedPacketBottom.setText("顶一个");
                                             linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
                                             ToastUtils.toTosat(RedPacketActivity.this, response.getMsg());
@@ -821,6 +826,7 @@ public class RedPacketActivity extends BaseActivity {
                                         MyApp.TYPE = 5;
                                         imgRedPacketBottom.setVisibility(View.VISIBLE);
                                         tvRedPacketBottom.setText("顶一个");
+                                        imgRedPacketBottom.setImageResource(R.drawable.ic_red_count1);
                                         linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
                                     }
                                 }
@@ -844,16 +850,18 @@ public class RedPacketActivity extends BaseActivity {
                 EventBus.getDefault().post(new Intent("REFRESH"));
                 ToastUtils.toTosat(RedPacketActivity.this, "您已经顶过了");
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("顶一个");
-                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
+                tvRedPacketBottom.setText("已顶过");
+                imgRedPacketBottom.setImageResource(R.drawable.ic_red_count2);
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffeca0"));
                 break;
             case 6:
                 isGetRedPacket = true;
                 EventBus.getDefault().post(new Intent("REFRESH"));
                 ToastUtils.toTosat(RedPacketActivity.this, "对不起，被顶满了");
                 imgRedPacketBottom.setVisibility(View.VISIBLE);
-                tvRedPacketBottom.setText("顶一个");
-                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffda44"));
+                imgRedPacketBottom.setImageResource(R.drawable.ic_red_count2);
+                tvRedPacketBottom.setText("顶满了");
+                linerRedPacketBottom.setBackgroundColor(Color.parseColor("#ffeca0"));
                 break;
         }
     }

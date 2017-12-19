@@ -289,7 +289,7 @@ public class SendRedPacketActivity extends BaseActivity {
     @OnClick(R.id.tv_send_red_packet_scan)
     public void onClick() {
 
-        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content) && !TextUtils.isEmpty(question) && !TextUtils.isEmpty(right) && !TextUtils.isEmpty(wrong)) {
+        if (!TextUtils.isEmpty(title) &&!TextUtils.isEmpty(netFfileCode) && !TextUtils.isEmpty(content) && !TextUtils.isEmpty(question) && !TextUtils.isEmpty(right) && !TextUtils.isEmpty(wrong)) {
             redPacketRequest = new SendRedPacketRequest();
             Boolean aBoolean = SharePreferenceUtil.getBoolean(SendRedPacketActivity.this, "type", false);
             if (aBoolean) {//全国红包
@@ -467,12 +467,16 @@ public class SendRedPacketActivity extends BaseActivity {
                     }
                     if (netFfileCode == null) {
                         tvSendRedPacketAdvice.setText("未设置");
+                        SharePreferenceUtil.remove(SendRedPacketActivity.this, "filecode");
+                        SharePreferenceUtil.remove(SendRedPacketActivity.this, "pic");
                     } else {
                         tvSendRedPacketAdvice.setText("已设置");
                     }
                     Log.e("...", netPicture + "*******" + netFfileCode);
                 } catch (Exception e) {
                     tvSendRedPacketAdvice.setText("未设置");
+                    SharePreferenceUtil.remove(SendRedPacketActivity.this, "filecode");
+                    SharePreferenceUtil.remove(SendRedPacketActivity.this, "pic");
                 }
 
                 break;

@@ -97,6 +97,7 @@ public class SetMoneyActivity extends BaseActivity {
 //                handler.sendEmptyMessage(0);
             }
         });
+
         etSetMoneyRedNum.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

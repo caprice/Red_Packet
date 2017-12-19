@@ -150,7 +150,7 @@
             android:layout_marginTop="3dp"
             android:background="@drawable/message_detail_et_bg"
             android:paddingLeft="6dp"
-            android:textColor="#aaaaaa"
+            android:textColor="#000000"
             android:textSize="15sp" />
 
         <TextView

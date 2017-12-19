@@ -195,7 +195,7 @@
         android:id="@+id/cb_send_red_packet_child_rule"
         android:text="不设范围，全国发布"
         android:textSize="12sp"
-        android:textColor="#aaaaaa"
+        android:textColor="#ff7b42"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

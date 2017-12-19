@@ -54,7 +54,7 @@ public class AllOwnerActivity extends AppCompatActivity {
         adapter = new RecycleRedPacketWinerAdapter(R.layout.item_red_packet_winer_adapter, AllOwnerActivity.this, data);
         recycleView.setAdapter(adapter);
         if (rid != -1) {
-            getOwener(1, rid);
+            getOwener(0, rid);
         }
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override

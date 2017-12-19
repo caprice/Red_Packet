@@ -67,9 +67,10 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="20dp">
+       >
 
         <LinearLayout
+            android:paddingBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -87,13 +88,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="192dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="200dp"
+                    android:layout_height="192dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp">
 
@@ -111,6 +112,7 @@
                                 android:background="#f0eff6"
                                 android:scaleType="fitXY" />
                             <TextView
+                                android:gravity="center"
                                 android:id="@+id/tv_picture_one"
                                 android:layout_centerInParent="true"
                                 android:text="第1张"
@@ -134,7 +136,7 @@
                                 android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#686868"
+                                android:textColor="#ff7b42"
                                 android:textSize="14dp" />
 
                             <TextView
@@ -153,7 +155,7 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="200dp"
+                    android:layout_height="192dp"
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp">
@@ -172,6 +174,7 @@
                                 android:background="#f0eff6"
                                 android:scaleType="fitXY" />
                             <TextView
+                                android:gravity="center"
                                 android:id="@+id/tv_picture_two"
                                 android:layout_centerInParent="true"
                                 android:text="第2张"
@@ -195,7 +198,7 @@
                                 android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#686868"
+                                android:textColor="#ff7b42"
                                 android:textSize="14dp" />
 
                             <TextView
@@ -215,14 +218,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="192dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="200dp"
+                    android:layout_height="192dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp">
 
@@ -263,7 +266,7 @@
                                 android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#686868"
+                                android:textColor="#ff7b42"
                                 android:textSize="14dp" />
 
                             <TextView
@@ -282,7 +285,7 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="200dp"
+                    android:layout_height="192dp"
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp">
@@ -324,7 +327,7 @@
                                 android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#686868"
+                                android:textColor="#ff7b42"
                                 android:textSize="14dp" />
 
                             <TextView
@@ -344,14 +347,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="192dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="200dp"
+                    android:layout_height="192dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp">
 
@@ -392,7 +395,7 @@
                                 android:background="?android:selectableItemBackground"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#686868"
+                                android:textColor="#ff7b42"
                                 android:textSize="14dp" />
 
                             <TextView
@@ -411,7 +414,7 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="200dp"
+                    android:layout_height="192dp"
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:visibility="invisible"
@@ -438,7 +441,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="上传"
-                                android:textColor="#686868"
+                                android:textColor="#ff7b42"
                                 android:textSize="14dp" />
 
                             <TextView

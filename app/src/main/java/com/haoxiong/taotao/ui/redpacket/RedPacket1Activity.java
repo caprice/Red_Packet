@@ -456,7 +456,7 @@ public class RedPacket1Activity extends BaseActivity {
                 }
                 break;
             case R.id.tv_rea_packet_answer1:
-                tvReaPacketAnswer1.setTextColor(Color.parseColor("#ffffff"));
+                tvReaPacketAnswer1.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer2.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer3.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer1.setBackgroundResource(R.drawable.answer_ringht);
@@ -464,7 +464,7 @@ public class RedPacket1Activity extends BaseActivity {
                 tvReaPacketAnswer3.setBackgroundResource(R.drawable.answer_wrong);
                 break;
             case R.id.tv_rea_packet_answer2:
-                tvReaPacketAnswer2.setTextColor(Color.parseColor("#ffffff"));
+                tvReaPacketAnswer2.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer1.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer3.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer2.setBackgroundResource(R.drawable.answer_ringht);
@@ -472,7 +472,7 @@ public class RedPacket1Activity extends BaseActivity {
                 tvReaPacketAnswer3.setBackgroundResource(R.drawable.answer_wrong);
                 break;
             case R.id.tv_rea_packet_answer3:
-                tvReaPacketAnswer3.setTextColor(Color.parseColor("#ffffff"));
+                tvReaPacketAnswer3.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer2.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer1.setTextColor(Color.parseColor("#989898"));
                 tvReaPacketAnswer3.setBackgroundResource(R.drawable.answer_ringht);

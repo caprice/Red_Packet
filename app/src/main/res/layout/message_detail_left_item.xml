@@ -7,13 +7,12 @@
     <TextView
         android:textSize="10sp"
         android:id="@+id/tv_left_time"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="12:22:22"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <RelativeLayout
-        android:paddingRight="100dp"
+        android:paddingRight="60dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView

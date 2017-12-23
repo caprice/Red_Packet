@@ -242,7 +242,7 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
                 if (isChecked) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChildSendRedPacketActivity.this);
                     builder.setTitle("提示")
-                            .setIcon(R.drawable.ic_logo1)
+                            .setIcon(R.drawable.logo_s)
                             .setMessage("确认清空范围改为全国发布？")
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
@@ -529,7 +529,7 @@ public class ChildSendRedPacketActivity extends AppCompatActivity {
     public void back() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示")
-                .setIcon(R.drawable.ic_logo1)
+                .setIcon(R.drawable.logo_s)
                 .setMessage("是否保存修改后的内容？")
                 .setPositiveButton("保存", new DialogInterface.OnClickListener() {
                     @Override

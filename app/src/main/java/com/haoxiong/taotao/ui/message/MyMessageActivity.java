@@ -73,6 +73,7 @@ public class MyMessageActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        refreshDate(true);
     }
 
     private void refreshDate(final boolean b) {

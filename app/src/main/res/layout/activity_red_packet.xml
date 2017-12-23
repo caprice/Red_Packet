@@ -438,8 +438,8 @@
 
             <ImageView
                 android:id="@+id/red_title_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_logo1" />

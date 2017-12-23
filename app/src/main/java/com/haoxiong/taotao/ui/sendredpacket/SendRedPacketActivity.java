@@ -216,7 +216,7 @@ public class SendRedPacketActivity extends BaseActivity {
                     public void onNext(@NonNull Boolean aBoolean) {
                         if (!aBoolean) {
                             new AlertDialog.Builder(SendRedPacketActivity.this).setTitle("提示")
-                                    .setIcon(R.drawable.ic_logo1)
+                                    .setIcon(R.drawable.logo_s)
                                     .setMessage("需要开启相机权限和读写才能拍照？")
                                     .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
                                         @Override

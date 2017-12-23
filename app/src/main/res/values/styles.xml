@@ -8,8 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self</item>
     </style>
-    <style name="Theme.AppCompat.Light.Dialog.Alert.Self"
-        parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+
+
+
+    <style name="Theme.AppCompat.Light.Dialog.Alert.Self" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">#ff7b42</item>
     </style>
 
@@ -22,22 +24,26 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="view_h">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
         <item name="android:background">#cccccc</item>
         <item name="android:layout_marginLeft">16dp</item>
     </style>
+
     <style name="view_h_without_margin">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
         <item name="android:background">#cccccc</item>
     </style>
+
     <style name="view_h_without_margin_bg">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
         <item name="android:background">#B9B9B9</item>
     </style>
+
     <style name="view_h_without_margin_black">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>

@@ -180,7 +180,7 @@ public class BaiduMapActivity extends BaseActivity {
     public void back() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示")
-                .setIcon(R.drawable.ic_logo1)
+                .setIcon(R.drawable.logo_s)
                 .setMessage("是否保存该定位？")
                 .setPositiveButton("保存", new DialogInterface.OnClickListener() {
                     @Override

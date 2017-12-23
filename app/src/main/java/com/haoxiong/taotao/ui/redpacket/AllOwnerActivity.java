@@ -13,6 +13,7 @@ import com.fan.service.OnRequestCompletedListener;
 import com.fan.service.api.RedPacketListApi;
 import com.fan.service.response.RedOwerResponse;
 import com.haoxiong.taotao.R;
+import com.haoxiong.taotao.base.BaseActivity;
 import com.haoxiong.taotao.ui.redpacket.adapter.RecycleRedPacketWinerAdapter;
 import com.haoxiong.taotao.util.ToastUtils;
 
@@ -23,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AllOwnerActivity extends AppCompatActivity {
+public class AllOwnerActivity extends BaseActivity {
 
     @BindView(R.id.liner_all_back)
     LinearLayout linerAllBack;
@@ -52,10 +53,12 @@ public class AllOwnerActivity extends AppCompatActivity {
         rid = getIntent().getIntExtra("rid", -1);
         recycleView.setLayoutManager(new FullyLinearLayoutManager(AllOwnerActivity.this, LinearLayoutManager.VERTICAL, false));
         adapter = new RecycleRedPacketWinerAdapter(R.layout.item_red_packet_winer_adapter, AllOwnerActivity.this, data);
+        adapter.setEnableLoadMore(false);
         recycleView.setAdapter(adapter);
         if (rid != -1) {
             getOwener(0, rid);
         }
+
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -66,29 +69,39 @@ public class AllOwnerActivity extends AppCompatActivity {
     }
 
     private void getOwener(final int page1, final int rid) {
+        if (page1 == 0) {
+            showProgressDialog("数据加载中");
+        }
         RedPacketListApi.redpostterList(AllOwnerActivity.this, page1, rid, new OnRequestCompletedListener<RedOwerResponse>() {
             @Override
             public void onCompleted(RedOwerResponse response, String msg) {
+                if (page1 == 0) {
+                   dismissProgressDialog();
+                }
                 adapter.loadMoreComplete();
                 if (response == null) {
-                    adapter.setEnableLoadMore(false);
                     adapter.loadMoreEnd();
+                    adapter.setEnableLoadMore(false);
                     ToastUtils.toTosat(AllOwnerActivity.this, "网络跑丢了");
                 }
                 if (response.getErr() == 0) {
-                    if (response.getData() != null && response.getData().size() > 0) {
-                        if (page1 == 1) {
+                    if (response.getData() != null) {
+                        if (page1 == 0) {
                             adapter.setNewData(response.getData());
                         } else {
                             adapter.addData(response.getData());
                         }
-                        adapter.setEnableLoadMore(true);
-                    } else {
-                        if (page1 == 1) {
-                            ToastUtils.toTosat(AllOwnerActivity.this, "暂无红包得主...");
+                        if (response.getData().size() < 10) {
+                            adapter.loadMoreEnd();
+                            adapter.setEnableLoadMore(false);
+                        } else if (response.getData().size() == 0) {
+                            ToastUtils.toTosat(AllOwnerActivity.this,"暂无红包得主...");
+                        } else {
+                            adapter.setEnableLoadMore(true);
                         }
-                        adapter.setEnableLoadMore(false);
-                        adapter.loadMoreEnd();
+
+                    } else {
+                        ToastUtils.toTosat(AllOwnerActivity.this, response.getMsg());
                     }
                 } else {
                     ToastUtils.toTosat(AllOwnerActivity.this, response.getMsg());

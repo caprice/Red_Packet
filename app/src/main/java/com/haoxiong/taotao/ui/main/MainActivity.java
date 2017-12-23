@@ -139,6 +139,7 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
@@ -834,7 +835,7 @@ public class MainActivity extends BaseActivity
     private void playPhone() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("询问")
-                .setIcon(R.drawable.ic_logo1)
+                .setIcon(R.drawable.logo_s)
                 .setMessage("是否联系客服：028-64095902")
                 .setPositiveButton("拨打", new DialogInterface.OnClickListener() {
                     @Override

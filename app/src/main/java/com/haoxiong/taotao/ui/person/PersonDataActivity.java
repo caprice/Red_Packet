@@ -153,7 +153,7 @@ public class PersonDataActivity extends BaseActivity {
                     public void onNext(@NonNull Boolean aBoolean) {
                         if (!aBoolean) {
                             new AlertDialog.Builder(PersonDataActivity.this).setTitle("提示")
-                                    .setIcon(R.drawable.ic_logo1)
+                                    .setIcon(R.drawable.logo_s)
                                     .setMessage("需要开启相机权限和读写才能拍照？")
                                     .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
                                         @Override
@@ -199,7 +199,7 @@ public class PersonDataActivity extends BaseActivity {
     private void logout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(PersonDataActivity.this);
         builder.setTitle("提示")
-                .setIcon(R.drawable.ic_logo1)
+                .setIcon(R.drawable.logo_s)
                 .setMessage("确定退出掏掏？")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override

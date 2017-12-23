@@ -788,7 +788,7 @@ public class RedPacketActivity extends BaseActivity {
                             builder = new AlertDialog.Builder(RedPacketActivity.this);
                         }
                         builder.setTitle("提示")
-                                .setIcon(R.drawable.ic_logo1)
+                                .setIcon(R.drawable.logo_s)
                                 .setMessage("需要开启定位才能抢红包？")
                                 .setPositiveButton("去开启", new DialogInterface.OnClickListener() {
                                     @Override
@@ -911,7 +911,7 @@ public class RedPacketActivity extends BaseActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RedPacketActivity.this);
                 builder.setTitle("提示")
-                        .setIcon(R.drawable.ic_logo1)
+                        .setIcon(R.drawable.logo_s)
                         .setMessage("确定支付" + sendRedPacketRequest.getMoney() + "元？")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override

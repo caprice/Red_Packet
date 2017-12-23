@@ -17,7 +17,10 @@
         android:layout_gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
+        <EditText
+            android:editable="false"
+            android:textCursorDrawable="@null"
+            android:textIsSelectable="true"
             android:gravity="center_vertical"
             android:layout_alignParentRight="true"
             android:id="@+id/tv_right_content"

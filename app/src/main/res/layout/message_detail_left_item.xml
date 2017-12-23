@@ -15,7 +15,10 @@
         android:paddingRight="60dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
+        <EditText
+            android:editable="false"
+            android:textCursorDrawable="@null"
+            android:textIsSelectable="true"
             android:layout_marginBottom="10dp"
             android:textSize="15sp"
             android:layout_marginTop="13dp"

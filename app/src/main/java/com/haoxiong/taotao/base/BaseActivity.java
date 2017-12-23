@@ -12,6 +12,8 @@ import android.view.View;
 
 
 import com.haoxiong.taotao.base.broadcastreceiver.NetConnectChangeReceiver;
+import com.haoxiong.taotao.ui.main.MainActivity;
+import com.haoxiong.taotao.util.StatusBarUtil;
 
 
 /**
@@ -26,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override

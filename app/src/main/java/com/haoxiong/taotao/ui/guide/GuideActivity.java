@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.WindowManager;
 
 import com.haoxiong.taotao.MyApp;
 import com.haoxiong.taotao.R;
@@ -18,6 +19,8 @@ public class GuideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         final String token = SharePreferenceUtil.get(GuideActivity.this, "token");
         final String phone = SharePreferenceUtil.get(GuideActivity.this, "phone");
         handler.postDelayed(new Runnable() {

@@ -11,6 +11,8 @@ import android.util.Log;
 import com.amap.api.location.AMapLocation;
 import com.fan.service.RetrofitApplication;
 
+import com.haoxiong.taotao.base.BaseActivity;
+import com.haoxiong.taotao.util.StatusBarUtil;
 import com.igexin.sdk.PushManager;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;

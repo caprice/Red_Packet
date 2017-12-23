@@ -34,7 +34,7 @@
     </RelativeLayout>
     <ImageView
         android:layout_marginTop="10dp"
-        android:src="@drawable/ic_logo1"
+        android:src="@drawable/ic_logo2"
         android:layout_width="85dp"
         android:layout_height="85dp" />
     <LinearLayout
